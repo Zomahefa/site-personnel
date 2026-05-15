@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "Portfolio de Zo Mahefa RANAIVO - Développeur Fullstack & DevOps. Conception, développement et déploiement d'applications modernes.",
   icons: [
-    { rel: "icon", url: "/api/favicon", type: "image/png" },
+    { rel: "icon", url: "/favicon.svg?v=3", type: "image/svg+xml" },
   ],
 };
 
