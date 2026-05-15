@@ -17,7 +17,7 @@ export async function DELETE(
     );
   }
 
-  const deleted = removeMessage(id);
+  const deleted = await removeMessage(id);
   if (!deleted) {
     return NextResponse.json(
       { error: "Message non trouvé" },

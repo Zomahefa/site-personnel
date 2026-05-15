@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllProjects, createProject, getDb } from "@/lib/db";
+import { getAllProjects, createProject } from "@/lib/db";
 import { verifyPassword } from "@/lib/auth";
 
 const seedProjects = [
@@ -80,82 +80,76 @@ const seedProjects = [
     demo: "https://github.com/Zomahefa",
   },
   {
-    title: "InfraStack",
+    title: "Gestion de Station Essence — JavaFX",
     description:
-      "Infrastructure as Code complète avec Terraform pour déploiement multi-cloud (AWS + GCP). Automatisation CI/CD avec GitHub Actions, GitOps via ArgoCD, monitoring centralisé (Prometheus/Grafana/ELK) et gestion des secrets avec Vault.",
+      "Application de bureau pour la gestion complète d'une station essence : gestion des pompes, ventes de carburant, inventaire, clients, fournisseurs, rapports financiers et statistiques. Conception et développement JavaFX avec base de données PostgreSQL. Projet ENI — L2.",
+    category: "fullstack",
+    technologies: ["JavaFX", "PostgreSQL", "Java", "SQL", "Java FXML"],
+    image: "",
+    github: "https://github.com/Zomahefa",
+  },
+  {
+    title: "ERP Quincaillerie — Boutique de l'Évolution",
+    description:
+      "Application ERP complète pour la gestion d'une quincallerie. Gestion des stocks, produits, ventes, fournisseurs, clients, trésorerie, rapports financiers et tableaux de bord. Projet personnel / Freelance.",
+    category: "fullstack",
+    technologies: ["Nest.js", "React", "TypeScript", "PostgreSQL", "Docker", "Tailwind CSS"],
+    image: "",
+    github: "https://github.com/Zomahefa",
+  },
+  {
+    title: "CI/CD Sécurisé & Scalable",
+    description:
+      "Pipeline CI/CD complet pour une application React.js/Django/MySQL. Build, test, déploiement sur VPS avec Docker/Docker Compose. Monitoring Prometheus/Grafana/Loki. Infrastructure sécurisée Nginx reverse proxy. Projet créé de A à Z lors du Stage L3.",
     category: "devops",
     technologies: [
-      "Terraform",
-      "Kubernetes",
-      "Docker",
-      "GitHub Actions",
-      "ArgoCD",
-      "Prometheus",
-      "Grafana",
-      "ELK Stack",
-      "Vault",
+      "Docker", "Docker Compose", "GitHub Actions", "Nginx", "VPS",
+      "Prometheus", "Grafana", "Loki", "Node Exporter", "MySQL Exporter",
     ],
     image: "",
     github: "https://github.com/Zomahefa",
   },
   {
-    title: "PipeLine Pro",
+    title: "InfraStack — IaC Multi-Cloud",
     description:
-      "Pipeline CI/CD générique automatisant l'analyse statique (SonarQube), les tests, le scanning de vulnérabilités (Trivy), le build multi-stage Docker et le déploiement blue/green sur Kubernetes via Helm. Gestion centralisée des secrets avec Vault.",
+      "Infrastructure as Code complète avec Terraform pour déploiement multi-cloud (AWS + GCP). CI/CD GitHub Actions, GitOps ArgoCD, monitoring Prometheus/Grafana/ELK, gestion des secrets Vault. Infrastructure scalable et reproductible.",
     category: "devops",
-    technologies: [
-      "Jenkins",
-      "Docker",
-      "Kubernetes",
-      "SonarQube",
-      "Trivy",
-      "Helm",
-      "Vault",
-      "ArgoCD",
-    ],
+    technologies: ["Terraform", "Kubernetes", "Docker", "GitHub Actions", "ArgoCD", "Prometheus", "Grafana", "ELK Stack", "Vault"],
     image: "",
     github: "https://github.com/Zomahefa",
   },
   {
-    title: "CloudGuard",
+    title: "PipeLine Pro — CI/CD Générique",
     description:
-      "Solution de sécurité cloud avec détection d'intrusion (Wazuh), analyse de logs temps réel (ELK), automatisation des réponses aux incidents via playbooks Ansible. Infrastructure déployée et versionnée avec Terraform, conteneurs Docker orchestrés.",
+      "Pipeline CI/CD générique : analyse statique SonarQube, tests, scanning Trivy, build multi-stage Docker, déploiement blue/green Kubernetes via Helm. Gestion centralisée des secrets avec Vault. Solution réutilisable pour tout projet.",
     category: "devops",
-    technologies: [
-      "AWS",
-      "Ansible",
-      "Wazuh",
-      "ELK",
-      "Python",
-      "Docker",
-      "Terraform",
-      "Kubernetes",
-    ],
+    technologies: ["Jenkins", "Docker", "Kubernetes", "SonarQube", "Trivy", "Helm", "Vault", "ArgoCD"],
+    image: "",
+    github: "https://github.com/Zomahefa",
+  },
+  {
+    title: "CloudGuard — Sécurité Cloud",
+    description:
+      "Solution de sécurité cloud : détection d'intrusion Wazuh, analyse logs ELK, automatisation des réponses aux incidents via Ansible. Infrastructure Terraform, conteneurs Docker orchestrés. Protection des applications en production.",
+    category: "devops",
+    technologies: ["AWS", "Ansible", "Wazuh", "ELK", "Python", "Docker", "Terraform", "Kubernetes"],
     image: "",
     github: "https://github.com/Zomahefa",
   },
   {
     title: "ZM Portfolio",
     description:
-      "Portfolio nouvelle génération : Next.js 16, Shadcn UI, Framer Motion, intégration IA Groq, base SQLite. Déploiement Docker automatisé via CI/CD GitHub Actions, monitoring, et application des bonnes pratiques DevOps.",
+      "Portfolio nouvelle génération : Next.js 16, Shadcn UI, Framer Motion, intégration IA Groq, base SQLite/Turso. Déploiement automatisé et bonnes pratiques DevOps.",
     category: "fullstack",
-    technologies: [
-      "Next.js 16",
-      "TypeScript",
-      "Tailwind CSS",
-      "Shadcn UI",
-      "Framer Motion",
-      "Groq AI",
-      "Docker",
-    ],
+    technologies: ["Next.js 16", "TypeScript", "Tailwind CSS", "Shadcn UI", "Framer Motion", "Groq AI", "Docker"],
     image: "",
     github: "https://github.com/Zomahefa",
     demo: "https://github.com/Zomahefa",
   },
   {
-    title: "VeloTrack — Application Mobile de Suivi Sportif",
+    title: "VeloTrack — Application Mobile Sportive",
     description:
-      "Application mobile cross-platform (React Native) pour le suivi d'activités cyclistes : GPS, statistiques, objectifs et partage social. API backend Node.js/PostgreSQL, déploiement automatisé et monitoring DevOps.",
+      "Application mobile cross-platform (React Native) pour suivi d'activités cyclistes : GPS, statistiques, objectifs, partage social. API backend Node.js/PostgreSQL, déploiement automatisé et monitoring DevOps.",
     category: "mobile",
     technologies: ["React Native", "Node.js", "PostgreSQL", "Docker", "GitHub Actions"],
     image: "",
@@ -163,9 +157,9 @@ const seedProjects = [
     demo: "",
   },
   {
-    title: "MarchéExpress — Application Mobile E-commerce",
+    title: "MarchéExpress — E-commerce Mobile",
     description:
-      "Application mobile de e-commerce local avec catalogue, panier, paiement mobile et livraison. Architecture microservices, CI/CD, et monitoring complet.",
+      "Application mobile e-commerce : catalogue, panier, paiement mobile, livraison. Architecture microservices, CI/CD, monitoring complet.",
     category: "mobile",
     technologies: ["React Native", "FastAPI", "Redis", "Docker", "Kubernetes", "Stripe"],
     image: "",
@@ -175,7 +169,7 @@ const seedProjects = [
   {
     title: "Portail Captif & Pare-feu — pfSense",
     description:
-      "Mise en place d'un portail captif avec système de tickets/voucher et gestion de pare-feu sur pfSense. Configuration des règles de filtrage, NAT, VLAN et QoS. Projet L3 ENI — Administration Réseau.",
+      "Portail captif avec tickets/voucher et pare-feu pfSense : règles de filtrage, NAT, VLAN, QoS. Projet L3 ENI — Administration Réseau.",
     category: "admin",
     technologies: ["pfSense", "VLAN", "NAT", "Captive Portal", "Firewall"],
     image: "",
@@ -185,7 +179,7 @@ const seedProjects = [
   {
     title: "Serveur VOIP sous Ubuntu",
     description:
-      "Déploiement et configuration d'un serveur VOIP complet sous Ubuntu avec Asterisk/FreePBX. Routage d'appels, messagerie vocale, conférence téléphonique. Projet L3 ENI — Téléphonie sur IP.",
+      "Serveur VOIP complet Ubuntu/Asterisk/FreePBX : routage d'appels, messagerie vocale, conférence téléphonique. Projet L3 ENI — Téléphonie IP.",
     category: "admin",
     technologies: ["Ubuntu", "Asterisk", "FreePBX", "VOIP", "SIP"],
     image: "",
@@ -193,9 +187,9 @@ const seedProjects = [
     demo: "",
   },
   {
-    title: "Mise en place d'un serveur Moodle avec Visioconférence",
+    title: "Serveur Moodle avec Visioconférence",
     description:
-      "Déploiement d'un serveur Moodle intégré avec solution de visioconférence (BigBlueButton). Gestion des utilisateurs, cours, et plugins. Stage L2 — Spray Info.",
+      "Déploiement Moodle + BigBlueButton pour visioconférence. Gestion utilisateurs, cours, plugins. Stage L2 — Spray Info.",
     category: "admin",
     technologies: ["Moodle", "BigBlueButton", "Linux", "Apache", "MySQL"],
     image: "",
@@ -205,7 +199,7 @@ const seedProjects = [
   {
     title: "Administration Windows Server",
     description:
-      "Configuration complète d'un environnement Windows Server : Active Directory, GPO, DHCP, DNS, partage de fichiers et gestion des utilisateurs. Mise en place d'une infrastructure sécurisée pour un domaine d'entreprise. Projet L2 ENI.",
+      "Configuration Windows Server complète : Active Directory, GPO, DHCP, DNS, partage fichiers, gestion utilisateurs. Infrastructure sécurisée pour domaine d'entreprise. Projet L2 ENI.",
     category: "admin",
     technologies: ["Windows Server", "Active Directory", "DHCP", "DNS", "GPO"],
     image: "",
@@ -215,7 +209,7 @@ const seedProjects = [
   {
     title: "Administration Système Linux",
     description:
-      "Administration de serveurs Linux : configuration réseau, gestion des utilisateurs, automatisation des tâches avec scripts bash, durcissement de sécurité, pare-feu iptables et monitoring système. Projet L2 ENI.",
+      "Administration serveurs Linux : configuration réseau, gestion utilisateurs, scripts bash, durcissement sécurité, iptables, monitoring. Projet L2 ENI.",
     category: "admin",
     technologies: ["Linux", "Bash", "iptables", "Apache", "Monitoring"],
     image: "",
@@ -225,7 +219,7 @@ const seedProjects = [
   {
     title: "Routage IP avec GNS3",
     description:
-      "Simulation et configuration de réseaux complexes avec GNS3 : routage statique et dynamique (OSPF, BGP), VLAN, STP, NAT, et sécurisation des accès. Conception d'architecture réseau pour une PME.",
+      "Simulation réseaux complexes GNS3 : routage OSPF/BGP, VLAN, STP, NAT, sécurisation. Conception architecture réseau PME.",
     category: "admin",
     technologies: ["GNS3", "Cisco IOS", "OSPF", "BGP", "VLAN"],
     image: "",
@@ -234,15 +228,15 @@ const seedProjects = [
   },
 ];
 
-function seedIfEmpty() {
-  const existing = getAllProjects();
-  const existingCategories = new Set(existing.map((p) => p.category));
+async function seedIfEmpty() {
+  const existing = await getAllProjects();
+  const existingCategories = new Set(existing.map((p: any) => p.category));
   const neededCategories = new Set(seedProjects.map((p) => p.category));
 
   for (const cat of neededCategories) {
     if (!existingCategories.has(cat)) {
       for (const p of seedProjects.filter((sp) => sp.category === cat)) {
-        createProject(
+        await createProject(
           Date.now().toString() + Math.random().toString(36).slice(2, 6),
           p.title,
           p.description,
@@ -258,12 +252,11 @@ function seedIfEmpty() {
 }
 
 export async function GET() {
-  seedIfEmpty();
-  const projects = getAllProjects().map((p) => ({
-    ...p,
-    technologies: JSON.parse(p.technologies),
-  }));
-  return NextResponse.json(projects);
+  await seedIfEmpty();
+  const projects = await getAllProjects();
+  return NextResponse.json(
+    projects.map((p: any) => ({ ...p, technologies: JSON.parse(p.technologies) }))
+  );
 }
 
 export async function POST(request: Request) {
@@ -284,7 +277,7 @@ export async function POST(request: Request) {
     }
 
     const id = Date.now().toString();
-    createProject(
+    await createProject(
       id,
       title,
       description,

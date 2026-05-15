@@ -1,9 +1,9 @@
 import { getAllMessages, addMessage, deleteMessageById } from "@/lib/db";
 import { Message } from "@/types";
 
-export function getMessages(): Message[] {
-  const rows = getAllMessages();
-  return rows.map((row) => ({
+export async function getMessages(): Promise<Message[]> {
+  const rows = await getAllMessages();
+  return rows.map((row: any) => ({
     id: row.id,
     name: row.name,
     email: row.email,
@@ -13,17 +13,17 @@ export function getMessages(): Message[] {
   }));
 }
 
-export function addNewMessage(
+export async function addNewMessage(
   name: string,
   email: string,
   phone: string,
   message: string
-): Message {
+): Promise<Message> {
   const id = Date.now().toString();
-  addMessage(id, name, email, phone, message);
+  await addMessage(id, name, email, phone, message);
   return { id, name, email, phone, message, createdAt: new Date().toISOString() };
 }
 
-export function removeMessage(id: string): boolean {
+export async function removeMessage(id: string): Promise<boolean> {
   return deleteMessageById(id);
 }

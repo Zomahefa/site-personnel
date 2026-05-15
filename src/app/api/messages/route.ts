@@ -13,8 +13,8 @@ export async function GET(request: Request) {
     );
   }
 
-  const messages = getMessages();
-  const dailyStats = getMessagesByDate();
+  const messages = await getMessages();
+  const dailyStats = await getMessagesByDate();
   return NextResponse.json({ messages, dailyStats });
 }
 
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const newMessage = addNewMessage(name, email, phone, message);
+    const newMessage = await addNewMessage(name, email, phone, message);
     return NextResponse.json(newMessage, { status: 201 });
   } catch {
     return NextResponse.json(

@@ -7,13 +7,13 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const project = getProjectById(id);
+  const project = await getProjectById(id);
   if (!project) {
     return NextResponse.json({ error: "Projet non trouvé" }, { status: 404 });
   }
   return NextResponse.json({
     ...project,
-    technologies: JSON.parse(project.technologies),
+    technologies: JSON.parse(project.technologies as string),
   });
 }
 
@@ -39,7 +39,7 @@ export async function PUT(
       );
     }
 
-    const updated = updateProject(
+    const updated = await updateProject(
       id,
       title,
       description,
@@ -70,7 +70,7 @@ export async function DELETE(
   }
 
   const { id } = await params;
-  const deleted = deleteProjectById(id);
+  const deleted = await deleteProjectById(id);
 
   if (!deleted) {
     return NextResponse.json({ error: "Projet non trouvé" }, { status: 404 });
