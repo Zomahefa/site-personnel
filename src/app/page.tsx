@@ -400,7 +400,7 @@ const certifications = [
   {
     title: "DELF B2 — Français",
     issuer: "Ministère français de l'Éducation nationale",
-    year: "2023",
+    year: "2025",
     status: "Obtenu",
   },
   {

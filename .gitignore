@@ -40,6 +40,6 @@ yarn-error.log*
 /data
 *.db
 
-# typescript
+# typescript type checking
 *.tsbuildinfo
 next-env.d.ts
