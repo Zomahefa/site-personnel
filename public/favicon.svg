@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
   <defs>
-    <clipPath id="circle">
-      <circle cx="16" cy="16" r="16"/>
-    </clipPath>
+    <pattern id="photo" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <image href="/photo-cv.png" width="32" height="32"/>
+    </pattern>
   </defs>
-  <image href="/photo-cv.png" x="0" y="0" width="32" height="32" clip-path="url(#circle)"/>
+  <circle cx="16" cy="16" r="16" fill="url(#photo)"/>
 </svg>
