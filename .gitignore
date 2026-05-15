@@ -44,7 +44,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Outils locaux
+# Outils locaux personnels
 utile/
 Utile/
 /utile
