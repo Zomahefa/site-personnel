@@ -43,3 +43,6 @@ yarn-error.log*
 # typescript type checking
 *.tsbuildinfo
 next-env.d.ts
+
+# Outils locaux
+utile/
