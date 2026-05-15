@@ -46,3 +46,6 @@ next-env.d.ts
 
 # Outils locaux
 utile/
+Utile/
+/utile
+/Utile
