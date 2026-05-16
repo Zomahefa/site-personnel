@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ExternalLink,
   MessageSquare,
   GitPullRequest,
   Eye,
@@ -31,7 +30,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Project } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
 import { toast } from "sonner";
 
 interface Props {
@@ -102,12 +100,12 @@ export function ProjectCard({ project, index }: Props) {
         <Card className="group h-full overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
           <div className="relative h-48 overflow-hidden bg-muted">
             <Image
-              src={project.image || "/photo-cv.png"}
+              src={project.image || `/api/project-image?title=${encodeURIComponent(project.title)}&category=${project.category}`}
               alt={project.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
             <div className="absolute bottom-3 left-3">
               <Badge
                 variant={
@@ -154,26 +152,10 @@ export function ProjectCard({ project, index }: Props) {
               Plus de détails
             </Button>
             {project.github && (
-              <Link
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-7 px-2.5 rounded-lg border border-border bg-background text-[0.8rem] font-medium hover:bg-muted transition-colors"
-              >
+              <span className="inline-flex items-center justify-center h-7 px-2.5 rounded-lg border border-border bg-muted text-muted-foreground text-[0.8rem] font-medium cursor-not-allowed opacity-50">
                 <GithubIcon className="mr-1.5 h-3.5 w-3.5" />
                 Code
-              </Link>
-            )}
-            {project.demo && (
-              <Link
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-7 px-2.5 rounded-lg border border-border bg-background text-[0.8rem] font-medium hover:bg-muted transition-colors"
-              >
-                <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
-                Demo
-              </Link>
+              </span>
             )}
             <button
               onClick={() => openFeedback("critique")}
@@ -201,7 +183,7 @@ export function ProjectCard({ project, index }: Props) {
           </DialogTitle>
           <div className="relative h-56 sm:h-72 rounded-lg overflow-hidden bg-muted mt-4">
             <Image
-              src={project.image || "/photo-cv.png"}
+              src={project.image || `/api/project-image?title=${encodeURIComponent(project.title)}&category=${project.category}`}
               alt={project.title}
               fill
               className="object-cover"
@@ -219,26 +201,10 @@ export function ProjectCard({ project, index }: Props) {
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
             {project.github && (
-              <Link
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-8 px-3 rounded-lg border border-border bg-background text-xs font-medium hover:bg-muted transition-colors"
-              >
+              <span className="inline-flex items-center justify-center h-8 px-3 rounded-lg border border-border bg-muted text-muted-foreground text-xs font-medium cursor-not-allowed opacity-50">
                 <GithubIcon className="mr-1.5 h-3.5 w-3.5" />
-                Voir le code
-              </Link>
-            )}
-            {project.demo && (
-              <Link
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-8 px-3 rounded-lg border border-border bg-background text-xs font-medium hover:bg-muted transition-colors"
-              >
-                <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
-                Voir la démo
-              </Link>
+                Code
+              </span>
             )}
             <button
               onClick={() => {

@@ -44,8 +44,11 @@ export default function ResumePage() {
         <div className="flex justify-end gap-3 mb-8 print:hidden">
           <Button variant="outline" onClick={() => window.print()}>
             <Printer className="mr-2 h-4 w-4" />
-            Imprimer / PDF
+            Télécharger en PDF
           </Button>
+          <p className="text-xs text-muted-foreground">
+            (Choisissez "Enregistrer au format PDF" dans l&apos;imprimante)
+          </p>
         </div>
 
         <div

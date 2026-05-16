@@ -17,10 +17,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Zo Mahefa RANAIVO | Fullstack & DevOps",
+  title: {
+    default: "Zo Mahefa RANAIVO | Fullstack & DevOps",
+    template: "%s | Zo Mahefa RANAIVO",
+  },
   description:
     "Portfolio de Zo Mahefa RANAIVO - Développeur Fullstack & DevOps. Conception, développement et déploiement d'applications modernes.",
   icons: [{ rel: "icon", url: "/photo-ronde.png" }],
+  verification: { google: "google81dfecfc5d73987c" },
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "Zo Mahefa RANAIVO | Fullstack & DevOps",
+    description:
+      "Développeur Fullstack & DevOps spécialisé dans la conception, le développement et le déploiement d'applications web modernes.",
+    type: "website",
+    locale: "fr_FR",
+    siteName: "Zo Mahefa RANAIVO",
+  },
 };
 
 export default function RootLayout({
@@ -34,6 +47,20 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                let theme = localStorage.getItem('theme');
+                if (!theme) theme = 'light';
+                document.documentElement.classList.remove('dark', 'light');
+                document.documentElement.classList.add(theme);
+              } catch(e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col">

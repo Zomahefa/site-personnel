@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   Plus,
@@ -28,7 +28,7 @@ const defaultImage = "/photo-cv.png";
 export function AdminProjects({ password }: { password: string }) {
   const [projects, setProjects] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
-  const [editId, setEditId] = useState<string | null>(null);
+  const editIdRef = useRef<string | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<"fullstack" | "devops" | "mobile" | "admin">("fullstack");
@@ -37,7 +37,7 @@ export function AdminProjects({ password }: { password: string }) {
   const [github, setGithub] = useState("");
   const [demo, setDemo] = useState("");
 
-  const isEditing = editId !== null;
+  const isEditing = editIdRef.current !== null;
 
   async function fetchProjects() {
     const res = await fetch("/api/projects");
@@ -47,7 +47,7 @@ export function AdminProjects({ password }: { password: string }) {
   useEffect(() => { fetchProjects(); }, []);
 
   function resetForm() {
-    setEditId(null);
+    editIdRef.current = null;
     setTitle("");
     setDescription("");
     setCategory("fullstack");
@@ -63,7 +63,7 @@ export function AdminProjects({ password }: { password: string }) {
   }
 
   function openEdit(p: any) {
-    setEditId(p.id);
+    editIdRef.current = p.id;
     setTitle(p.title);
     setDescription(p.description);
     setCategory(p.category);
@@ -95,7 +95,7 @@ export function AdminProjects({ password }: { password: string }) {
     };
 
     try {
-      const url = isEditing ? `/api/projects/${editId}` : "/api/projects";
+      const url = isEditing ? `/api/projects/${editIdRef.current}` : "/api/projects";
       const method = isEditing ? "PUT" : "POST";
 
       const res = await fetch(url, {

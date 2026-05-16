@@ -510,7 +510,7 @@ export default function Home() {
               >
                 Passionné, dynamique et rigoureux, je suis un{" "}
                 <strong>Fullstack & DevOps</strong> spécialisé dans la{" "}
-                <strong>conception, le développement ET le déploiement</strong>{" "}
+                <strong>conception, le développement et le déploiement</strong>{" "}
                 d&apos;applications web{" "}
                 <strong>scalables, robustes et performantes</strong>. Mon
                 approche va bien au-delà du code : j&apos;automatise, je
@@ -522,11 +522,11 @@ export default function Home() {
                 <strong>
                   création et livraison continue d&apos;applications
                 </strong>{" "}
-                que j&apos;excelle. Je sais travailler en équipe — nos projets à
-                l&apos;ENI sont souvent collaboratifs — et j&apos;aime résoudre
-                des problèmes complexes. Je pratique régulièrement sur LeetCode
-                et Codewars. Esprit d&apos;équipe, adaptable et tourné vers les
-                résultats.
+                que j&apos;excelle. Je sais travailler en équipe,nos projets à
+                l&apos;ENI sont souvent collaboratifs.J&apos;aime résoudre des
+                problèmes complexes. Je pratique régulièrement sur LeetCode et
+                Codewars car Je recherche toujours de nouveaux défis pour
+                continuer à apprendre et à évoluer dans ce domaine passionnant.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

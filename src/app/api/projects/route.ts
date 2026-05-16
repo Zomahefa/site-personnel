@@ -19,7 +19,7 @@ const seedProjects = [
       "Terraform",
       "GitHub Actions",
     ],
-    image: "",
+    image: "/images/NexaFlow.jpeg",
     github: "https://github.com/Zomahefa",
     demo: "https://github.com/Zomahefa",
   },
@@ -38,7 +38,7 @@ const seedProjects = [
       "Prometheus",
       "Grafana",
     ],
-    image: "",
+    image: "/images/ecoTrack.jpeg",
     github: "https://github.com/Zomahefa",
     demo: "https://github.com/Zomahefa",
   },
@@ -75,7 +75,7 @@ const seedProjects = [
       "DynamoDB",
       "Terraform",
     ],
-    image: "",
+    image: "/images/criptoSight.jpeg",
     github: "https://github.com/Zomahefa",
     demo: "https://github.com/Zomahefa",
   },
@@ -85,7 +85,7 @@ const seedProjects = [
       "Application de bureau pour la gestion complète d'une station essence : gestion des pompes, ventes de carburant, inventaire, clients, fournisseurs, rapports financiers et statistiques. Conception et développement JavaFX avec base de données PostgreSQL. Projet ENI — L2.",
     category: "fullstack",
     technologies: ["JavaFX", "PostgreSQL", "Java", "SQL", "Java FXML"],
-    image: "",
+    image: "/images/essence.png",
     github: "https://github.com/Zomahefa",
   },
   {
@@ -93,8 +93,15 @@ const seedProjects = [
     description:
       "Application ERP complète pour la gestion d'une quincallerie. Gestion des stocks, produits, ventes, fournisseurs, clients, trésorerie, rapports financiers et tableaux de bord. Projet personnel / Freelance.",
     category: "fullstack",
-    technologies: ["Nest.js", "React", "TypeScript", "PostgreSQL", "Docker", "Tailwind CSS"],
-    image: "",
+    technologies: [
+      "Nest.js",
+      "React",
+      "TypeScript",
+      "PostgreSQL",
+      "Docker",
+      "Tailwind CSS",
+    ],
+    image: "/images/ERP.png",
     github: "https://github.com/Zomahefa",
   },
   {
@@ -103,10 +110,18 @@ const seedProjects = [
       "Pipeline CI/CD complet pour une application React.js/Django/MySQL. Build, test, déploiement sur VPS avec Docker/Docker Compose. Monitoring Prometheus/Grafana/Loki. Infrastructure sécurisée Nginx reverse proxy. Projet créé de A à Z lors du Stage L3.",
     category: "devops",
     technologies: [
-      "Docker", "Docker Compose", "GitHub Actions", "Nginx", "VPS",
-      "Prometheus", "Grafana", "Loki", "Node Exporter", "MySQL Exporter",
+      "Docker",
+      "Docker Compose",
+      "GitHub Actions",
+      "Nginx",
+      "VPS",
+      "Prometheus",
+      "Grafana",
+      "Loki",
+      "Node Exporter",
+      "MySQL Exporter",
     ],
-    image: "",
+    image: "/images/pipeline pro.png",
     github: "https://github.com/Zomahefa",
   },
   {
@@ -114,8 +129,18 @@ const seedProjects = [
     description:
       "Infrastructure as Code complète avec Terraform pour déploiement multi-cloud (AWS + GCP). CI/CD GitHub Actions, GitOps ArgoCD, monitoring Prometheus/Grafana/ELK, gestion des secrets Vault. Infrastructure scalable et reproductible.",
     category: "devops",
-    technologies: ["Terraform", "Kubernetes", "Docker", "GitHub Actions", "ArgoCD", "Prometheus", "Grafana", "ELK Stack", "Vault"],
-    image: "",
+    technologies: [
+      "Terraform",
+      "Kubernetes",
+      "Docker",
+      "GitHub Actions",
+      "ArgoCD",
+      "Prometheus",
+      "Grafana",
+      "ELK Stack",
+      "Vault",
+    ],
+    image: "/images/infraStack.jpeg",
     github: "https://github.com/Zomahefa",
   },
   {
@@ -123,8 +148,17 @@ const seedProjects = [
     description:
       "Pipeline CI/CD générique : analyse statique SonarQube, tests, scanning Trivy, build multi-stage Docker, déploiement blue/green Kubernetes via Helm. Gestion centralisée des secrets avec Vault. Solution réutilisable pour tout projet.",
     category: "devops",
-    technologies: ["Jenkins", "Docker", "Kubernetes", "SonarQube", "Trivy", "Helm", "Vault", "ArgoCD"],
-    image: "",
+    technologies: [
+      "Jenkins",
+      "Docker",
+      "Kubernetes",
+      "SonarQube",
+      "Trivy",
+      "Helm",
+      "Vault",
+      "ArgoCD",
+    ],
+    image: "/images/pipeline pro.png",
     github: "https://github.com/Zomahefa",
   },
   {
@@ -132,8 +166,17 @@ const seedProjects = [
     description:
       "Solution de sécurité cloud : détection d'intrusion Wazuh, analyse logs ELK, automatisation des réponses aux incidents via Ansible. Infrastructure Terraform, conteneurs Docker orchestrés. Protection des applications en production.",
     category: "devops",
-    technologies: ["AWS", "Ansible", "Wazuh", "ELK", "Python", "Docker", "Terraform", "Kubernetes"],
-    image: "",
+    technologies: [
+      "AWS",
+      "Ansible",
+      "Wazuh",
+      "ELK",
+      "Python",
+      "Docker",
+      "Terraform",
+      "Kubernetes",
+    ],
+    image: "/images/infraStack.jpeg",
     github: "https://github.com/Zomahefa",
   },
   {
@@ -141,8 +184,16 @@ const seedProjects = [
     description:
       "Portfolio nouvelle génération : Next.js 16, Shadcn UI, Framer Motion, intégration IA Groq, base SQLite/Turso. Déploiement automatisé et bonnes pratiques DevOps.",
     category: "fullstack",
-    technologies: ["Next.js 16", "TypeScript", "Tailwind CSS", "Shadcn UI", "Framer Motion", "Groq AI", "Docker"],
-    image: "",
+    technologies: [
+      "Next.js 16",
+      "TypeScript",
+      "Tailwind CSS",
+      "Shadcn UI",
+      "Framer Motion",
+      "Groq AI",
+      "Docker",
+    ],
+    image: "/images/portfolio-image.png",
     github: "https://github.com/Zomahefa",
     demo: "https://github.com/Zomahefa",
   },
@@ -151,20 +202,33 @@ const seedProjects = [
     description:
       "Application mobile cross-platform (React Native) pour suivi d'activités cyclistes : GPS, statistiques, objectifs, partage social. API backend Node.js/PostgreSQL, déploiement automatisé et monitoring DevOps.",
     category: "mobile",
-    technologies: ["React Native", "Node.js", "PostgreSQL", "Docker", "GitHub Actions"],
-    image: "",
+    technologies: [
+      "React Native",
+      "Node.js",
+      "PostgreSQL",
+      "Docker",
+      "GitHub Actions",
+    ],
+    image: "/images/veloTrack.jpeg",
     github: "https://github.com/Zomahefa",
-    demo: "",
+    /* demo: "", */
   },
   {
     title: "MarchéExpress — E-commerce Mobile",
     description:
       "Application mobile e-commerce : catalogue, panier, paiement mobile, livraison. Architecture microservices, CI/CD, monitoring complet.",
     category: "mobile",
-    technologies: ["React Native", "FastAPI", "Redis", "Docker", "Kubernetes", "Stripe"],
-    image: "",
+    technologies: [
+      "React Native",
+      "FastAPI",
+      "Redis",
+      "Docker",
+      "Kubernetes",
+      "Stripe",
+    ],
+    image: "/images/MarcheExpress.jpeg",
     github: "https://github.com/Zomahefa",
-    demo: "",
+    /* demo: "", */
   },
   {
     title: "Portail Captif & Pare-feu — pfSense",
@@ -172,9 +236,9 @@ const seedProjects = [
       "Portail captif avec tickets/voucher et pare-feu pfSense : règles de filtrage, NAT, VLAN, QoS. Projet L3 ENI — Administration Réseau.",
     category: "admin",
     technologies: ["pfSense", "VLAN", "NAT", "Captive Portal", "Firewall"],
-    image: "",
+    image: "/images/pfsens.png",
     github: "",
-    demo: "",
+    /* demo: "", */
   },
   {
     title: "Serveur VOIP sous Ubuntu",
@@ -182,9 +246,9 @@ const seedProjects = [
       "Serveur VOIP complet Ubuntu/Asterisk/FreePBX : routage d'appels, messagerie vocale, conférence téléphonique. Projet L3 ENI — Téléphonie IP.",
     category: "admin",
     technologies: ["Ubuntu", "Asterisk", "FreePBX", "VOIP", "SIP"],
-    image: "",
+    image: "/images/VOIP server.png",
     github: "",
-    demo: "",
+    /* demo: "", */
   },
   {
     title: "Serveur Moodle avec Visioconférence",
@@ -192,9 +256,9 @@ const seedProjects = [
       "Déploiement Moodle + BigBlueButton pour visioconférence. Gestion utilisateurs, cours, plugins. Stage L2 — Spray Info.",
     category: "admin",
     technologies: ["Moodle", "BigBlueButton", "Linux", "Apache", "MySQL"],
-    image: "",
+    image: "/images/moodle server.png",
     github: "",
-    demo: "",
+    /* demo: "", */
   },
   {
     title: "Administration Windows Server",
@@ -202,9 +266,9 @@ const seedProjects = [
       "Configuration Windows Server complète : Active Directory, GPO, DHCP, DNS, partage fichiers, gestion utilisateurs. Infrastructure sécurisée pour domaine d'entreprise. Projet L2 ENI.",
     category: "admin",
     technologies: ["Windows Server", "Active Directory", "DHCP", "DNS", "GPO"],
-    image: "",
+    image: "/images/windows server.png",
     github: "",
-    demo: "",
+    /* demo: "", */
   },
   {
     title: "Administration Système Linux",
@@ -212,9 +276,9 @@ const seedProjects = [
       "Administration serveurs Linux : configuration réseau, gestion utilisateurs, scripts bash, durcissement sécurité, iptables, monitoring. Projet L2 ENI.",
     category: "admin",
     technologies: ["Linux", "Bash", "iptables", "Apache", "Monitoring"],
-    image: "",
+    image: "/images/linux server.png",
     github: "",
-    demo: "",
+    /* demo: "", */
   },
   {
     title: "Routage IP avec GNS3",
@@ -222,9 +286,9 @@ const seedProjects = [
       "Simulation réseaux complexes GNS3 : routage OSPF/BGP, VLAN, STP, NAT, sécurisation. Conception architecture réseau PME.",
     category: "admin",
     technologies: ["GNS3", "Cisco IOS", "OSPF", "BGP", "VLAN"],
-    image: "",
+    image: "/images/GNS3.png",
     github: "",
-    demo: "",
+    /* demo: "", */
   },
 ];
 
@@ -244,7 +308,7 @@ async function seedIfEmpty() {
           p.technologies,
           p.image || "",
           p.github || "",
-          p.demo || ""
+          p.demo || "",
         );
       }
     }
@@ -255,7 +319,10 @@ export async function GET() {
   await seedIfEmpty();
   const projects = await getAllProjects();
   return NextResponse.json(
-    projects.map((p: any) => ({ ...p, technologies: JSON.parse(p.technologies) }))
+    projects.map((p: any) => ({
+      ...p,
+      technologies: JSON.parse(p.technologies),
+    })),
   );
 }
 
@@ -272,7 +339,7 @@ export async function POST(request: Request) {
     if (!title || !description) {
       return NextResponse.json(
         { error: "Titre et description requis" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -285,7 +352,7 @@ export async function POST(request: Request) {
       technologies || [],
       image || "",
       github || "",
-      demo || ""
+      demo || "",
     );
 
     return NextResponse.json({ id, success: true }, { status: 201 });
