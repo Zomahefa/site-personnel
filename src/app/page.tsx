@@ -388,8 +388,8 @@ export default function Home() {
                   Me contacter
                 </Link>
                 <a
-                  href="/cv-zomahefa.pdf"
-                  download="CV_Zo_Mahefa_RANAIVO.pdf"
+                  href="/CV_Zo_Mahefa_RANAIVO_2026.pdf"
+                  download="CV_Zo_Mahefa_RANAIVO_2026.pdf"
                   className="inline-flex items-center justify-center h-10 px-6 rounded-full border border-primary/30 text-primary text-sm font-medium hover:bg-primary/5 transition-all cursor-pointer"
                 >
                   <Download className="mr-2 h-4 w-4" />
@@ -646,7 +646,7 @@ export default function Home() {
           {/* Download CV */}
           <AnimatedSection className="text-center mb-16">
             <Link
-              href="/cv-zomahefa.pdf"
+              href="/CV_Zo_Mahefa_RANAIVO_2026.pdf"
               target="_blank"
               className="inline-flex items-center justify-center h-11 px-8 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25"
             >
