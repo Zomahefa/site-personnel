@@ -109,25 +109,6 @@ const techStack = [
   "SonarQube",
 ];
 
-const PortfolioProjectStatic = {
-  id: "portfolio",
-  title: "Ce Portfolio — ZM Portfolio",
-  description:
-    "Portfolio nouvelle génération : Next.js 16, Shadcn UI, Framer Motion, base SQLite. Déploiement Docker automatisé via CI/CD GitHub Actions, monitoring, et application des bonnes pratiques DevOps.",
-  category: "fullstack" as const,
-  technologies: [
-    "Next.js 16",
-    "TypeScript",
-    "Tailwind CSS",
-    "Shadcn UI",
-    "Framer Motion",
-    "Docker",
-  ],
-  image: "/portfolio-image.png",
-  github: "https://github.com/Zomahefa",
-  demo: "https://github.com/Zomahefa",
-};
-
 const mobileProjects = [
   {
     id: "mobile1",
@@ -733,15 +714,6 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          <AnimatedSection>
-            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-              <Code2 className="h-5 w-5 text-primary" />
-              Projet Remarquable
-            </h3>
-            <div className="max-w-md">
-              <ProjectCard project={PortfolioProjectStatic} index={0} />
-            </div>
-          </AnimatedSection>
         </div>
       </section>
 
