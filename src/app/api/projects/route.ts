@@ -193,7 +193,7 @@ const seedProjects = [
       "Groq AI",
       "Docker",
     ],
-    image: "/images/portfolio-image.png",
+    image: "/portfolio-image.png",
     github: "https://github.com/Zomahefa",
     demo: "https://github.com/Zomahefa",
   },

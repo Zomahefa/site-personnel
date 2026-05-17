@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/", hash: "", label: "Accueil" },
   { href: "/", hash: "projets", label: "Mes projets" },
   { href: "/", hash: "competences", label: "Compétences & Parcours" },
+  { href: "/", hash: "project-matcher", label: "AI Projet" },
   { href: "/", hash: "contact", label: "Contactez moi" },
 ];
 

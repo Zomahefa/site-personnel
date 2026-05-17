@@ -27,6 +27,7 @@ const defaultImage = "/photo-cv.png";
 
 export function AdminProjects({ password }: { password: string }) {
   const [projects, setProjects] = useState<any[]>([]);
+  const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const editIdRef = useRef<string | null>(null);
   const [title, setTitle] = useState("");
@@ -38,6 +39,15 @@ export function AdminProjects({ password }: { password: string }) {
   const [demo, setDemo] = useState("");
 
   const isEditing = editIdRef.current !== null;
+  const filtered = projects.filter((p) => {
+    const q = search.toLowerCase();
+    return (
+      p.title.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      (p.technologies || []).some((t: string) => t.toLowerCase().includes(q)) ||
+      p.category.toLowerCase().includes(q)
+    );
+  });
 
   async function fetchProjects() {
     const res = await fetch("/api/projects");
@@ -145,7 +155,7 @@ export function AdminProjects({ password }: { password: string }) {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold">
-          Projets ({projects.length})
+          Projets ({filtered.length}/{projects.length})
         </h2>
         <Button size="sm" onClick={openNew}>
           <Plus className="mr-1.5 h-4 w-4" />
@@ -153,8 +163,15 @@ export function AdminProjects({ password }: { password: string }) {
         </Button>
       </div>
 
+      <Input
+        placeholder="Rechercher un projet..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="mb-4"
+      />
+
       <div className="grid gap-4">
-        {projects.map((p) => (
+        {filtered.map((p) => (
           <motion.div
             key={p.id}
             initial={{ opacity: 0, y: 5 }}
@@ -207,7 +224,7 @@ export function AdminProjects({ password }: { password: string }) {
             </Card>
           </motion.div>
         ))}
-        {projects.length === 0 && (
+        {filtered.length === 0 && (
           <p className="text-sm text-muted-foreground text-center py-8">
             Aucun projet pour le moment.
           </p>
