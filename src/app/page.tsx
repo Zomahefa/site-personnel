@@ -123,6 +123,7 @@ const PortfolioProjectStatic = {
     "Framer Motion",
     "Docker",
   ],
+  image: "/portfolio-image.png",
   github: "https://github.com/Zomahefa",
   demo: "https://github.com/Zomahefa",
 };

@@ -292,14 +292,16 @@ const seedProjects = [
   },
 ];
 
-async function seedIfEmpty() {
-  const existing = await getAllProjects();
-  const existingCategories = new Set(existing.map((p: any) => p.category));
-  const neededCategories = new Set(seedProjects.map((p) => p.category));
+let seedingPromise: Promise<void> | null = null;
 
-  for (const cat of neededCategories) {
-    if (!existingCategories.has(cat)) {
-      for (const p of seedProjects.filter((sp) => sp.category === cat)) {
+async function seedIfEmpty() {
+  if (seedingPromise) return seedingPromise;
+  seedingPromise = (async () => {
+    const existing = await getAllProjects();
+    const existingTitles = new Set(existing.map((p: any) => p.title));
+
+    for (const p of seedProjects) {
+      if (!existingTitles.has(p.title)) {
         await createProject(
           Date.now().toString() + Math.random().toString(36).slice(2, 6),
           p.title,
@@ -312,7 +314,8 @@ async function seedIfEmpty() {
         );
       }
     }
-  }
+  })();
+  return seedingPromise;
 }
 
 export async function GET() {
@@ -323,6 +326,11 @@ export async function GET() {
       ...p,
       technologies: JSON.parse(p.technologies),
     })),
+    {
+      headers: {
+        "Cache-Control": "public, max-age=60, s-maxage=60, stale-while-revalidate=120",
+      },
+    },
   );
 }
 
