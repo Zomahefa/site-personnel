@@ -84,32 +84,19 @@ const services = [
 
 const techStack = [
   "Spring Boot",
-  "Spring Security",
-  "Spring Data JPA / Hibernate",
-  "REST API",
-  "Microservices",
-  "Spring Cloud",
-  "Node.js",
-  "Python",
-  "Flutter",
-  "Kotlin",
+  "React/Next.js",
   "Docker",
+  "Docker compose",
   "Kubernetes",
-  "AWS",
-  "CI/CD",
   "Terraform",
   "Ansible",
   "GitHub Actions",
   "ArgoCD",
-  "Helm",
   "Prometheus",
   "Grafana",
-  "ELK Stack",
   "PostgreSQL",
   "MongoDB",
   "Redis",
-  "Nginx",
-  "Traefik",
   "Git",
   "Linux",
 ];
@@ -122,25 +109,25 @@ const skills = [
       "TypeScript / JavaScript",
       "Tailwind CSS / Shadcn UI",
       "Framer Motion",
-      "Tests : Vitest / Jest / Testing Library",
+      "Tests : Vitest / Jest",
       "ESLint / Prettier",
     ],
   },
   {
     category: "Backend",
     items: [
-      "Java 17+ / Spring Boot 3",
+      "Java / Spring Boot",
       "Spring Security (JWT / OAuth2)",
       "Spring Data JPA / Hibernate",
       "REST API / Microservices / Spring Cloud",
       "Spring Web / Validation (Bean Validation)",
       "Spring Actuator / AOP",
       "Springdoc OpenAPI (Swagger UI)",
-      "Tests : JUnit 5 / Mockito / AssertJ",
+      "Tests : JUnit / Mockito / AssertJ",
       "Maven / Gradle",
       "Lombok / MapStruct",
-      "Node.js / Express",
-      "Python / FastAPI",
+      "Node.js / Nest.js",
+      "Python / Django & Socket & Scripts",
       "PostgreSQL / MongoDB / Redis",
     ],
   },
@@ -579,14 +566,6 @@ export default function Home() {
                   <Download className="mr-2 h-4 w-4" />
                   CV (PDF)
                 </a>
-                <Link
-                  href="/resume"
-                  target="_blank"
-                  className="inline-flex active-scale-97 items-center justify-center h-10 px-6 rounded-full border border-primary/30 text-primary text-sm font-medium hover:bg-primary/5 transition-[background,transform] duration-200 ease-out"
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  Résumé portfolio
-                </Link>
               </motion.div>
             </div>
           </div>
@@ -819,37 +798,11 @@ export default function Home() {
           </AnimatedSection>
 
           {/* Self-description */}
-          <AnimatedSection>
-            <div className="max-w-3xl mx-auto mb-16 p-8 rounded-2xl border border-primary/20 bg-linear-to-br from-primary/5 to-primary/5 text-center">
-              <p className="text-lg leading-relaxed text-muted-foreground italic">
-                &ldquo;Développeur backend spécialisé{" "}
-                <strong>Java / Spring Boot</strong>, je conçois des applications
-                robustes et évolutives en m&apos;appuyant sur tout
-                l&apos;écosystème Spring (Security, JPA/Hibernate, Spring Cloud,
-                microservices) que j&apos;intègre dans une démarche DevOps
-                complète : de l&apos;analyse des besoins jusqu&apos;au
-                déploiement continu, en passant par la sécurisation des API, la
-                containerisation Docker et l&apos;optimisation des performances.
-                Rigoureux et force de proposition, je m&apos;adapte rapidement
-                aux environnements techniques et aux contraintes métier. Chaque
-                projet est pour moi l&apos;opportunité de livrer un code propre,
-                maintenable et industriel, prêt pour la production.&rdquo;
-              </p>
-            </div>
-          </AnimatedSection>
 
-          {/* Skills cards — horizontal marquee */}
+          {/* Skills cards — grid layout */}
           <div className="mb-16">
-            <MarqueeCards>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {skills.map((group, gi) => {
-                const colors = [
-                  "from-violet-500/10 to-fuchsia-500/5 border-violet-500/20 hover:border-violet-500/40",
-                  "from-emerald-500/10 to-teal-500/5 border-emerald-500/20 hover:border-emerald-500/40",
-                  "from-amber-500/10 to-orange-500/5 border-amber-500/20 hover:border-amber-500/40",
-                  "from-sky-500/10 to-blue-500/5 border-sky-500/20 hover:border-sky-500/40",
-                  "from-rose-500/10 to-pink-500/5 border-rose-500/20 hover:border-rose-500/40",
-                  "from-primary/10 to-primary/5 border-primary/20 hover:border-primary/40",
-                ];
                 const dotColors = [
                   "bg-violet-500",
                   "bg-emerald-500",
@@ -858,13 +811,11 @@ export default function Home() {
                   "bg-rose-500",
                   "bg-primary",
                 ];
-                const c = colors[gi % colors.length];
                 const dc = dotColors[gi % dotColors.length];
+
                 return (
-                  <div key={group.category} className="w-80 shrink-0">
-                    <Card
-                      className={`h-full border bg-linear-to-br ${c} transition-all duration-300 hover:shadow-lg`}
-                    >
+                  <div key={group.category}>
+                    <Card className="h-full border border-border/50 bg-card/50 backdrop-blur-sm hover:border-border hover:shadow-md transition-all duration-300">
                       <CardContent className="p-6">
                         <h3
                           className={`font-semibold mb-4 text-lg ${dc.replace("bg-", "text-")}`}
@@ -880,14 +831,14 @@ export default function Home() {
                               return (
                                 <li key={item}>
                                   <div className="flex items-center justify-between text-sm mb-1">
-                                    <span className="text-muted-foreground">
+                                    <span className="text-muted-foreground/80">
                                       {label}
                                     </span>
-                                    <span className="text-xs font-semibold text-muted-foreground/70">
+                                    <span className="text-xs font-semibold text-muted-foreground/60">
                                       {pct}%
                                     </span>
                                   </div>
-                                  <div className="h-1.5 rounded-full bg-muted-foreground/15 overflow-hidden">
+                                  <div className="h-1.5 rounded-full bg-muted-foreground/10 overflow-hidden">
                                     <motion.div
                                       initial={{ width: 0 }}
                                       whileInView={{ width: `${pct}%` }}
@@ -914,7 +865,7 @@ export default function Home() {
                                 <div
                                   className={`h-1.5 w-1.5 rounded-full ${dc} shrink-0`}
                                 />
-                                <span className="text-sm text-muted-foreground">
+                                <span className="text-sm text-muted-foreground/80">
                                   {item}
                                 </span>
                               </motion.li>
@@ -926,7 +877,7 @@ export default function Home() {
                   </div>
                 );
               })}
-            </MarqueeCards>
+            </div>
           </div>
 
           {/* Download CV */}
