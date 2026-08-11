@@ -47,6 +47,12 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@utility active-scale-97 {
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
 :root {
   --background: oklch(0.98 0.01 260);
   --foreground: oklch(0.15 0.02 260);
@@ -126,6 +132,15 @@
   html {
     @apply font-sans scroll-smooth;
   }
+}
+
+body {
+  animation: body-fade-in 0.35s ease-out;
+}
+
+@keyframes body-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 ::selection {

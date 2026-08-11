@@ -37,12 +37,29 @@ export function ContactForm() {
     }
   }, [searchParams]);
 
+  function validate() {
+    if (!form.name.trim()) {
+      toast.error("Le nom est requis");
+      return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      toast.error("Email invalide");
+      return false;
+    }
+    if (!/^[\d\s\-\+\(\)]{6,20}$/.test(form.phone)) {
+      toast.error("Numéro de téléphone invalide");
+      return false;
+    }
+    if (!form.message.trim()) {
+      toast.error("Le message est requis");
+      return false;
+    }
+    return true;
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone || !form.message) {
-      toast.error("Tous les champs sont requis");
-      return;
-    }
+    if (!validate()) return;
     setPending(true);
     try {
       const res = await fetch("/api/messages", {

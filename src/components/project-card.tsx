@@ -6,6 +6,7 @@ import {
   MessageSquare,
   GitPullRequest,
   Eye,
+  ExternalLink,
   Send,
   Loader2,
 } from "lucide-react";
@@ -97,7 +98,7 @@ export function ProjectCard({ project, index }: Props) {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ delay: index * 0.1, duration: 0.5 }}
       >
-        <Card className="group h-full overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+        <Card className="group h-full overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col">
           <div className="relative h-48 overflow-hidden bg-muted">
             <Image
               src={project.image || `/api/project-image?title=${encodeURIComponent(project.title)}&category=${project.category}`}
@@ -115,29 +116,30 @@ export function ProjectCard({ project, index }: Props) {
                 }
                 className="capitalize"
               >
-                {project.category === "fullstack" && "Fullstack"}
+                {project.category === "fullstack" && "AppWeb"}
                 {project.category === "devops" && "DevOps"}
                 {project.category === "mobile" && "Mobile"}
                 {project.category === "admin" && "Admin Réseau"}
+                {project.category === "cybersec" && "Cybersécurité"}
               </Badge>
             </div>
           </div>
           <CardHeader>
             <CardTitle className="text-xl">{project.title}</CardTitle>
             <div className="flex flex-wrap gap-1.5 mt-1">
-              {project.technologies.slice(0, 4).map((tech) => (
+              {[...new Set(project.technologies)].slice(0, 4).map((tech) => (
                 <Badge key={tech} variant="outline" className="text-xs">
                   {tech}
                 </Badge>
               ))}
-              {project.technologies.length > 4 && (
+              {[...new Set(project.technologies)].length > 4 && (
                 <Badge variant="outline" className="text-xs">
-                  +{project.technologies.length - 4}
+                  +{[...new Set(project.technologies)].length - 4}
                 </Badge>
               )}
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-1">
             <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
               {project.description}
             </p>
@@ -151,11 +153,27 @@ export function ProjectCard({ project, index }: Props) {
               <Eye className="mr-1.5 h-3.5 w-3.5" />
               Plus de détails
             </Button>
-            {project.github && (
-              <span className="inline-flex items-center justify-center h-7 px-2.5 rounded-lg border border-border bg-muted text-muted-foreground text-[0.8rem] font-medium cursor-not-allowed opacity-50">
-                <GithubIcon className="mr-1.5 h-3.5 w-3.5" />
-                Code
-              </span>
+            <button
+              onClick={() => {
+                if (project.github) {
+                  window.open(project.github, "_blank", "noopener,noreferrer");
+                } else {
+                  toast.info("Lien vers le code source bientôt disponible");
+                }
+              }}
+              className="inline-flex items-center justify-center h-7 px-2.5 rounded-lg border border-border bg-background text-[0.8rem] font-medium hover:bg-muted transition-colors cursor-pointer"
+            >
+              <GithubIcon className="mr-1.5 h-3.5 w-3.5" />
+              Code
+            </button>
+            {project.demo && (
+              <button
+                onClick={() => window.open(project.demo, "_blank", "noopener,noreferrer")}
+                className="inline-flex items-center justify-center h-7 px-2.5 rounded-lg border border-border bg-background text-[0.8rem] font-medium hover:bg-muted transition-colors cursor-pointer"
+              >
+                <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                Démo
+              </button>
             )}
             <button
               onClick={() => openFeedback("critique")}
@@ -200,11 +218,27 @@ export function ProjectCard({ project, index }: Props) {
             {project.description}
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
-            {project.github && (
-              <span className="inline-flex items-center justify-center h-8 px-3 rounded-lg border border-border bg-muted text-muted-foreground text-xs font-medium cursor-not-allowed opacity-50">
-                <GithubIcon className="mr-1.5 h-3.5 w-3.5" />
-                Code
-              </span>
+            <button
+              onClick={() => {
+                if (project.github) {
+                  window.open(project.github, "_blank", "noopener,noreferrer");
+                } else {
+                  toast.info("Lien vers le code source bientôt disponible");
+                }
+              }}
+              className="inline-flex items-center justify-center h-8 px-3 rounded-lg border border-border bg-background text-xs font-medium hover:bg-muted transition-colors cursor-pointer"
+            >
+              <GithubIcon className="mr-1.5 h-3.5 w-3.5" />
+              Code
+            </button>
+            {project.demo && (
+              <button
+                onClick={() => window.open(project.demo, "_blank", "noopener,noreferrer")}
+                className="inline-flex items-center justify-center h-8 px-3 rounded-lg border border-border bg-background text-xs font-medium hover:bg-muted transition-colors cursor-pointer"
+              >
+                <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+                Démo
+              </button>
             )}
             <button
               onClick={() => {

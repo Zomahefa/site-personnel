@@ -13,20 +13,27 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { AnimatedSection } from "@/components/animated-section";
 import { ProjectMatcher } from "@/components/project-matcher";
 import { ProjectCard } from "@/components/project-card";
 import { ContactForm } from "@/components/contact-form";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Eye, Loader2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 
 const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "zomahefa.ranaivo@gmail.com",
+    value: "zomahefaranaivo@gmail.com",
     href: "mailto:zomahefa.ranaivo@gmail.com",
   },
   {
@@ -57,9 +64,9 @@ const contactInfo = [
 const services = [
   {
     icon: Code2,
-    title: "Développement Fullstack",
+    title: "Développement Web Backend avec Spring Boot",
     description:
-      "Applications web modernes de la conception au déploiement. Frontend réactif, API robustes, bases de données optimisées.",
+      "Architecte d'applications robustes avec Spring Boot et tous son écosystème (Spring Security, JPA/Hibernate, Spring Cloud, microservices). Je conçois des API REST performantes, sécurisées et prêtes pour la production.",
   },
   {
     icon: Cloud,
@@ -70,26 +77,23 @@ const services = [
   {
     icon: Smartphone,
     title: "Applications Mobiles",
-    description: "Solutions cross-platform avec React Native.",
+    description:
+      "Solutions cross-platform avec Flutter et Kotlin (Android natif).",
   },
 ];
 
 const techStack = [
-  "Next.js",
-  "React.js",
-  "Tailwind CSS",
-  "Shadcn UI",
-  "React native",
-  "TypeScript",
+  "Spring Boot",
+  "Spring Security",
+  "Spring Data JPA / Hibernate",
+  "REST API",
+  "Microservices",
+  "Spring Cloud",
   "Node.js",
   "Python",
-  "Nest.js",
-  "FastAPI",
-  "Nginx",
-  "Traefik",
-  "Rest API",
+  "Flutter",
+  "Kotlin",
   "Docker",
-  "Docker Compose",
   "Kubernetes",
   "AWS",
   "CI/CD",
@@ -100,13 +104,14 @@ const techStack = [
   "Helm",
   "Prometheus",
   "Grafana",
-  "ELK",
+  "ELK Stack",
   "PostgreSQL",
   "MongoDB",
   "Redis",
-  "GraphQL",
-  "Vault",
-  "SonarQube",
+  "Nginx",
+  "Traefik",
+  "Git",
+  "Linux",
 ];
 
 const skills = [
@@ -117,19 +122,31 @@ const skills = [
       "TypeScript / JavaScript",
       "Tailwind CSS / Shadcn UI",
       "Framer Motion",
-      "React Native",
+      "Tests : Vitest / Jest / Testing Library",
+      "ESLint / Prettier",
     ],
   },
   {
     category: "Backend",
     items: [
-      "Nest.js (forte préférence)",
-      "Spring Boot",
-      "FastAPI",
-      "PostgreSQL / MongoDB",
-      "GraphQL / REST API",
-      "Redis / RabbitMQ",
+      "Java 17+ / Spring Boot 3",
+      "Spring Security (JWT / OAuth2)",
+      "Spring Data JPA / Hibernate",
+      "REST API / Microservices / Spring Cloud",
+      "Spring Web / Validation (Bean Validation)",
+      "Spring Actuator / AOP",
+      "Springdoc OpenAPI (Swagger UI)",
+      "Tests : JUnit 5 / Mockito / AssertJ",
+      "Maven / Gradle",
+      "Lombok / MapStruct",
+      "Node.js / Express",
+      "Python / FastAPI",
+      "PostgreSQL / MongoDB / Redis",
     ],
+  },
+  {
+    category: "Mobile",
+    items: ["Flutter (cross-platform)", "Kotlin (Android natif)"],
   },
   {
     category: "DevOps & Cloud",
@@ -159,6 +176,19 @@ const skills = [
     ],
   },
   {
+    category: "Soft Skills",
+    items: [
+      "Problem Solving",
+      "Autonomie & Ownership",
+      "Pensée analytique",
+      "Communication technique",
+      "Esprit d'équipe & Collaboration",
+      "Adaptabilité",
+      "Apprentissage continu",
+      "Rigueur & Sens des responsabilités",
+    ],
+  },
+  {
     category: "Langues",
     items: [
       "Français : Courant",
@@ -170,7 +200,7 @@ const skills = [
 
 const experiences = [
   {
-    title: "Développeur Fullstack & DevOps",
+    title: "Développeur Backend & DevOps",
     company: "Freelance · Projets personnels",
     period: "2024 - Présent",
     description:
@@ -232,60 +262,209 @@ const education = [
 
 const certifications = [
   {
-    title: "Licence en Informatique Générale",
+    title: "Licence en Informatique Générale — Mention Très Bien",
     issuer: "ENI (École Nationale d'Informatique)",
     year: "2025",
     status: "Obtenu",
   },
   {
-    title: "DELF B2 — Français",
-    issuer: "Ministère français de l'Éducation nationale",
-    year: "2025",
+    title: "Baccalauréat Série D — Mention Assez Bien",
+    issuer: "LPJC Ambohimahasoa",
+    year: "2022",
     status: "Obtenu",
   },
   {
-    title: "Certification Administration Réseau & Système",
-    issuer: "Spray Info, Fianarantsoa",
-    year: "2024",
+    title: "Certification Spring Boot",
+    issuer: "Mind Luster",
+    year: "2026",
     status: "Obtenu",
+    image: "/certifcatSping-boot2.jpeg",
+    pdf: "/certificatSpringBoot.pdf",
   },
   {
-    title: "AWS Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    year: "En cours",
+    title: "Certification UML",
+    issuer: "Mind Luster",
+    year: "2026",
+    status: "Obtenu",
+    image: "/uml-certification.jpeg",
+    pdf: "/uml-certification-zo.pdf",
+  },
+  {
+    title: "DevOps from A to Z",
+    issuer: "Formation en cours",
+    year: "2026",
     status: "En cours",
   },
   {
-    title: "Certified Kubernetes Administrator (CKA)",
-    issuer: "CNCF",
-    year: "En cours",
-    status: "En cours",
-  },
-  {
-    title: "HashiCorp Terraform Associate",
-    issuer: "HashiCorp",
-    year: "En cours",
+    title: "DELF B2",
+    issuer: "Alliance Française",
+    year: "2026",
     status: "En cours",
   },
 ];
 
+function CertCard({
+  cert,
+  index,
+}: {
+  cert: (typeof certifications)[0];
+  index: number;
+}) {
+  const [open, setOpen] = useState(false);
+
+  if (!cert.image) {
+    return (
+      <AnimatedSection delay={index * 0.08}>
+        <motion.div
+          whileHover={{ y: -4 }}
+          className="group overflow-hidden rounded-xl border border-border/50 bg-card hover:border-primary/30 transition-all duration-300 hover:shadow-md h-full"
+        >
+          <div className="h-40 flex flex-col items-center justify-center text-center p-6">
+            <span
+              className={`mb-3 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                cert.status === "Obtenu"
+                  ? "bg-emerald-500/10 text-emerald-500"
+                  : "bg-amber-500/15 text-amber-600"
+              }`}
+            >
+              {cert.status}
+            </span>
+            <h4 className="font-semibold text-sm leading-snug mb-1">
+              {cert.title}
+            </h4>
+            <div className="text-xs text-muted-foreground">{cert.issuer}</div>
+            <div className="text-xs text-muted-foreground/60 mt-0.5">
+              {cert.year}
+            </div>
+          </div>
+        </motion.div>
+      </AnimatedSection>
+    );
+  }
+
+  return (
+    <AnimatedSection delay={index * 0.08}>
+      <motion.div
+        whileHover={{ y: -4 }}
+        className="group overflow-hidden rounded-xl border border-border/50 bg-card hover:border-primary/30 transition-all duration-300 hover:shadow-md"
+      >
+        <div className="relative h-40 overflow-hidden bg-muted">
+          <Image
+            src={cert.image}
+            alt={cert.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
+          <div className="absolute top-3 right-3">
+            <span
+              className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                cert.status === "Obtenu"
+                  ? "bg-emerald-500/15 text-emerald-500 backdrop-blur-xs"
+                  : "bg-amber-500/15 text-amber-600 backdrop-blur-xs"
+              }`}
+            >
+              {cert.status}
+            </span>
+          </div>
+        </div>
+        <div className="p-4">
+          <h4 className="font-semibold text-sm leading-snug mb-1">
+            {cert.title}
+          </h4>
+          <div className="text-xs text-muted-foreground">{cert.issuer}</div>
+          <div className="text-xs text-muted-foreground/60 mt-0.5">
+            {cert.year}
+          </div>
+          <button
+            onClick={() => setOpen(true)}
+            className="mt-3 inline-flex active-scale-97 items-center justify-center h-8 px-3 rounded-lg border border-border bg-background text-[0.75rem] font-medium hover:bg-muted transition-[background,transform] duration-200 ease-out cursor-pointer"
+          >
+            <Eye className="mr-1.5 h-3.5 w-3.5" />
+            Plus de détails
+          </button>
+        </div>
+      </motion.div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-2xl">
+          <DialogTitle className="text-lg font-bold">{cert.title}</DialogTitle>
+          <div className="relative h-64 sm:h-80 rounded-lg overflow-hidden bg-muted mt-2">
+            <Image
+              src={cert.image}
+              alt={cert.title}
+              fill
+              className="object-contain"
+            />
+          </div>
+          <DialogDescription className="text-sm text-muted-foreground">
+            Délivré par {cert.issuer} — {cert.year}
+          </DialogDescription>
+          {cert.pdf && (
+            <a
+              href={cert.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="inline-flex active-scale-97 items-center justify-center h-9 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-[background,transform] duration-200 ease-out"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Télécharger le PDF
+            </a>
+          )}
+        </DialogContent>
+      </Dialog>
+    </AnimatedSection>
+  );
+}
+
+function MarqueeCards({ children }: { children: React.ReactNode }) {
+  const [isPaused, setIsPaused] = useState(false);
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className="overflow-hidden">
+        <motion.div
+          className="flex gap-6 w-max"
+          animate={isPaused ? {} : { x: [0, -1800] }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            ease: "linear",
+            repeatType: "loop",
+          }}
+        >
+          {children}
+          {children}
+        </motion.div>
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-linear-to-r from-accent/80 to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-linear-to-l from-accent/80 to-transparent z-10" />
+    </div>
+  );
+}
+
 export default function Home() {
   const [allProjects, setAllProjects] = useState<any[]>([]);
+  const [projectsLoading, setProjectsLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/projects")
       .then((r) => r.json())
       .then((data) => setAllProjects(data))
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setProjectsLoading(false));
   }, []);
 
-  const fullstackProjects = allProjects.filter(
-    (p) => p.category === "fullstack",
-  );
+  const webProjects = allProjects.filter((p) => p.category === "fullstack");
   const devopsProjects = allProjects.filter((p) => p.category === "devops");
 
   return (
-    <div>
+    <div className="min-h-full">
       {/* ========== HERO ========== */}
       <section
         id="accueil"
@@ -321,7 +500,7 @@ export default function Home() {
                 transition={{ delay: 0.8, type: "spring" }}
                 className="absolute -bottom-1 -right-1 bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs font-semibold shadow-lg"
               >
-                Fullstack & DevOps
+                Backend & DevOps
               </motion.div>
             </motion.div>
 
@@ -332,7 +511,7 @@ export default function Home() {
                 transition={{ delay: 0.2 }}
                 className="text-primary font-semibold mb-2 tracking-wide uppercase text-sm"
               >
-                Développeur Fullstack & DevOps
+                Développeur Backend & DevOps
               </motion.p>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -342,32 +521,37 @@ export default function Home() {
               >
                 Zo Mahefa <span className="gradient-text">RANAIVO</span>
               </motion.h1>
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-lg text-muted-foreground max-w-xl mb-6 leading-relaxed"
+                className="text-lg text-muted-foreground max-w-xl mb-6 leading-relaxed space-y-3"
               >
-                Passionné, dynamique et rigoureux, je suis un{" "}
-                <strong>Fullstack & DevOps</strong> spécialisé dans la{" "}
-                <strong>conception, le développement et le déploiement</strong>{" "}
-                d&apos;applications web{" "}
-                <strong>scalables, robustes et performantes</strong>. Mon
-                approche va bien au-delà du code : j&apos;automatise, je
-                conteneurise, j&apos;orchestre et je déploie avec les{" "}
-                <strong>bonnes pratiques DevOps</strong> (CI/ CD, IaC,
-                monitoring, gestion des secrets). Mon parcours hybride à
-                l&apos;ENI m&apos;a offert une vision globale, mais c&apos;est
-                dans la{" "}
-                <strong>
-                  création et livraison continue d&apos;applications
-                </strong>{" "}
-                que j&apos;excelle. Je sais travailler en équipe,nos projets à
-                l&apos;ENI sont souvent collaboratifs.J&apos;aime résoudre des
-                problèmes complexes. Je pratique régulièrement sur LeetCode et
-                Codewars car Je recherche toujours de nouveaux défis pour
-                continuer à apprendre et à évoluer dans ce domaine passionnant.
-              </motion.p>
+                <p>
+                  Passionné par <strong>Java / Spring Boot</strong>{" "}
+                  <span> </span>et l&apos;écosystème backend, je conçois des{" "}
+                  <strong>API robustes, sécurisées et scalables</strong>, en
+                  m&apos;appuyant sur <strong>Spring Security</strong>,{" "}
+                  <strong>JPA/Hibernate</strong> et{" "}
+                  <strong>Spring Cloud</strong>. Mon approche ne s&apos;arrête
+                  pas au développement : je m&apos;intéresse à l&apos;ensemble
+                  du <strong>cycle de vie</strong> d&apos;une application, de la
+                  conception à la mise en production. J&apos;automatise,
+                  conteneurise et déploie mes applications en appliquant les
+                  bonnes pratiques <strong>DevOps</strong> :{" "}
+                  <strong>CI/CD</strong>, <strong>IaC</strong>,{" "}
+                  <strong>monitoring</strong> et{" "}
+                  <strong>gestion des secrets</strong>. Chaque solution que je
+                  développe est pensée pour être <strong>testable</strong>,{" "}
+                  <strong>documentée</strong>, <strong>maintenable</strong>
+                  <span> </span> et prête pour la production. Habitué au travail
+                  collaboratif à l&apos;ENI, je suis animé par la résolution de
+                  problèmes, l&apos;apprentissage continu et la recherche de
+                  solutions concrètes. Je cherche constamment à approfondir mes
+                  compétences et à relever de nouveaux défis dans le
+                  développement backend et le DevOps.
+                </p>
+              </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -376,21 +560,21 @@ export default function Home() {
               >
                 <Link
                   href="#projets"
-                  className="inline-flex items-center justify-center h-10 px-6 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25"
+                  className="inline-flex active-scale-97 items-center justify-center h-10 px-6 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-[background,box-shadow,transform] duration-200 ease-out hover:shadow-lg hover:shadow-primary/25"
                 >
                   Voir mes projets
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
                 <Link
                   href="#contact"
-                  className="inline-flex items-center justify-center h-10 px-6 rounded-full border border-border bg-background text-sm font-medium hover:bg-accent transition-all"
+                  className="inline-flex active-scale-97 items-center justify-center h-10 px-6 rounded-full border border-border bg-background text-sm font-medium hover:bg-accent transition-[background,transform] duration-200 ease-out"
                 >
                   Me contacter
                 </Link>
                 <a
-                  href="/CV_Zo_Mahefa_RANAIVO_2026.pdf"
-                  download="CV_Zo_Mahefa_RANAIVO_2026.pdf"
-                  className="inline-flex items-center justify-center h-10 px-6 rounded-full border border-primary/30 text-primary text-sm font-medium hover:bg-primary/5 transition-all cursor-pointer"
+                  href="/cv-zomahefa-latest-2026.pdf"
+                  download="cv-zomahefa-latest-2026.pdf"
+                  className="inline-flex active-scale-97 items-center justify-center h-10 px-6 rounded-full border border-primary/30 text-primary text-sm font-medium hover:bg-primary/5 transition-[background,transform] duration-200 ease-out cursor-pointer"
                 >
                   <Download className="mr-2 h-4 w-4" />
                   CV (PDF)
@@ -398,7 +582,7 @@ export default function Home() {
                 <Link
                   href="/resume"
                   target="_blank"
-                  className="inline-flex items-center justify-center h-10 px-6 rounded-full border border-primary/30 text-primary text-sm font-medium hover:bg-primary/5 transition-all"
+                  className="inline-flex active-scale-97 items-center justify-center h-10 px-6 rounded-full border border-primary/30 text-primary text-sm font-medium hover:bg-primary/5 transition-[background,transform] duration-200 ease-out"
                 >
                   <Download className="mr-2 h-4 w-4" />
                   Résumé portfolio
@@ -407,6 +591,28 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="text-xs text-muted-foreground/60 font-medium tracking-wider uppercase">
+            Défiler
+          </span>
+          <div className="w-5 h-8 rounded-full border-2 border-muted-foreground/30 flex justify-center pt-1.5">
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="w-1 h-1.5 rounded-full bg-muted-foreground/60"
+            />
+          </div>
+        </motion.div>
       </section>
 
       {/* ========== SERVICES ========== */}
@@ -427,8 +633,8 @@ export default function Home() {
             {services.map((service, i) => (
               <AnimatedSection key={service.title} delay={i * 0.1}>
                 <motion.div
-                  whileHover={{ y: -5 }}
-                  className="group relative rounded-xl border border-border/50 bg-card p-6 hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
+                  whileHover={{ y: -3 }}
+                  className="group relative rounded-xl border border-border/50 bg-card p-6 hover:border-primary/50 transition-[border-color,box-shadow,transform] duration-200 ease-out hover:shadow-md"
                 >
                   <div className="mb-4 inline-flex p-3 rounded-xl bg-linear-to-br from-primary/10 to-primary/10 text-primary">
                     <service.icon className="h-6 w-6" />
@@ -452,7 +658,7 @@ export default function Home() {
           <AnimatedSection className="text-center mb-10">
             <h2 className="text-2xl font-bold mb-2">Technologies maîtrisées</h2>
             <p className="text-muted-foreground">
-              Un stack technique moderne, complet et constamment mis à jour.
+              Stack technique centré Spring Boot, constamment mis à jour.
             </p>
           </AnimatedSection>
           <motion.div
@@ -464,15 +670,15 @@ export default function Home() {
             {techStack.map((tech, i) => (
               <motion.div
                 key={tech}
-                initial={{ opacity: 0, scale: 0 }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05, type: "spring" }}
-                whileHover={{ scale: 1.05 }}
+                transition={{ delay: i * 0.04, type: "spring", stiffness: 120 }}
+                whileHover={{ scale: 1.08 }}
               >
                 <Badge
                   variant="secondary"
-                  className="px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default"
+                  className="px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-[background,color,transform] duration-200 ease-out cursor-default"
                 >
                   {tech}
                 </Badge>
@@ -490,88 +696,105 @@ export default function Home() {
           <AnimatedSection className="text-center mb-14">
             <h2 className="text-3xl font-bold mb-3">Mes projets</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Des projets concrets qui démontrent mon expertise fullstack et
+              Des projets concrets qui démontrent mon expertise backend et
               DevOps, de la conception au déploiement. Chaque projet est ouvert
               à vos contributions et suggestions.
             </p>
           </AnimatedSection>
 
-          <AnimatedSection className="mb-12">
-            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-              <Code2 className="h-5 w-5 text-primary" />
-              Applications Fullstack
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {fullstackProjects.map((project, i) => (
-                <ProjectCard key={project.id} project={project} index={i} />
-              ))}
+          {projectsLoading ? (
+            <div className="flex items-center justify-center py-24">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
-          </AnimatedSection>
+          ) : (
+            <>
+              <AnimatedSection className="mb-12">
+                <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Code2 className="h-5 w-5 text-primary" />
+                  Applications Web
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {webProjects.map((project, i) => (
+                    <ProjectCard key={project.id} project={project} index={i} />
+                  ))}
+                </div>
+              </AnimatedSection>
 
-          <AnimatedSection className="mb-12">
-            <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
-              <Cloud className="h-5 w-5 text-primary" />
-              DevOps — Infrastructure scalable et robuste
-            </h3>
-            <p className="text-sm text-muted-foreground mb-6 max-w-3xl">
-              Au-delà du développement, je maîtrise l&apos;ensemble de la chaîne
-              de livraison logicielle : automatisation, conteneurisation,
-              orchestration, monitoring et déploiement continu. Chaque projet
-              que je développe est pensé pour être industrialisé et mis en
-              production avec les bonnes pratiques DevOps.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {devopsProjects.map((project, i) => (
-                <ProjectCard key={project.id} project={project} index={i} />
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection className="mb-12">
-            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-              <Smartphone className="h-5 w-5 text-primary" />
-              Applications Mobiles
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allProjects
-                .filter((p) => p.category === "mobile")
-                .map((project, i) => (
-                  <ProjectCard key={project.id} project={project} index={i} />
-                ))}
-              {allProjects.filter((p) => p.category === "mobile").length ===
-                0 && (
-                <p className="text-sm text-muted-foreground col-span-full text-center py-8">
-                  Projets mobiles à venir — bientôt disponibles.
+              <AnimatedSection className="mb-12">
+                <h3 className="text-xl font-semibold mb-2 flex items-center gap-2">
+                  <Cloud className="h-5 w-5 text-primary" />
+                  DevOps — Infrastructure scalable et robuste
+                </h3>
+                <p className="text-sm text-muted-foreground mb-6 max-w-3xl">
+                  Au-delà du développement, je maîtrise l&apos;ensemble de la
+                  chaîne de livraison logicielle : automatisation,
+                  conteneurisation, orchestration, monitoring et déploiement
+                  continu. Chaque projet que je développe est pensé pour être
+                  industrialisé et mis en production avec les bonnes pratiques
+                  DevOps.
                 </p>
-              )}
-            </div>
-          </AnimatedSection>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {devopsProjects.map((project, i) => (
+                    <ProjectCard key={project.id} project={project} index={i} />
+                  ))}
+                </div>
+              </AnimatedSection>
 
-          <AnimatedSection className="mb-12">
-            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-              <span className="text-primary">🖥</span>
-              Administration Système & Réseau
-            </h3>
-            <p className="text-sm text-muted-foreground mb-6 max-w-3xl">
-              En complément de mes compétences en développement et DevOps,
-              j&apos;ai acquis une solide expérience en administration système
-              et réseau à travers mes projets à l&apos;ENI et en stage.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allProjects
-                .filter((p) => p.category === "admin")
-                .map((project, i) => (
-                  <ProjectCard key={project.id} project={project} index={i} />
-                ))}
-              {allProjects.filter((p) => p.category === "admin").length ===
-                0 && (
-                <p className="text-sm text-muted-foreground col-span-full text-center py-8">
-                  Projets d&apos;administration à venir.
+              <AnimatedSection className="mb-12">
+                <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <Smartphone className="h-5 w-5 text-primary" />
+                  Applications Mobiles
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {allProjects
+                    .filter((p) => p.category === "mobile")
+                    .map((project, i) => (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        index={i}
+                      />
+                    ))}
+                  {allProjects.filter((p) => p.category === "mobile").length ===
+                    0 && (
+                    <p className="text-sm text-muted-foreground col-span-full text-center py-8">
+                      Projets mobiles à venir — bientôt disponibles.
+                    </p>
+                  )}
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection className="mb-12">
+                <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                  <span className="text-primary">🖥</span>
+                  Administration Système & Réseau
+                </h3>
+                <p className="text-sm text-muted-foreground mb-6 max-w-3xl">
+                  En complément de mes compétences en développement et DevOps,
+                  j&apos;ai acquis une solide expérience en administration
+                  système et réseau à travers mes projets à l&apos;ENI et en
+                  stage.
                 </p>
-              )}
-            </div>
-          </AnimatedSection>
-
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {allProjects
+                    .filter((p) => p.category === "admin")
+                    .map((project, i) => (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        index={i}
+                      />
+                    ))}
+                  {allProjects.filter((p) => p.category === "admin").length ===
+                    0 && (
+                    <p className="text-sm text-muted-foreground col-span-full text-center py-8">
+                      Projets d&apos;administration à venir.
+                    </p>
+                  )}
+                </div>
+              </AnimatedSection>
+            </>
+          )}
         </div>
       </section>
 
@@ -587,7 +810,7 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 w-125 h-125 bg-primary/10 rounded-full blur-3xl" />
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection className="text-center mb-14">
-            <h2 className="text-3xl font-bold mb-3">Compétences & Parcours</h2>
+            <h2 className="text-3xl font-bold mb-3">Compétences</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Un parcours généraliste qui m&apos;a permis d&apos;acquérir une
               vision globale, avant de me spécialiser dans la création et la
@@ -599,60 +822,134 @@ export default function Home() {
           <AnimatedSection>
             <div className="max-w-3xl mx-auto mb-16 p-8 rounded-2xl border border-primary/20 bg-linear-to-br from-primary/5 to-primary/5 text-center">
               <p className="text-lg leading-relaxed text-muted-foreground italic">
-                &ldquo;Je suis quelqu&apos;un qui apprend vite, s&apos;adapte
-                rapidement aux nouvelles technologies et aux environnements
-                changeants. Dynamique et passionné, je donne toujours le
-                meilleur de moi-même pour livrer un travail de qualité dans les
-                délais impartis. Mon objectif : créer des solutions qui font la
-                différence, avec rigueur et créativité. J&apos;aime résoudre des
-                problèmes complexes et je m&apos;entraîne régulièrement sur des
-                plateformes comme LeetCode et Codewars pour perfectionner mes
-                compétences en algorithmique et en conception.&rdquo;
+                &ldquo;Développeur backend spécialisé{" "}
+                <strong>Java / Spring Boot</strong>, je conçois des applications
+                robustes et évolutives en m&apos;appuyant sur tout
+                l&apos;écosystème Spring (Security, JPA/Hibernate, Spring Cloud,
+                microservices) que j&apos;intègre dans une démarche DevOps
+                complète : de l&apos;analyse des besoins jusqu&apos;au
+                déploiement continu, en passant par la sécurisation des API, la
+                containerisation Docker et l&apos;optimisation des performances.
+                Rigoureux et force de proposition, je m&apos;adapte rapidement
+                aux environnements techniques et aux contraintes métier. Chaque
+                projet est pour moi l&apos;opportunité de livrer un code propre,
+                maintenable et industriel, prêt pour la production.&rdquo;
               </p>
             </div>
           </AnimatedSection>
 
-          {/* Skills grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            {skills.map((group, i) => (
-              <AnimatedSection key={group.category} delay={i * 0.1}>
-                <Card className="h-full border-border/50 hover:border-primary/30 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <h3 className="font-semibold mb-4 text-primary">
-                      {group.category}
-                    </h3>
-                    <ul className="space-y-2.5">
-                      {group.items.map((item) => (
-                        <motion.li
-                          key={item}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          className="flex items-center gap-2"
+          {/* Skills cards — horizontal marquee */}
+          <div className="mb-16">
+            <MarqueeCards>
+              {skills.map((group, gi) => {
+                const colors = [
+                  "from-violet-500/10 to-fuchsia-500/5 border-violet-500/20 hover:border-violet-500/40",
+                  "from-emerald-500/10 to-teal-500/5 border-emerald-500/20 hover:border-emerald-500/40",
+                  "from-amber-500/10 to-orange-500/5 border-amber-500/20 hover:border-amber-500/40",
+                  "from-sky-500/10 to-blue-500/5 border-sky-500/20 hover:border-sky-500/40",
+                  "from-rose-500/10 to-pink-500/5 border-rose-500/20 hover:border-rose-500/40",
+                  "from-primary/10 to-primary/5 border-primary/20 hover:border-primary/40",
+                ];
+                const dotColors = [
+                  "bg-violet-500",
+                  "bg-emerald-500",
+                  "bg-amber-500",
+                  "bg-sky-500",
+                  "bg-rose-500",
+                  "bg-primary",
+                ];
+                const c = colors[gi % colors.length];
+                const dc = dotColors[gi % dotColors.length];
+                return (
+                  <div key={group.category} className="w-80 shrink-0">
+                    <Card
+                      className={`h-full border bg-linear-to-br ${c} transition-all duration-300 hover:shadow-lg`}
+                    >
+                      <CardContent className="p-6">
+                        <h3
+                          className={`font-semibold mb-4 text-lg ${dc.replace("bg-", "text-")}`}
                         >
-                          <div className="h-1.5 w-1.5 rounded-full bg-primary/60" />
-                          <span className="text-sm text-muted-foreground">
-                            {item}
-                          </span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
+                          {group.category}
+                        </h3>
+                        <ul className="space-y-3">
+                          {group.items.map((item) => {
+                            const pctMatch = item.match(/: (\d+)%$/);
+                            if (pctMatch) {
+                              const pct = parseInt(pctMatch[1]);
+                              const label = item.replace(/: \d+%$/, "");
+                              return (
+                                <li key={item}>
+                                  <div className="flex items-center justify-between text-sm mb-1">
+                                    <span className="text-muted-foreground">
+                                      {label}
+                                    </span>
+                                    <span className="text-xs font-semibold text-muted-foreground/70">
+                                      {pct}%
+                                    </span>
+                                  </div>
+                                  <div className="h-1.5 rounded-full bg-muted-foreground/15 overflow-hidden">
+                                    <motion.div
+                                      initial={{ width: 0 }}
+                                      whileInView={{ width: `${pct}%` }}
+                                      viewport={{ once: true }}
+                                      transition={{
+                                        duration: 0.8,
+                                        ease: "easeOut",
+                                        delay: 0.2,
+                                      }}
+                                      className={`h-full rounded-full ${dc}`}
+                                    />
+                                  </div>
+                                </li>
+                              );
+                            }
+                            return (
+                              <motion.li
+                                key={item}
+                                initial={{ opacity: 0, x: -10 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                className="flex items-center gap-2"
+                              >
+                                <div
+                                  className={`h-1.5 w-1.5 rounded-full ${dc} shrink-0`}
+                                />
+                                <span className="text-sm text-muted-foreground">
+                                  {item}
+                                </span>
+                              </motion.li>
+                            );
+                          })}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </div>
+                );
+              })}
+            </MarqueeCards>
           </div>
 
           {/* Download CV */}
           <AnimatedSection className="text-center mb-16">
-            <Link
-              href="/CV_Zo_Mahefa_RANAIVO_2026.pdf"
-              target="_blank"
-              className="inline-flex items-center justify-center h-11 px-8 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25"
+            <motion.div
+              className="inline-block"
+              animate={{ y: [0, -4, 0, -2, 0] }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                repeatDelay: 1,
+              }}
             >
-              <Download className="mr-2 h-5 w-5" />
-              Télécharger mon CV complet
-            </Link>
+              <Link
+                href="/cv-zomahefa-latest-2026.pdf"
+                target="_blank"
+                className="inline-flex active-scale-97 items-center justify-center h-11 px-8 rounded-full bg-primary text-primary-foreground font-medium shadow-lg shadow-primary/30 hover:bg-primary/90 transition-[background,box-shadow,transform] duration-200 ease-out hover:shadow-xl hover:shadow-primary/40"
+              >
+                <Download className="mr-2 h-5 w-5" />
+                Télécharger mon CV complet
+              </Link>
+            </motion.div>
           </AnimatedSection>
 
           {/* Experience Timeline */}
@@ -721,35 +1018,9 @@ export default function Home() {
               <span className="text-primary">●</span>
               Certifications & Diplômes
             </h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {certifications.map((cert, i) => (
-                <AnimatedSection key={i} delay={i * 0.08}>
-                  <motion.div
-                    whileHover={{ y: -3 }}
-                    className="relative p-5 rounded-xl border border-border/50 bg-card hover:border-primary/30 transition-all duration-300"
-                  >
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <h4 className="font-semibold text-sm leading-snug">
-                        {cert.title}
-                      </h4>
-                      <span
-                        className={`shrink-0 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                          cert.status === "Obtenu"
-                            ? "bg-emerald-500/10 text-emerald-500"
-                            : "bg-amber-500/10 text-amber-500"
-                        }`}
-                      >
-                        {cert.status}
-                      </span>
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {cert.issuer}
-                    </div>
-                    <div className="text-xs text-muted-foreground/60 mt-1">
-                      {cert.year}
-                    </div>
-                  </motion.div>
-                </AnimatedSection>
+                <CertCard key={i} cert={cert} index={i} />
               ))}
             </div>
           </AnimatedSection>
@@ -774,7 +1045,7 @@ export default function Home() {
               {contactInfo.map((info, i) => (
                 <AnimatedSection key={info.label} delay={i * 0.08}>
                   <motion.div whileHover={{ x: 3 }}>
-                    <Card className="border-border/50 hover:border-primary/30 transition-all duration-300">
+                    <Card className="border-border/50 hover:border-primary/30 transition-[border-color,box-shadow,transform] duration-200 ease-out">
                       <CardContent className="p-4 flex items-center gap-4">
                         <div className="p-2.5 rounded-xl bg-linear-to-br from-primary/10 to-blue-500/10 text-primary shrink-0">
                           <info.icon className="h-5 w-5" />

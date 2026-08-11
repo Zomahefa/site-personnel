@@ -32,7 +32,7 @@ export function AdminProjects({ password }: { password: string }) {
   const editIdRef = useRef<string | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState<"fullstack" | "devops" | "mobile" | "admin">("fullstack");
+  const [category, setCategory] = useState<"fullstack" | "devops" | "mobile" | "admin" | "cybersec">("fullstack");
   const [technologies, setTechnologies] = useState("");
   const [image, setImage] = useState("");
   const [github, setGithub] = useState("");
@@ -276,14 +276,15 @@ export function AdminProjects({ password }: { password: string }) {
                 <select
                   value={category}
                   onChange={(e) =>
-                    setCategory(e.target.value as "fullstack" | "devops" | "mobile" | "admin")
+                    setCategory(e.target.value as "fullstack" | "devops" | "mobile" | "admin" | "cybersec")
                   }
                   className="flex h-9 w-full rounded-lg border border-input bg-background px-3 py-1 text-sm shadow-sm"
                 >
-                  <option value="fullstack">Fullstack</option>
+                  <option value="fullstack">Web</option>
                   <option value="devops">DevOps</option>
                   <option value="mobile">Mobile</option>
                   <option value="admin">Admin Réseau</option>
+                  <option value="cybersec">Cybersécurité</option>
                 </select>
               </div>
               <div className="space-y-2">

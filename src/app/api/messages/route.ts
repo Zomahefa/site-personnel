@@ -23,14 +23,32 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, phone, message } = body;
 
-    if (!name || !email || !phone || !message) {
+    if (!name || !name.trim()) {
       return NextResponse.json(
-        { error: "Tous les champs sont requis" },
+        { error: "Le nom est requis" },
+        { status: 400 }
+      );
+    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json(
+        { error: "Email invalide" },
+        { status: 400 }
+      );
+    }
+    if (!phone || !/^[\d\s\-\+\(\)]{6,20}$/.test(phone)) {
+      return NextResponse.json(
+        { error: "Numéro de téléphone invalide" },
+        { status: 400 }
+      );
+    }
+    if (!message || !message.trim()) {
+      return NextResponse.json(
+        { error: "Le message est requis" },
         { status: 400 }
       );
     }
 
-    const newMessage = await addNewMessage(name, email, phone, message);
+    const newMessage = await addNewMessage(name.trim(), email.trim(), phone.trim(), message.trim());
     return NextResponse.json(newMessage, { status: 201 });
   } catch {
     return NextResponse.json(

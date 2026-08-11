@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Zo Mahefa RANAIVO
 
-## Getting Started
+Portfolio personnel de **Zo Mahefa RANAIVO**, développeur Backend & DevOps.
 
-First, run the development server:
+**Site web :** [zomahefa.dev](https://zomahefa.dev)
+
+---
+
+## Stack technique
+
+| Technologie | Usage |
+|---|---|
+| **Next.js 16** (App Router) | Framework |
+| **React 19** | UI |
+| **TypeScript** | Langage |
+| **Tailwind CSS v4** | Styling |
+| **shadcn/ui** (base-nova) | Composants UI |
+| **Framer Motion** | Animations |
+| **libSQL / SQLite** | Base de données |
+| **Groq (LLaMA 3.3)** | Chatbot IA & matching |
+| **Docker** | Conteneurisation |
+
+## Fonctionnalités
+
+- Portfolio one-page avec sections : Hero, Services, Projets, Compétences, Expérience, Contact
+- Panneau d'administration avec CRUD projets et messagerie
+- Chatbot IA interactif
+- Moteur de recommandation de projets par IA
+- Thème clair/sombre
+- CV interactif imprimable
+- SEO optimisé (sitemap, robots.txt, Open Graph)
+- API REST complète
+
+## Développement
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Docker
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker build -t zomahefa/portfolio .
+docker run -p 3000:3000 -v ./data:/app/data --env-file .env.local zomahefa/portfolio
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Variables d'environnement
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Créer un fichier `.env.local` :
 
-## Deploy on Vercel
+```
+ADMIN_PASSWORD=your_password
+GROQ_API_KEY=your_groq_api_key
+# Optionnel — Turso distants
+# TURSO_DB_URL=libsql://...
+# TURSO_DB_TOKEN=...
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licence
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Projet personnel — tous droits réservés.
