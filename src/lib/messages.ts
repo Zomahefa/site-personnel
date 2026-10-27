@@ -3,7 +3,7 @@ import { Message } from "@/types";
 
 export async function getMessages(): Promise<Message[]> {
   const rows = await getAllMessages();
-  return rows.map((row: any) => ({
+  return rows.map((row) => ({
     id: row.id,
     name: row.name,
     email: row.email,

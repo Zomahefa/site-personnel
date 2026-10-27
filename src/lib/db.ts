@@ -11,7 +11,7 @@ const db = createClient(
       }
     : {
         url: `file:${path.join(process.cwd(), "data", "portfolio.db")}`,
-      }
+      },
 );
 
 db.execute(`
@@ -26,24 +26,67 @@ db.execute(`
 `);
 
 db.execute(`
-  CREATE TABLE IF NOT EXISTS projects (
+  CREATE TABLE IF NOT EXISTS page_views (
     id TEXT PRIMARY KEY,
-    title TEXT NOT NULL,
-    description TEXT NOT NULL,
-    category TEXT NOT NULL DEFAULT 'fullstack',
-    technologies TEXT NOT NULL DEFAULT '[]',
-    image TEXT DEFAULT '',
-    github TEXT DEFAULT '',
-    demo TEXT DEFAULT '',
+    path TEXT NOT NULL,
+    referrer TEXT NOT NULL DEFAULT '',
+    country TEXT NOT NULL DEFAULT '',
+    device TEXT NOT NULL DEFAULT '',
+    visitor_id TEXT NOT NULL DEFAULT '',
     created_at TEXT NOT NULL
   )
 `);
 
+db.execute(
+  "CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views(created_at)",
+);
+db.execute(
+  "CREATE INDEX IF NOT EXISTS idx_page_views_visitor ON page_views(visitor_id)",
+);
+
+export type MessageRow = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  created_at: string;
+};
+
+export type DailyCountRow = {
+  date: string;
+  count: number;
+};
+
+export type PageViewRow = {
+  id: string;
+  path: string;
+  referrer: string;
+  country: string;
+  device: string;
+  visitor_id: string;
+  created_at: string;
+};
+
+export type VisitStats = {
+  total: number;
+  last7: number;
+  today: number;
+  uniqueVisitors: number;
+  daily: DailyCountRow[];
+  topPages: Array<{ path: string; count: number }>;
+  topCountries: Array<{ country: string; count: number }>;
+  topDevices: Array<{ device: string; count: number }>;
+  recent: PageViewRow[];
+};
+
 /* ───────── Messages ───────── */
 
-export async function getAllMessages() {
-  const rs = await db.execute("SELECT * FROM messages ORDER BY created_at DESC");
-  return rs.rows as any[];
+export async function getAllMessages(): Promise<MessageRow[]> {
+  const result = await db.execute(
+    "SELECT * FROM messages ORDER BY created_at DESC",
+  );
+  return result.rows as unknown as MessageRow[];
 }
 
 export async function addMessage(
@@ -51,7 +94,7 @@ export async function addMessage(
   name: string,
   email: string,
   phone: string,
-  message: string
+  message: string,
 ) {
   await db.execute({
     sql: "INSERT INTO messages (id, name, email, phone, message, created_at) VALUES (?, ?, ?, ?, ?, ?)",
@@ -60,78 +103,130 @@ export async function addMessage(
 }
 
 export async function deleteMessageById(id: string): Promise<boolean> {
-  const rs = await db.execute({
+  const result = await db.execute({
     sql: "DELETE FROM messages WHERE id = ?",
     args: [id],
   });
-  return rs.rowsAffected > 0;
+  return result.rowsAffected > 0;
 }
 
-export async function getMessagesByDate() {
-  const rs = await db.execute(
+export async function getMessagesByDate(): Promise<DailyCountRow[]> {
+  const result = await db.execute(
     `SELECT DATE(created_at) as date, COUNT(*) as count
      FROM messages
      GROUP BY DATE(created_at)
-     ORDER BY date ASC`
+     ORDER BY date ASC`,
   );
-  return rs.rows as any[];
+  return result.rows as unknown as DailyCountRow[];
 }
 
-/* ───────── Projects ───────── */
 
-export async function getAllProjects() {
-  const rs = await db.execute("SELECT * FROM projects ORDER BY created_at DESC");
-  return rs.rows as any[];
-}
+/* ───────── Audience ───────── */
 
-export async function getProjectById(id: string) {
-  const rs = await db.execute({
-    sql: "SELECT * FROM projects WHERE id = ?",
-    args: [id],
-  });
-  return rs.rows[0] as any | undefined;
-}
-
-export async function createProject(
+export async function addPageView(
   id: string,
-  title: string,
-  description: string,
-  category: string,
-  technologies: string[],
-  image: string,
-  github: string,
-  demo: string
+  path: string,
+  referrer: string,
+  country: string,
+  device: string,
+  visitorId: string,
 ) {
   await db.execute({
-    sql: `INSERT INTO projects (id, title, description, category, technologies, image, github, demo, created_at)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    args: [id, title, description, category, JSON.stringify(technologies), image, github, demo, new Date().toISOString()],
+    sql: `INSERT INTO page_views (id, path, referrer, country, device, visitor_id, created_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    args: [
+      id,
+      path,
+      referrer,
+      country,
+      device,
+      visitorId,
+      new Date().toISOString(),
+    ],
   });
 }
 
-export async function updateProject(
-  id: string,
-  title: string,
-  description: string,
-  category: string,
-  technologies: string[],
-  image: string,
-  github: string,
-  demo: string
-): Promise<boolean> {
-  const rs = await db.execute({
-    sql: `UPDATE projects
-          SET title = ?, description = ?, category = ?, technologies = ?, image = ?, github = ?, demo = ?
-          WHERE id = ?`,
-    args: [title, description, category, JSON.stringify(technologies), image, github, demo, id],
-  });
-  return rs.rowsAffected > 0;
+async function countQuery(sql: string): Promise<number> {
+  const result = await db.execute(sql);
+  const row = result.rows[0] as unknown as { count?: number } | undefined;
+  return Number(row?.count ?? 0);
 }
 
-export async function deleteProjectById(id: string): Promise<boolean> {
-  const rs = await db.execute({
-    sql: "DELETE FROM projects WHERE id = ?",
-    args: [id],
-  });
-  return rs.rowsAffected > 0;
+export async function getVisitStats(): Promise<VisitStats> {
+  const [
+    total,
+    last7,
+    today,
+    uniqueVisitors,
+    daily,
+    topPages,
+    topCountries,
+    topDevices,
+    recent,
+  ] = await Promise.all([
+    countQuery("SELECT COUNT(*) AS count FROM page_views"),
+    countQuery(
+      "SELECT COUNT(*) AS count FROM page_views WHERE julianday(created_at) >= julianday('now', '-7 days')",
+    ),
+    countQuery(
+      "SELECT COUNT(*) AS count FROM page_views WHERE date(created_at) = date('now')",
+    ),
+    countQuery(
+      "SELECT COUNT(DISTINCT visitor_id) AS count FROM page_views WHERE visitor_id <> ''",
+    ),
+    db.execute(
+      `SELECT date(created_at) AS date, COUNT(*) AS count
+       FROM page_views
+       WHERE julianday(created_at) >= julianday('now', '-14 days')
+       GROUP BY date(created_at)
+       ORDER BY date(created_at) ASC`,
+    ),
+    db.execute(
+      `SELECT path, COUNT(*) AS count
+       FROM page_views
+       GROUP BY path
+       ORDER BY count DESC
+       LIMIT 5`,
+    ),
+    db.execute(
+      `SELECT country, COUNT(*) AS count
+       FROM page_views
+       WHERE country <> ''
+       GROUP BY country
+       ORDER BY count DESC
+       LIMIT 5`,
+    ),
+    db.execute(
+      `SELECT device, COUNT(*) AS count
+       FROM page_views
+       WHERE device <> ''
+       GROUP BY device
+       ORDER BY count DESC
+       LIMIT 5`,
+    ),
+    db.execute(
+      `SELECT id, path, referrer, country, device, visitor_id, created_at
+       FROM page_views
+       ORDER BY created_at DESC
+       LIMIT 25`,
+    ),
+  ]);
+
+  return {
+    total,
+    last7,
+    today,
+    uniqueVisitors,
+    daily: daily.rows as unknown as DailyCountRow[],
+    topPages: topPages.rows as unknown as Array<{ path: string; count: number }>,
+    topCountries: topCountries.rows as unknown as Array<{
+      country: string;
+      count: number;
+    }>,
+    topDevices: topDevices.rows as unknown as Array<{
+      device: string;
+      count: number;
+    }>,
+    recent: recent.rows as unknown as PageViewRow[],
+  };
 }

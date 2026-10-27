@@ -1,0 +1,33 @@
+const { chromium } = require('playwright');
+(async()=>{
+  const browser=await chromium.launch({headless:true});
+  const page=await browser.newPage({viewport:{width:1440,height:1000}});
+  const errors=[]; page.on('pageerror',e=>errors.push(e.message)); page.on('console',m=>{if(m.type()==='error') errors.push(m.text())});
+  await page.goto('http://localhost:3000',{waitUntil:'networkidle'});
+  await page.evaluate(()=>document.fonts.ready);
+  await page.waitForTimeout(1000);
+  const gallery = page.locator('.project-gallery').nth(1);
+  await gallery.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1600);
+  console.log('initial', await gallery.locator('.gallery-caption').innerText(), await gallery.locator('.gallery-state').innerText());
+  await page.screenshot({path:'preview/gallery-check-erp-1.png'});
+  await page.waitForTimeout(5200);
+  console.log('after5s', await gallery.locator('.gallery-caption').innerText(), await gallery.locator('.gallery-state').innerText());
+  await gallery.hover();
+  await page.waitForTimeout(5300);
+  console.log('hover', await gallery.locator('.gallery-caption').innerText(), await gallery.locator('.gallery-state').innerText());
+  await gallery.getByRole('button',{name:/suivante/}).click();
+  await page.waitForTimeout(900);
+  console.log('manual next', await gallery.locator('.gallery-caption').innerText());
+  await page.screenshot({path:'preview/gallery-check-erp-2.png'});
+  // count-up: watch stats at initial load
+  const page2=await browser.newPage({viewport:{width:1440,height:1000}});
+  await page2.goto('http://localhost:3000',{waitUntil:'domcontentloaded'});
+  await page2.evaluate(()=>window.scrollTo({top:document.querySelector('.hero-stats').offsetTop-500,behavior:'instant'}));
+  await page2.waitForTimeout(100);
+  console.log('stats100ms', await page2.locator('.hero-stat-value').allInnerTexts());
+  await page2.waitForTimeout(1100);
+  console.log('stats1200ms', await page2.locator('.hero-stat-value').allInnerTexts());
+  console.log('errors', errors);
+  await browser.close();
+})();

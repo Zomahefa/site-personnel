@@ -1,35 +1,32 @@
 # Portfolio — Zo Mahefa RANAIVO
 
-Portfolio personnel de **Zo Mahefa RANAIVO**, développeur Backend & DevOps.
+Portfolio personnel de **Zo Mahefa RANAIVO**, développeur web & mobile, ingénieur DevOps et testeur QA.
 
-**Site web :** [zomahefa.dev](https://zomahefa.dev)
+**Site :** [zo-mahefa-it.vercel.app](https://zo-mahefa-it.vercel.app)
 
----
-
-## Stack technique
+## Stack
 
 | Technologie | Usage |
 |---|---|
-| **Next.js 16** (App Router) | Framework |
-| **React 19** | UI |
-| **TypeScript** | Langage |
-| **Tailwind CSS v4** | Styling |
-| **shadcn/ui** (base-nova) | Composants UI |
-| **Framer Motion** | Animations |
-| **libSQL / SQLite** | Base de données |
-| **Groq (LLaMA 3.3)** | Chatbot IA & matching |
-| **Docker** | Conteneurisation |
+| Next.js 16 (App Router) | Framework, rendu serveur, SEO |
+| React 19 + TypeScript | Interface |
+| Tailwind CSS v4 | Design system |
+| Framer Motion | Animations et révélations au scroll |
+| Instrument Serif · Geist · Geist Mono | Direction typographique |
+| libSQL / Turso | Stockage des messages du formulaire |
+| Vercel | Déploiement |
+| PDF | CV français + profil anglais d'une page |
 
-## Fonctionnalités
+## Sections
 
-- Portfolio one-page avec sections : Hero, Services, Projets, Compétences, Expérience, Contact
-- Panneau d'administration avec CRUD projets et messagerie
-- Chatbot IA interactif
-- Moteur de recommandation de projets par IA
-- Thème clair/sombre
-- CV interactif imprimable
-- SEO optimisé (sitemap, robots.txt, Open Graph)
-- API REST complète
+- Hero avec rôles animés lettre par lettre
+- Projets sélectionnés avec problème, rôle, résultat et liens de code
+- Expertise (web/mobile, DevOps, QA) et stack par niveau réel
+- Méthode de collaboration et engagements
+- Chaîne de livraison illustrée
+- Parcours, formation et attestations PDF
+- Contact avec formulaire, parcours recruteur et parcours client
+- CV français et profil anglais (`/profile-en.pdf`)
 
 ## Développement
 
@@ -40,31 +37,40 @@ npm run dev
 
 Ouvrir [http://localhost:3000](http://localhost:3000).
 
-## Build production
+## Vérifications
 
 ```bash
+npm run lint
 npm run build
-npm start
-```
-
-## Docker
-
-```bash
-docker build -t zomahefa/portfolio .
-docker run -p 3000:3000 -v ./data:/app/data --env-file .env.local zomahefa/portfolio
+npm test
 ```
 
 ## Variables d'environnement
 
 Créer un fichier `.env.local` :
 
+```bash
+# Domaine public utilisé pour canonical, Open Graph, robots et sitemap
+NEXT_PUBLIC_SITE_URL=https://zo-mahefa-it.vercel.app
+
+# Accès à l'inbox privée /admin (mot de passe fort recommandé)
+ADMIN_PASSWORD=
+
+# Optionnel — base distante Turso pour conserver les messages en production
+TURSO_DB_URL=
+TURSO_DB_TOKEN=
 ```
-ADMIN_PASSWORD=your_password
-GROQ_API_KEY=your_groq_api_key
-# Optionnel — Turso distants
-# TURSO_DB_URL=libsql://...
-# TURSO_DB_TOKEN=...
-```
+
+Si la base n'est pas accessible en production, le formulaire affiche un repli vers la messagerie du visiteur : aucun message n'est perdu silencieusement.
+
+## Sécurité et SEO
+
+- Route `/admin` non listée, en `noindex`, protégée par mot de passe.
+- En-têtes de sécurité (CSP, HSTS, `X-Frame-Options`, `Permissions-Policy`).
+- Canonical, Open Graph, JSON-LD `Person` / `ProfilePage`, sitemap et robots alignés sur le domaine réel.
+- Animations désactivées si `prefers-reduced-motion` est actif.
+- Formulaire avec validation, honeypot et limitation de débit basique.
+- Dépendances de production auditées : `npm audit --omit=dev` sans vulnérabilité.
 
 ## Licence
 

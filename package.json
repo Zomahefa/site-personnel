@@ -1,6 +1,6 @@
 {
-  "name": "portfolio-temp",
-  "version": "0.1.0",
+  "name": "zo-mahefa-portfolio",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,21 +11,14 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@base-ui/react": "^1.4.1",
     "@libsql/client": "^0.17.3",
-    "better-sqlite3": "^12.10.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
-    "next": "16.2.6",
+    "next": "^16.4.3",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "recharts": "^3.8.1",
-    "shadcn": "^4.7.0",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.6.0",
     "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
@@ -36,10 +29,17 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "^16.4.3",
     "jsdom": "^29.1.1",
+    "shadcn": "^4.22.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"
+  },
+  "description": "Portfolio de Zo Mahefa RANAIVO — développeur web & mobile, ingénieur DevOps et testeur QA.",
+  "overrides": {
+    "nanoid": "^3.3.20",
+    "source-map-js": "^1.2.2",
+    "ws": "^8.22.0"
   }
 }
