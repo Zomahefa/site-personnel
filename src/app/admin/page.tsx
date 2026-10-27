@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ArrowUpRight,
   BarChart3,
@@ -105,23 +105,24 @@ export default function AdminPage() {
     );
   });
 
-  async function loadAll(currentPassword = password) {
+  const loadAll = useCallback(async () => {
     setLoading(true);
     setError("");
 
     try {
       const [messagesResponse, visitsResponse] = await Promise.all([
-        fetch("/api/messages", {
-          headers: { Authorization: `Bearer ${currentPassword}` },
-        }),
-        fetch("/api/visits", {
-          headers: { Authorization: `Bearer ${currentPassword}` },
-        }),
+        fetch("/api/messages", { cache: "no-store" }),
+        fetch("/api/visits", { cache: "no-store" }),
       ]);
 
-      if (!messagesResponse.ok) {
+      if (messagesResponse.status === 401) {
         setAuthenticated(false);
-        setError("Mot de passe incorrect ou session expirée.");
+        setError("Session expirée. Reconnectez-vous.");
+        return;
+      }
+
+      if (!messagesResponse.ok) {
+        setError("Impossible de charger les messages.");
         return;
       }
 
@@ -141,17 +142,69 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    (async () => {
+      try {
+        const response = await fetch("/api/admin/session", {
+          cache: "no-store",
+        });
+        if (!active || !response.ok) return;
+        await loadAll();
+      } catch {
+        // Pas de session : l'écran de connexion reste affiché.
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [loadAll]);
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await loadAll(password);
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      if (!response.ok) {
+        setError("Mot de passe incorrect ou tentative trop fréquente.");
+        return;
+      }
+
+      setPassword("");
+      await loadAll();
+    } catch {
+      setError("Connexion impossible. Réessayez.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } catch {
+      // La session locale est fermée dans tous les cas.
+    }
+    setAuthenticated(false);
+    setPassword("");
+    setMessages([]);
+    setVisits(null);
   }
 
   async function handleDelete(id: string) {
     const response = await fetch(`/api/messages/${id}`, {
       method: "DELETE",
-      headers: { Authorization: `Bearer ${password}` },
     });
 
     if (response.ok) {
@@ -239,12 +292,7 @@ export default function AdminPage() {
             <button
               type="button"
               className="button button-outline"
-              onClick={() => {
-                setAuthenticated(false);
-                setPassword("");
-                setMessages([]);
-                setVisits(null);
-              }}
+              onClick={handleLogout}
             >
               <LogOut className="size-3.5" aria-hidden="true" />
               Quitter

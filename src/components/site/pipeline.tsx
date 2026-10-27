@@ -1,9 +1,14 @@
+"use client";
+
 import { ArrowUpRight, GitBranch, ShieldCheck } from "lucide-react";
-import { pipelineSteps } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 import { Reveal } from "@/components/site/reveal";
 import { TypewriterHeading } from "@/components/site/typewriter";
 
 export function Pipeline() {
+  const { c } = useI18n();
+  const { pipeline } = c;
+
   return (
     <section
       className="pipeline-section"
@@ -16,20 +21,17 @@ export function Pipeline() {
           <Reveal distance={12}>
             <div className="section-kicker is-dark">
               <span className="section-index mono">↳</span>
-              <span className="section-label mono">Chaîne de livraison</span>
+              <span className="section-label mono">{pipeline.label}</span>
               <span className="section-kicker-line" aria-hidden="true" />
             </div>
           </Reveal>
           <div className="pipeline-title-row">
             <TypewriterHeading
-              text="Du commit au monitoring."
+              text={pipeline.title}
               id="pipeline-title"
               className="pipeline-title type-title"
             />
-            <p className="pipeline-intro">
-              Une livraison ne s&apos;arrête pas au déploiement. Chaque étape
-              laisse une trace, chaque incident peut être compris.
-            </p>
+            <p className="pipeline-intro">{pipeline.intro}</p>
           </div>
         </div>
 
@@ -37,7 +39,7 @@ export function Pipeline() {
           <div className="pipeline-track" aria-hidden="true">
             <span className="pipeline-traveler" />
           </div>
-          {pipelineSteps.map((step, index) => (
+          {pipeline.steps.map((step, index) => (
             <Reveal
               key={step.number}
               delay={index * 0.08}
@@ -61,20 +63,16 @@ export function Pipeline() {
           <div className="pipeline-principle">
             <ShieldCheck className="size-5" aria-hidden="true" />
             <p>
-              <strong>Principe :</strong> un déploiement doit pouvoir être
-              rejoué, observé et annulé. Pas de copier-coller en production.
+              <strong>{pipeline.principleLabel}</strong> {pipeline.principle}
             </p>
           </div>
           <div className="pipeline-site-card">
             <div>
-              <span className="mono">LIVRABLES / RUNBOOK</span>
-              <p>
-                Pipeline, procédure de rollback et documentation de supervision
-                remis avec le projet.
-              </p>
+              <span className="mono">{pipeline.deliverablesLabel}</span>
+              <p>{pipeline.deliverables}</p>
             </div>
             <a href="#contact" className="button button-ghost-dark">
-              Cadrer un projet
+              {pipeline.cta}
               <ArrowUpRight className="size-3.5" aria-hidden="true" />
             </a>
           </div>
@@ -82,10 +80,10 @@ export function Pipeline() {
 
         <div className="pipeline-bottomline">
           <span className="mono">
-            <GitBranch className="inline size-3.5" aria-hidden="true" /> FLUX
-            REJOUABLE · TESTS · LOGS · MÉTRIQUES
+            <GitBranch className="inline size-3.5" aria-hidden="true" />{" "}
+            {pipeline.footerLeft}
           </span>
-          <span className="mono">DOCKER / GH ACTIONS / PROMETHEUS / VERCEL</span>
+          <span className="mono">{pipeline.footerRight}</span>
         </div>
       </div>
     </section>

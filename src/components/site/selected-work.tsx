@@ -1,10 +1,8 @@
+"use client";
+
 import { ArrowUpRight, ExternalLink, Lock } from "lucide-react";
-import {
-  archiveProjects,
-  featuredProjects,
-  mailtoForProject,
-  site,
-} from "@/lib/content";
+import { mailtoForProject, site } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 import { GithubIcon } from "@/components/icons";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
@@ -12,6 +10,9 @@ import { ProjectVisual } from "@/components/site/project-visual";
 import { ProjectGallery } from "@/components/site/project-gallery";
 
 export function SelectedWork() {
+  const { c } = useI18n();
+  const { featuredProjects, archive, sections, ui } = c;
+
   return (
     <section
       id="projets"
@@ -20,17 +21,19 @@ export function SelectedWork() {
     >
       <div className="site-shell">
         <SectionHeading
-          index="01"
-          label="Travaux sélectionnés"
-          title="Des preuves, pas des promesses."
-          intro="Trois projets, trois problèmes réels. Le contexte, mon rôle et le résultat — sans chiffre que je ne peux pas défendre en entretien."
+          index={sections.projects.index}
+          label={sections.projects.label}
+          title={sections.projects.title}
+          intro={sections.projects.intro}
           id="projects-title"
         />
 
         <div className="project-list">
           {featuredProjects.map((project, index) => (
             <Reveal key={project.id} delay={index * 0.04} distance={28}>
-              <article className={`project-row ${index % 2 === 1 ? "is-reversed" : ""}`}>
+              <article
+                className={`project-row ${index % 2 === 1 ? "is-reversed" : ""}`}
+              >
                 <div className="project-visual-col">
                   {project.gallery?.length ? (
                     <ProjectGallery
@@ -56,21 +59,21 @@ export function SelectedWork() {
 
                   <dl className="case-study">
                     <div>
-                      <dt>Le problème</dt>
+                      <dt>{ui.caseProblem}</dt>
                       <dd>{project.problem}</dd>
                     </div>
                     <div>
-                      <dt>Mon rôle</dt>
+                      <dt>{ui.caseRole}</dt>
                       <dd>{project.role}</dd>
                     </div>
                     <div>
-                      <dt>Le résultat</dt>
+                      <dt>{ui.caseOutcome}</dt>
                       <dd>{project.outcome}</dd>
                     </div>
                   </dl>
 
                   <div className="project-bottom">
-                    <ul className="tag-list" aria-label="Technologies utilisées">
+                    <ul className="tag-list" aria-label={ui.technologies}>
                       {project.stack.map((tech) => (
                         <li className="tag" key={tech}>
                           {tech}
@@ -85,10 +88,10 @@ export function SelectedWork() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="button button-dark project-demo"
-                          aria-label={`${project.demoLabel ?? "Voir la démo"} de ${project.title}`}
+                          aria-label={`${project.demoLabel ?? ui.viewDemo} — ${project.title}`}
                         >
                           <ExternalLink className="size-3.5" aria-hidden="true" />
-                          {project.demoLabel ?? "Voir la démo"}
+                          {project.demoLabel ?? ui.viewDemo}
                         </a>
                       ) : null}
                       {project.repo ? (
@@ -97,10 +100,10 @@ export function SelectedWork() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-link"
-                          aria-label={`Voir le code source de ${project.title} sur GitHub`}
+                          aria-label={`${project.title} — ${ui.archiveRepoAria}`}
                         >
                           <GithubIcon className="size-4" />
-                          Code source
+                          {ui.viewCode}
                           <ArrowUpRight className="size-3.5" aria-hidden="true" />
                         </a>
                       ) : null}
@@ -108,10 +111,10 @@ export function SelectedWork() {
                         <a
                           href={mailtoForProject(project.title)}
                           className="text-link"
-                          aria-label={`Demander l'étude de cas du projet ${project.title}`}
+                          aria-label={`${ui.caseStudy} — ${project.title}`}
                         >
                           <Lock className="size-3.5" aria-hidden="true" />
-                          Étude de cas sur demande
+                          {ui.caseStudy}
                           <ArrowUpRight className="size-3.5" aria-hidden="true" />
                         </a>
                       ) : null}
@@ -126,17 +129,14 @@ export function SelectedWork() {
         <Reveal className="archive" distance={22}>
           <div className="archive-header">
             <div>
-              <span className="mono text-muted-foreground">ARCHIVE / 06</span>
-              <h3 className="archive-title">Autres projets & labs</h3>
+              <span className="mono text-muted-foreground">{archive.kicker}</span>
+              <h3 className="archive-title">{archive.title}</h3>
             </div>
-            <p className="archive-copy">
-              Le reste du terrain : desktop, réseau, systèmes et projets
-              académiques. Les dépôts publics sont ouverts.
-            </p>
+            <p className="archive-copy">{archive.copy}</p>
           </div>
 
           <div className="archive-list" role="list">
-            {archiveProjects.map((project, index) => {
+            {archive.projects.map((project, index) => {
               const content = (
                 <>
                   <span className="archive-index mono">
@@ -152,7 +152,7 @@ export function SelectedWork() {
                   <span className="archive-action">
                     {project.href ? (
                       <>
-                        Code
+                        {ui.archiveCode}
                         <ArrowUpRight className="size-3.5" aria-hidden="true" />
                       </>
                     ) : (
@@ -170,12 +170,16 @@ export function SelectedWork() {
                   rel="noopener noreferrer"
                   key={project.title}
                   role="listitem"
-                  aria-label={`${project.title} — voir le code sur GitHub`}
+                  aria-label={`${project.title} — ${ui.archiveRepoAria}`}
                 >
                   {content}
                 </a>
               ) : (
-                <div className="archive-row is-static" key={project.title} role="listitem">
+                <div
+                  className="archive-row is-static"
+                  key={project.title}
+                  role="listitem"
+                >
                   {content}
                 </div>
               );
@@ -184,7 +188,7 @@ export function SelectedWork() {
 
           <div className="archive-footer">
             <span className="mono text-muted-foreground">
-              ZÉRO LIEN MORT — LES PROJETS PRIVÉS SONT SIGNALÉS
+              {archive.footerNote}
             </span>
             <a
               href={site.github}
@@ -193,7 +197,7 @@ export function SelectedWork() {
               className="text-link"
             >
               <GithubIcon className="size-4" />
-              Tous mes dépôts publics
+              {archive.allRepos}
               <ArrowUpRight className="size-3.5" aria-hidden="true" />
             </a>
           </div>

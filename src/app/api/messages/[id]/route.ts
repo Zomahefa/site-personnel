@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { removeMessage } from "@/lib/messages";
-import { verifyPassword } from "@/lib/auth";
+import { isAuthorized } from "@/lib/auth";
 
 export async function DELETE(
   request: Request,
@@ -8,9 +8,7 @@ export async function DELETE(
 ) {
   const { id } = await params;
 
-  const authHeader = request.headers.get("authorization");
-
-  if (!verifyPassword(authHeader)) {
+  if (!isAuthorized(request)) {
     return NextResponse.json(
       { error: "Non autorisé" },
       { status: 401 }

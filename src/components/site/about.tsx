@@ -1,16 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowUpRight, Download, MapPin, MoveUpRight } from "lucide-react";
-import {
-  certifications,
-  education,
-  experiences,
-  site,
-  softSkills,
-} from "@/lib/content";
+import { site } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 
 export function About() {
+  const { c } = useI18n();
+  const { about, sections } = c;
+
   return (
     <section
       id="parcours"
@@ -19,10 +19,10 @@ export function About() {
     >
       <div className="site-shell">
         <SectionHeading
-          index="04"
-          label="Parcours"
-          title="Ingénieur, pas collectionneur de logos."
-          intro="Une formation d'ingénieur, des stages qui touchent à la production et une pratique régulière du code, de l'infrastructure et des tests."
+          index={sections.about.index}
+          label={sections.about.label}
+          title={sections.about.title}
+          intro={sections.about.intro}
           id="about-title"
         />
 
@@ -30,42 +30,27 @@ export function About() {
           <aside className="about-side">
             <Reveal distance={18}>
               <div className="about-bio">
-                <p className="about-lead">
-                  Je m&apos;appelle Zo Mahefa RANAIVO. Je construis des
-                  applications utiles, puis je m&apos;assure qu&apos;elles
-                  tiennent debout.
-                </p>
-                <p>
-                  Formé à l&apos;ENI, j&apos;ai appris à relier le produit, le
-                  système et la qualité. Mes projets vont de l&apos;ERP métier
-                  au pipeline CI/CD, en passant par la supervision et les tests.
-                  Ce qui m&apos;intéresse : comprendre le besoin, choisir le
-                  juste niveau de complexité et laisser un système
-                  compréhensible derrière moi.
-                </p>
-                <p>
-                  Je documente mes décisions, je teste ce que je livre et je
-                  considère la mise en production comme une partie du travail —
-                  pas comme une formalité.
-                </p>
+                <p className="about-lead">{about.lead}</p>
+                <p>{about.body1}</p>
+                <p>{about.body2}</p>
               </div>
             </Reveal>
 
             <Reveal delay={0.08} distance={18}>
               <div className="target-card">
-                <span className="mono">CE QUE JE RECHERCHE</span>
-                <p className="target-title">{site.availability}</p>
+                <span className="mono">{about.targetKicker}</span>
+                <p className="target-title">{c.availability}</p>
                 <ul>
-                  <li>Web & mobile · backend</li>
-                  <li>DevOps & cloud</li>
-                  <li>Qualité & automatisation</li>
+                  {about.targetItems.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
                 </ul>
                 <div className="target-meta">
                   <span>
                     <MapPin className="size-3.5" aria-hidden="true" />
-                    {site.location}
+                    {c.location}
                   </span>
-                  <span>{site.workModes}</span>
+                  <span>{c.workModes}</span>
                 </div>
               </div>
             </Reveal>
@@ -73,15 +58,16 @@ export function About() {
             <Reveal delay={0.14} distance={18}>
               <div className="about-extra">
                 <div>
-                  <span className="mono text-muted-foreground">LANGUES</span>
-                  <p>
-                    Français courant · Anglais technique (documentation et
-                    échanges écrits) · Malgache natif
-                  </p>
+                  <span className="mono text-muted-foreground">
+                    {about.languagesLabel}
+                  </span>
+                  <p>{about.languages}</p>
                 </div>
                 <div>
-                  <span className="mono text-muted-foreground">FORMAT</span>
-                  <p>Remote friendly · réponse sous 48 h ouvrées</p>
+                  <span className="mono text-muted-foreground">
+                    {about.formatLabel}
+                  </span>
+                  <p>{about.format}</p>
                 </div>
                 <a
                   href={site.cv}
@@ -89,7 +75,7 @@ export function About() {
                   className="button button-outline about-cv"
                 >
                   <Download className="size-4" aria-hidden="true" />
-                  Télécharger le CV
+                  {about.cvCta}
                   <span className="mono text-muted-foreground">PDF</span>
                 </a>
               </div>
@@ -99,15 +85,15 @@ export function About() {
           <div className="about-main">
             <Reveal distance={18}>
               <div className="timeline-title-row">
-                <h3 className="subsection-title">Expérience</h3>
+                <h3 className="subsection-title">{about.experienceTitle}</h3>
                 <span className="mono text-muted-foreground">
-                  03 POSITIONS / STAGES
+                  {about.experienceCount}
                 </span>
               </div>
             </Reveal>
 
             <ol className="timeline">
-              {experiences.map((experience, index) => (
+              {about.experiences.map((experience, index) => (
                 <li
                   className="timeline-item"
                   key={`${experience.period}-${experience.title}`}
@@ -138,13 +124,13 @@ export function About() {
 
             <Reveal className="education-block" distance={18}>
               <div className="timeline-title-row">
-                <h3 className="subsection-title">Formation</h3>
+                <h3 className="subsection-title">{about.educationTitle}</h3>
                 <span className="mono text-muted-foreground">
-                  ENI FIANARANTSOA
+                  {about.educationSchool}
                 </span>
               </div>
               <div className="education-grid">
-                {education.map((item) => (
+                {about.education.map((item) => (
                   <article className="education-card" key={item.title}>
                     <span className="mono">{item.period}</span>
                     <h4>{item.title}</h4>
@@ -157,25 +143,27 @@ export function About() {
 
             <Reveal className="certifications-block" distance={18}>
               <div className="timeline-title-row">
-                <h3 className="subsection-title">Certifications</h3>
+                <h3 className="subsection-title">
+                  {about.certificationsTitle}
+                </h3>
                 <span className="mono text-muted-foreground">
-                  ATTESTATIONS VÉRIFIABLES
+                  {about.certificationsNote}
                 </span>
               </div>
               <div className="certification-grid">
-                {certifications.map((certification) => (
+                {about.certifications.map((certification) => (
                   <a
                     href={certification.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="certification-card"
                     key={certification.title}
-                    aria-label={`Ouvrir l'attestation ${certification.title} au format PDF`}
+                    aria-label={`${about.certificationOpen} — ${certification.title}`}
                   >
                     <div className="certification-image">
                       <Image
                         src={certification.image}
-                        alt={`Attestation ${certification.title}`}
+                        alt={`${certification.title} — Zo Mahefa`}
                         width={1600}
                         height={1131}
                         sizes="(max-width: 767px) 90vw, 300px"
@@ -191,7 +179,7 @@ export function About() {
                       </span>
                       <h4>{certification.title}</h4>
                       <span className="certification-link">
-                        Voir l&apos;attestation PDF
+                        {about.certificationSee}
                         <ArrowUpRight className="size-3.5" aria-hidden="true" />
                       </span>
                     </div>
@@ -206,18 +194,14 @@ export function About() {
           <div className="soft-skills-head">
             <div>
               <span className="mono text-muted-foreground">
-                SAVOIR-ÊTRE / CE QUI SE VOIT DANS LE TRAVAIL
+                {about.softKicker}
               </span>
-              <h3>La technique se prouve. Le comportement aussi.</h3>
+              <h3>{about.softTitle}</h3>
             </div>
-            <p>
-              Pas une liste de mots dans un coin du CV : chaque qualité est
-              reliée à une situation concrète de projet, de stage ou
-              d&apos;équipe.
-            </p>
+            <p>{about.softIntro}</p>
           </div>
           <div className="soft-skills-grid">
-            {softSkills.map((skill, index) => (
+            {about.softSkills.map((skill, index) => (
               <article className="soft-skill" key={skill.title}>
                 <span className="mono soft-skill-index">
                   S{String(index + 1).padStart(2, "0")}

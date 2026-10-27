@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { getMessages, addNewMessage } from "@/lib/messages";
-import { getMessagesByDate } from "@/lib/db";
-import { verifyPassword } from "@/lib/auth";
+import { isAuthorized } from "@/lib/auth";
 
 const rateLimits = new Map<string, { count: number; resetAt: number }>();
 
@@ -24,15 +23,12 @@ function clean(value: unknown, maxLength: number) {
 }
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-
-  if (!verifyPassword(authHeader)) {
+  if (!isAuthorized(request)) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
   const messages = await getMessages();
-  const dailyStats = await getMessagesByDate();
-  return NextResponse.json({ messages, dailyStats });
+  return NextResponse.json({ messages });
 }
 
 export async function POST(request: Request) {

@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function CompetencesRedirect() {
-  redirect("/#competences");
+  redirect("/#expertise");
 }

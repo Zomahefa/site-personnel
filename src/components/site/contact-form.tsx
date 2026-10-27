@@ -2,13 +2,14 @@
 
 import { useId, useMemo, useState } from "react";
 import { ArrowUpRight, CheckCircle2, Loader2, Send } from "lucide-react";
-import { contactTypes, site } from "@/lib/content";
+import { site } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 
 type FormState = {
   name: string;
   email: string;
   phone: string;
-  projectType: string;
+  typeIndex: number;
   message: string;
   website: string;
   consent: boolean;
@@ -18,13 +19,16 @@ const initialState: FormState = {
   name: "",
   email: "",
   phone: "",
-  projectType: contactTypes[0],
+  typeIndex: 0,
   message: "",
   website: "",
   consent: false,
 };
 
 export function ContactForm() {
+  const { c } = useI18n();
+  const formCopy = c.contact.form;
+  const types = c.contact.types;
   const formId = useId();
   const [form, setForm] = useState<FormState>(initialState);
   const [pending, setPending] = useState(false);
@@ -32,17 +36,19 @@ export function ContactForm() {
   const [error, setError] = useState("");
   const [fallbackHref, setFallbackHref] = useState("");
 
+  const projectType = types[form.typeIndex] ?? types[0];
+
   const mailtoHref = useMemo(() => {
     const subject = encodeURIComponent(
-      `Nouveau projet — ${form.projectType || "contact portfolio"}`,
+      `${formCopy.head} — ${projectType || "portfolio"}`,
     );
     const body = encodeURIComponent(
-      `Bonjour Zo Mahefa,\n\n${form.message}\n\n— ${form.name}\n${form.email}${
+      `${form.message}\n\n— ${form.name}\n${form.email}${
         form.phone ? `\n${form.phone}` : ""
-      }\n${form.projectType ? `Type de besoin : ${form.projectType}` : ""}`,
+      }\n${projectType ? `${formCopy.type} : ${projectType}` : ""}`,
     );
     return `mailto:${site.email}?subject=${subject}&body=${body}`;
-  }, [form]);
+  }, [form, formCopy.head, formCopy.type, projectType]);
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((current) => ({ ...current, [key]: value }));
@@ -60,19 +66,17 @@ export function ContactForm() {
     }
 
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
-      setError("Merci de renseigner votre nom, votre e-mail et votre message.");
+      setError(formCopy.errorRequired);
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setError("L'adresse e-mail ne semble pas valide.");
+      setError(formCopy.errorEmail);
       return;
     }
 
     if (!form.consent) {
-      setError(
-        "Merci de confirmer que vos coordonnées peuvent être utilisées pour vous répondre.",
-      );
+      setError(formCopy.errorConsent);
       return;
     }
 
@@ -86,7 +90,7 @@ export function ContactForm() {
           email: form.email,
           phone: form.phone,
           message: form.message,
-          projectType: form.projectType,
+          projectType,
         }),
       });
 
@@ -97,9 +101,7 @@ export function ContactForm() {
       setSuccess(true);
       setForm(initialState);
     } catch {
-      setError(
-        "L'envoi direct est indisponible pour le moment. Votre message est prêt : ouvrez votre messagerie pour me l'adresser.",
-      );
+      setError(formCopy.errorSend);
       setFallbackHref(mailtoHref);
     } finally {
       setPending(false);
@@ -110,14 +112,11 @@ export function ContactForm() {
     return (
       <div className="form-success" role="status" aria-live="polite">
         <CheckCircle2 className="size-8" aria-hidden="true" />
-        <h3>Message reçu.</h3>
-        <p>
-          Merci pour votre confiance. Je vous réponds sous 48 h ouvrées à
-          l&apos;adresse indiquée.
-        </p>
+        <h3>{formCopy.successTitle}</h3>
+        <p>{formCopy.successText}</p>
         <div className="form-success-actions">
           <a href={`mailto:${site.email}`} className="button button-dark">
-            Écrire directement
+            {formCopy.writeDirectly}
             <ArrowUpRight className="size-4" aria-hidden="true" />
           </a>
           <button
@@ -128,7 +127,7 @@ export function ContactForm() {
               setForm(initialState);
             }}
           >
-            Envoyer un autre message
+            {formCopy.another}
           </button>
         </div>
       </div>
@@ -138,21 +137,22 @@ export function ContactForm() {
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
       <div className="form-head">
-        <span className="mono">BRIEF / CONTACT</span>
-        <span className="mono text-muted-foreground">RÉPONSE &lt; 48 H</span>
+        <span className="mono">{formCopy.head}</span>
+        <span className="mono text-muted-foreground">{formCopy.response}</span>
       </div>
 
       <div className="form-grid">
         <div className="form-field">
           <label htmlFor={`${formId}-name`}>
-            Nom complet <span aria-hidden="true">*</span>
+            {formCopy.name} <span aria-hidden="true">*</span>
           </label>
           <input
             id={`${formId}-name`}
             name="name"
             autoComplete="name"
-            placeholder="Votre nom"
+            placeholder={formCopy.namePlaceholder}
             value={form.name}
+            maxLength={120}
             onChange={(event) => update("name", event.target.value)}
             required
           />
@@ -160,7 +160,7 @@ export function ContactForm() {
 
         <div className="form-field">
           <label htmlFor={`${formId}-email`}>
-            E-mail <span aria-hidden="true">*</span>
+            {formCopy.email} <span aria-hidden="true">*</span>
           </label>
           <input
             id={`${formId}-email`}
@@ -168,37 +168,41 @@ export function ContactForm() {
             type="email"
             inputMode="email"
             autoComplete="email"
-            placeholder="vous@entreprise.com"
+            placeholder={formCopy.emailPlaceholder}
             value={form.email}
+            maxLength={180}
             onChange={(event) => update("email", event.target.value)}
             required
           />
         </div>
 
         <div className="form-field">
-          <label htmlFor={`${formId}-phone`}>Téléphone (optionnel)</label>
+          <label htmlFor={`${formId}-phone`}>{formCopy.phone}</label>
           <input
             id={`${formId}-phone`}
             name="phone"
             type="tel"
             inputMode="tel"
             autoComplete="tel"
-            placeholder="+261 ..."
+            placeholder={formCopy.phonePlaceholder}
             value={form.phone}
+            maxLength={30}
             onChange={(event) => update("phone", event.target.value)}
           />
         </div>
 
         <div className="form-field">
-          <label htmlFor={`${formId}-type`}>Type de besoin</label>
+          <label htmlFor={`${formId}-type`}>{formCopy.type}</label>
           <select
             id={`${formId}-type`}
             name="projectType"
-            value={form.projectType}
-            onChange={(event) => update("projectType", event.target.value)}
+            value={String(form.typeIndex)}
+            onChange={(event) =>
+              update("typeIndex", Number(event.target.value))
+            }
           >
-            {contactTypes.map((type) => (
-              <option key={type} value={type}>
+            {types.map((type, index) => (
+              <option key={type} value={index}>
                 {type}
               </option>
             ))}
@@ -207,13 +211,14 @@ export function ContactForm() {
 
         <div className="form-field form-field-full">
           <label htmlFor={`${formId}-message`}>
-            Votre message <span aria-hidden="true">*</span>
+            {formCopy.message} <span aria-hidden="true">*</span>
           </label>
           <textarea
             id={`${formId}-message`}
             name="message"
             rows={5}
-            placeholder="Le contexte, l'objectif, l'échéance... Quelques lignes suffisent pour commencer."
+            maxLength={5000}
+            placeholder={formCopy.messagePlaceholder}
             value={form.message}
             onChange={(event) => update("message", event.target.value)}
             required
@@ -240,10 +245,7 @@ export function ContactForm() {
           checked={form.consent}
           onChange={(event) => update("consent", event.target.checked)}
         />
-        <span>
-          J&apos;accepte que mes coordonnées soient utilisées uniquement pour
-          répondre à cette demande.
-        </span>
+        <span>{formCopy.consent}</span>
       </label>
 
       {error ? (
@@ -251,7 +253,7 @@ export function ContactForm() {
           <p>{error}</p>
           {fallbackHref ? (
             <a href={fallbackHref} className="text-link">
-              Ouvrir ma messagerie
+              {formCopy.fallbackLink}
               <ArrowUpRight className="size-3.5" aria-hidden="true" />
             </a>
           ) : null}
@@ -263,18 +265,16 @@ export function ContactForm() {
           {pending ? (
             <>
               <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-              Envoi en cours...
+              {formCopy.pending}
             </>
           ) : (
             <>
               <Send className="size-4" aria-hidden="true" />
-              Envoyer le message
+              {formCopy.submit}
             </>
           )}
         </button>
-        <p className="form-note">
-          Pas de newsletter, pas de revente de données. Seulement une réponse.
-        </p>
+        <p className="form-note">{formCopy.note}</p>
       </div>
     </form>
   );

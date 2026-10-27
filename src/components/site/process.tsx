@@ -1,9 +1,14 @@
+"use client";
+
 import { ArrowRight, Check } from "lucide-react";
-import { engagements, processSteps } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 
 export function Process() {
+  const { c } = useI18n();
+  const { sections, process, ui } = c;
+
   return (
     <section
       id="methode"
@@ -12,15 +17,15 @@ export function Process() {
     >
       <div className="site-shell">
         <SectionHeading
-          index="03"
-          label="Méthode"
-          title="Un cadre simple. Zéro surprise."
-          intro="Le même fil rouge pour une mission client ou une intégration en équipe : clarifier, livrer par étapes, documenter. La technique sert le résultat, pas l'inverse."
+          index={sections.method.index}
+          label={sections.method.label}
+          title={sections.method.title}
+          intro={sections.method.intro}
           id="process-title"
         />
 
         <div className="process-grid">
-          {processSteps.map((step, index) => (
+          {process.steps.map((step, index) => (
             <Reveal key={step.number} delay={index * 0.07} distance={20}>
               <article className="process-step">
                 <div className="process-number">{step.number}</div>
@@ -28,7 +33,7 @@ export function Process() {
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
                 <div className="process-deliverable">
-                  <span className="mono">LIVRABLE</span>
+                  <span className="mono">{ui.deliverableLabel}</span>
                   <span>{step.deliverable}</span>
                 </div>
               </article>
@@ -38,11 +43,11 @@ export function Process() {
 
         <Reveal className="engagements" distance={18}>
           <div className="engagements-copy">
-            <span className="mono">ENGAGEMENTS / SIMPLES</span>
-            <p>Des règles lisibles avant même de commencer.</p>
+            <span className="mono">{process.engagementsKicker}</span>
+            <p>{process.engagementsTitle}</p>
           </div>
           <ul className="engagement-list">
-            {engagements.map((item) => (
+            {process.engagements.map((item) => (
               <li key={item}>
                 <Check className="size-3.5" aria-hidden="true" />
                 {item}
@@ -50,7 +55,7 @@ export function Process() {
             ))}
           </ul>
           <a href="#contact" className="text-link engagements-link">
-            Cadrer un besoin
+            {process.cta}
             <ArrowRight className="size-4" aria-hidden="true" />
           </a>
         </Reveal>

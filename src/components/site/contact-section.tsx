@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowUpRight,
   BriefcaseBusiness,
@@ -7,6 +9,7 @@ import {
   Phone,
 } from "lucide-react";
 import { site } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
@@ -14,6 +17,10 @@ import { CopyEmail } from "@/components/site/copy-email";
 import { ContactForm } from "@/components/site/contact-form";
 
 export function ContactSection() {
+  const { c, locale } = useI18n();
+  const { contact, sections } = c;
+  const isFr = locale === "fr";
+
   return (
     <section
       id="contact"
@@ -23,10 +30,10 @@ export function ContactSection() {
       <div className="contact-glow" aria-hidden="true" />
       <div className="site-shell">
         <SectionHeading
-          index="05"
-          label="Contact"
-          title="Un projet à cadrer ? Une équipe à renforcer ?"
-          intro="Décrivez le contexte en quelques lignes. Je vous réponds sous 48 h ouvrées, avec une première lecture du besoin et les prochaines étapes."
+          index={sections.contact.index}
+          label={sections.contact.label}
+          title={sections.contact.title}
+          intro={sections.contact.intro}
           id="contact-title"
         />
 
@@ -34,7 +41,9 @@ export function ContactSection() {
           <div className="contact-info">
             <Reveal distance={18}>
               <div className="contact-direct">
-                <span className="mono text-muted-foreground">ÉCRIRE DIRECTEMENT</span>
+                <span className="mono text-muted-foreground">
+                  {contact.directLabel}
+                </span>
                 <CopyEmail />
                 <a href={site.phoneHref} className="contact-phone">
                   <Phone className="size-4" aria-hidden="true" />
@@ -47,7 +56,9 @@ export function ContactSection() {
               <div className="contact-paths">
                 <a
                   href={`mailto:${site.email}?subject=${encodeURIComponent(
-                    "Opportunité — recrutement",
+                    isFr
+                      ? "Opportunité — recrutement"
+                      : "Opportunity — recruitment",
                   )}`}
                   className="contact-path"
                 >
@@ -55,15 +66,17 @@ export function ContactSection() {
                     <BriefcaseBusiness className="size-5" aria-hidden="true" />
                   </span>
                   <span>
-                    <span className="mono">RECRUTEUR</span>
-                    <strong>Un poste, un stage ou une alternance</strong>
-                    <small>CV, disponibilité et références de projets.</small>
+                    <span className="mono">{contact.recruiterLabel}</span>
+                    <strong>{contact.recruiterTitle}</strong>
+                    <small>{contact.recruiterText}</small>
                   </span>
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </a>
                 <a
                   href={`mailto:${site.email}?subject=${encodeURIComponent(
-                    "Mission — cadrage de projet",
+                    isFr
+                      ? "Mission — cadrage de projet"
+                      : "Mission — project scoping",
                   )}`}
                   className="contact-path"
                 >
@@ -71,9 +84,9 @@ export function ContactSection() {
                     <CalendarDays className="size-5" aria-hidden="true" />
                   </span>
                   <span>
-                    <span className="mono">CLIENT</span>
-                    <strong>Un produit à concevoir ou à fiabiliser</strong>
-                    <small>Un premier échange de 30 minutes, sans engagement.</small>
+                    <span className="mono">{contact.clientLabel}</span>
+                    <strong>{contact.clientTitle}</strong>
+                    <small>{contact.clientText}</small>
                   </span>
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </a>
@@ -84,11 +97,11 @@ export function ContactSection() {
               <div className="contact-meta">
                 <span>
                   <MapPin className="size-3.5" aria-hidden="true" />
-                  {site.location} · remote possible
+                  {c.location} · {contact.locationNote}
                 </span>
                 <span>
                   <span className="status-dot" aria-hidden="true" />
-                  {site.availability}
+                  {c.availability}
                 </span>
               </div>
               <div className="contact-socials">
@@ -114,16 +127,7 @@ export function ContactSection() {
                 </a>
                 <a href={site.cv} download className="text-link">
                   <Download className="size-4" />
-                  CV PDF
-                </a>
-                <a
-                  href={site.profileEn}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-link"
-                >
-                  <Download className="size-4" />
-                  Profile EN
+                  {contact.cv}
                 </a>
               </div>
             </Reveal>

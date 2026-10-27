@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { Check, Copy, Mail } from "lucide-react";
 import { site } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 
 export function CopyEmail() {
+  const { c } = useI18n();
   const [copied, setCopied] = useState(false);
 
   async function copy() {
@@ -25,18 +27,14 @@ export function CopyEmail() {
         type="button"
         className="copy-email-button"
         onClick={copy}
-        aria-label={
-          copied
-            ? "Adresse e-mail copiée"
-            : "Copier l'adresse e-mail dans le presse-papiers"
-        }
+        aria-label={copied ? c.ui.copiedAria : c.ui.copyEmailAria}
       >
         {copied ? (
           <Check className="size-3.5" aria-hidden="true" />
         ) : (
           <Copy className="size-3.5" aria-hidden="true" />
         )}
-        <span className="mono">{copied ? "COPIÉ" : "COPIER"}</span>
+        <span className="mono">{copied ? c.ui.copied : c.ui.copyEmail}</span>
       </button>
     </div>
   );

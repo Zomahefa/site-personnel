@@ -1,7 +1,14 @@
 import { createClient } from "@libsql/client";
+import fs from "node:fs";
 import path from "path";
 
 const isTurso = !!process.env.TURSO_DB_URL;
+const localDbPath = path.join(process.cwd(), "data", "portfolio.db");
+
+if (!isTurso) {
+  // Sur un clone neuf, le dossier n'existe pas encore.
+  fs.mkdirSync(path.dirname(localDbPath), { recursive: true });
+}
 
 const db = createClient(
   isTurso
@@ -10,39 +17,59 @@ const db = createClient(
         authToken: process.env.TURSO_DB_TOKEN,
       }
     : {
-        url: `file:${path.join(process.cwd(), "data", "portfolio.db")}`,
+        url: `file:${localDbPath}`,
       },
 );
 
-db.execute(`
-  CREATE TABLE IF NOT EXISTS messages (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    email TEXT NOT NULL,
-    phone TEXT NOT NULL,
-    message TEXT NOT NULL,
-    created_at TEXT NOT NULL
-  )
-`);
+let schemaPromise: Promise<void> | null = null;
 
-db.execute(`
-  CREATE TABLE IF NOT EXISTS page_views (
-    id TEXT PRIMARY KEY,
-    path TEXT NOT NULL,
-    referrer TEXT NOT NULL DEFAULT '',
-    country TEXT NOT NULL DEFAULT '',
-    device TEXT NOT NULL DEFAULT '',
-    visitor_id TEXT NOT NULL DEFAULT '',
-    created_at TEXT NOT NULL
-  )
-`);
+/**
+ * Crée les tables une seule fois par instance, avec une erreur remontée
+ * au premier appelant au lieu d'une promesse non gérée au chargement.
+ */
+async function ensureSchema(): Promise<void> {
+  if (!schemaPromise) {
+    schemaPromise = (async () => {
+      await db.execute(`
+        CREATE TABLE IF NOT EXISTS messages (
+          id TEXT PRIMARY KEY,
+          name TEXT NOT NULL,
+          email TEXT NOT NULL,
+          phone TEXT NOT NULL,
+          message TEXT NOT NULL,
+          created_at TEXT NOT NULL
+        )
+      `);
 
-db.execute(
-  "CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views(created_at)",
-);
-db.execute(
-  "CREATE INDEX IF NOT EXISTS idx_page_views_visitor ON page_views(visitor_id)",
-);
+      await db.execute(`
+        CREATE TABLE IF NOT EXISTS page_views (
+          id TEXT PRIMARY KEY,
+          path TEXT NOT NULL,
+          referrer TEXT NOT NULL DEFAULT '',
+          country TEXT NOT NULL DEFAULT '',
+          device TEXT NOT NULL DEFAULT '',
+          visitor_id TEXT NOT NULL DEFAULT '',
+          created_at TEXT NOT NULL
+        )
+      `);
+
+      await db.execute(
+        "CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views(created_at)",
+      );
+      await db.execute(
+        "CREATE INDEX IF NOT EXISTS idx_page_views_visitor ON page_views(visitor_id)",
+      );
+      await db.execute(
+        "CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at)",
+      );
+    })().catch((error) => {
+      schemaPromise = null;
+      throw error;
+    });
+  }
+
+  return schemaPromise;
+}
 
 export type MessageRow = {
   id: string;
@@ -83,6 +110,7 @@ export type VisitStats = {
 /* ───────── Messages ───────── */
 
 export async function getAllMessages(): Promise<MessageRow[]> {
+  await ensureSchema();
   const result = await db.execute(
     "SELECT * FROM messages ORDER BY created_at DESC",
   );
@@ -96,6 +124,7 @@ export async function addMessage(
   phone: string,
   message: string,
 ) {
+  await ensureSchema();
   await db.execute({
     sql: "INSERT INTO messages (id, name, email, phone, message, created_at) VALUES (?, ?, ?, ?, ?, ?)",
     args: [id, name, email, phone, message, new Date().toISOString()],
@@ -103,23 +132,13 @@ export async function addMessage(
 }
 
 export async function deleteMessageById(id: string): Promise<boolean> {
+  await ensureSchema();
   const result = await db.execute({
     sql: "DELETE FROM messages WHERE id = ?",
     args: [id],
   });
   return result.rowsAffected > 0;
 }
-
-export async function getMessagesByDate(): Promise<DailyCountRow[]> {
-  const result = await db.execute(
-    `SELECT DATE(created_at) as date, COUNT(*) as count
-     FROM messages
-     GROUP BY DATE(created_at)
-     ORDER BY date ASC`,
-  );
-  return result.rows as unknown as DailyCountRow[];
-}
-
 
 /* ───────── Audience ───────── */
 
@@ -131,6 +150,7 @@ export async function addPageView(
   device: string,
   visitorId: string,
 ) {
+  await ensureSchema();
   await db.execute({
     sql: `INSERT INTO page_views (id, path, referrer, country, device, visitor_id, created_at)
           VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -153,6 +173,8 @@ async function countQuery(sql: string): Promise<number> {
 }
 
 export async function getVisitStats(): Promise<VisitStats> {
+  await ensureSchema();
+
   const [
     total,
     last7,

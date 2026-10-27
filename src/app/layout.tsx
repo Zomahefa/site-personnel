@@ -1,16 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
+import { LanguageProvider } from "@/components/language-provider";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { VisitTracker } from "@/components/site/visit-tracker";
-import { site, siteUrl } from "@/lib/content";
+import { AiAssistant } from "@/components/site/ai-assistant";
+import { site, siteUrl, defaultContent } from "@/lib/content";
 import "./globals.css";
 
-const title =
-  "Zo Mahefa RANAIVO — Développeur web & mobile, DevOps, QA";
+const title = "Zo Mahefa RANAIVO — Développeur web, DevOps & QA";
 const description =
-  "Web & mobile, DevOps et QA à Madagascar. Je conçois, déploie et teste des applications fiables. Disponible en remote pour un stage, une alternance ou une mission.";
+  "Portfolio de Zo Mahefa RANAIVO, développeur web & mobile, ingénieur DevOps et testeur QA à Fianarantsoa, Madagascar. Projets, compétences, témoignages et contact.";
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -24,6 +26,20 @@ export const metadata: Metadata = {
   creator: site.name,
   publisher: site.name,
   category: "technology",
+  keywords: [
+    "Zo Mahefa",
+    "Zomahefa",
+    "Zo Mahefa RANAIVO",
+    "développeur web Madagascar",
+    "développeur Fianarantsoa",
+    "ingénieur DevOps Madagascar",
+    "testeur QA",
+    "QA automation",
+    "Next.js",
+    "Spring Boot",
+    "Docker",
+    "Playwright",
+  ],
   alternates: {
     canonical: "/",
     languages: {
@@ -121,12 +137,22 @@ const schema = {
       knowsAbout: [
         "Java",
         "Spring Boot",
+        "Spring Security",
         "PostgreSQL",
         "Docker",
-        "GitHub Actions",
         "Kubernetes",
+        "GitHub Actions",
+        "CI/CD",
         "Next.js",
+        "React",
+        "TypeScript",
         "Quality Assurance",
+        "QA automation",
+        "Playwright",
+        "Cypress",
+        "Postman",
+        "K6",
+        "Jira",
       ],
       hasOccupation: {
         "@type": "Occupation",
@@ -155,7 +181,7 @@ const schema = {
       name: title,
       description,
       inLanguage: "fr-FR",
-      dateModified: "2026-10-26",
+      dateModified: new Date().toISOString().slice(0, 10),
       mainEntity: { "@id": `${siteUrl}/#person` },
       primaryImageOfPage: {
         "@type": "ImageObject",
@@ -209,16 +235,19 @@ export default function RootLayout({
       </head>
       <body>
         <a href="#main" className="skip-link">
-          Aller au contenu
+          {defaultContent.ui.skipLink}
         </a>
         <ThemeProvider>
-          <VisitTracker />
-          <div className="site-frame">
-            <Header />
-            <main id="main">{children}</main>
-            <Footer />
-          </div>
-          <Toaster position="bottom-right" richColors />
+          <LanguageProvider>
+            <VisitTracker />
+            <div className="site-frame">
+              <Header />
+              <main id="main">{children}</main>
+              <Footer />
+            </div>
+            <AiAssistant />
+            <Toaster position="bottom-right" richColors />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

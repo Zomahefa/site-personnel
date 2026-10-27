@@ -1,13 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { navItems, site } from "@/lib/content";
+import { site } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 import { LocalClock } from "@/components/site/local-clock";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { LanguageToggle } from "@/components/site/language-toggle";
 
 export function Header() {
+  const { c } = useI18n();
+  const { nav, ui } = c;
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  const anchor = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+  const homeHref = onHome ? "#top" : "/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -34,7 +43,7 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const sections = navItems
+    const sections = nav
       .map((item) => document.getElementById(item.id))
       .filter((node): node is HTMLElement => Boolean(node));
 
@@ -52,7 +61,7 @@ export function Header() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [nav]);
 
   useEffect(() => {
     if (!open) return;
@@ -78,21 +87,21 @@ export function Header() {
         aria-hidden="true"
       />
       <div className="site-shell header-inner">
-        <Link href="#top" className="brand" aria-label="Zo Mahefa — retour en haut">
+        <Link href={homeHref} className="brand" aria-label={ui.brandAria}>
           <span className="brand-mark">
             ZM<span className="text-brand">.</span>
           </span>
           <span className="brand-name">
-            Zo Mahefa RANAIVO
-            <span className="brand-role">Ingénieur logiciel</span>
+            {site.name}
+            <span className="brand-role">{c.hero.kicker}</span>
           </span>
         </Link>
 
-        <nav className="desktop-nav" aria-label="Navigation principale">
-          {navItems.map((item) => (
+        <nav className="desktop-nav" aria-label={ui.navMain}>
+          {nav.map((item) => (
             <a
               key={item.id}
-              href={`#${item.id}`}
+              href={anchor(item.id)}
               className={`nav-link ${active === item.id ? "is-active" : ""}`}
               aria-current={active === item.id ? "location" : undefined}
             >
@@ -105,12 +114,13 @@ export function Header() {
         <div className="header-actions">
           <span className="availability-pill hidden xl:inline-flex">
             <span className="availability-dot" aria-hidden="true" />
-            Disponible
+            {ui.availability}
           </span>
           <LocalClock />
+          <LanguageToggle />
           <ThemeToggle />
-          <a href="#contact" className="button button-dark header-cta">
-            Me contacter
+          <a href={anchor("contact")} className="button button-dark header-cta">
+            {ui.contactCta}
             <ArrowUpRight className="size-3.5" aria-hidden="true" />
           </a>
           <button
@@ -119,7 +129,7 @@ export function Header() {
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="mobile-navigation"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={open ? ui.menuClose : ui.menuOpen}
           >
             {open ? (
               <X className="size-5" aria-hidden="true" />
@@ -141,8 +151,8 @@ export function Header() {
         `}</style>
         <div className="nojs-nav">
           <div className="site-shell">
-            {navItems.map((item) => (
-              <a key={item.id} href={`#${item.id}`}>
+            {nav.map((item) => (
+              <a key={item.id} href={anchor(item.id)}>
                 {item.label}
               </a>
             ))}
@@ -155,11 +165,11 @@ export function Header() {
         className="mobile-navigation"
         aria-hidden={!open}
       >
-        <nav aria-label="Navigation mobile">
-          {navItems.map((item) => (
+        <nav aria-label={ui.navMobile}>
+          {nav.map((item) => (
             <a
               key={item.id}
-              href={`#${item.id}`}
+              href={anchor(item.id)}
               className="mobile-nav-link"
               onClick={() => setOpen(false)}
               tabIndex={open ? 0 : -1}
@@ -175,11 +185,11 @@ export function Header() {
         <div className="mobile-navigation-footer">
           <p>
             <span className="status-dot" aria-hidden="true" />
-            {site.availability}
+            {c.availability}
           </p>
           <a href={`mailto:${site.email}`}>{site.email}</a>
           <p className="text-muted-foreground">
-            {site.location} · sur site ou à distance
+            {c.location} · {c.workModes}
           </p>
         </div>
       </div>

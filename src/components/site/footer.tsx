@@ -1,35 +1,49 @@
+"use client";
+
 import { ArrowUp, Mail, MapPin } from "lucide-react";
-import { navItems, site } from "@/lib/content";
+import { usePathname } from "next/navigation";
+import { site } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { LocalClock } from "@/components/site/local-clock";
 
 export function Footer() {
+  const { c } = useI18n();
+  const { footer, nav, ui } = c;
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  const anchor = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+  const homeHref = onHome ? "#top" : "/";
+
   return (
     <footer className="site-footer">
       <div className="site-shell">
         <div className="footer-top">
           <div className="footer-identity">
-            <a href="#top" className="footer-brand" aria-label="Retour en haut">
+            <a href={homeHref} className="footer-brand" aria-label={ui.brandAria}>
               ZM<span className="text-brand">.</span>
             </a>
             <p>
-              Ingénieur logiciel — web, mobile,
+              {footer.taglineLine1}
               <br />
-              cloud et qualité.
+              {footer.taglineLine2}
             </p>
             <div className="footer-coordinates">
-              <span>
+              <span title={ui.coordinatesAria}>
                 <MapPin className="size-3.5" aria-hidden="true" />
-                {site.location}
+                {c.location}
+              </span>
+              <span className="mono footer-gps" title={ui.coordinatesAria}>
+                {site.coordinates}
               </span>
               <LocalClock />
             </div>
           </div>
 
-          <nav className="footer-nav" aria-label="Navigation de pied de page">
+          <nav className="footer-nav" aria-label={footer.navLabel}>
             <span className="mono">INDEX</span>
-            {navItems.map((item) => (
-              <a href={`#${item.id}`} key={item.id}>
+            {nav.map((item) => (
+              <a href={anchor(item.id)} key={item.id}>
                 <span className="mono">{item.index}</span>
                 {item.label}
               </a>
@@ -37,7 +51,7 @@ export function Footer() {
           </nav>
 
           <div className="footer-contact">
-            <span className="mono">CONTACT</span>
+            <span className="mono">{footer.contactLabel}</span>
             <a href={`mailto:${site.email}`}>
               <Mail className="size-3.5" aria-hidden="true" />
               {site.email}
@@ -48,7 +62,7 @@ export function Footer() {
                 href={site.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub de Zo Mahefa"
+                aria-label="GitHub — Zo Mahefa"
               >
                 <GithubIcon className="size-4" />
               </a>
@@ -56,20 +70,12 @@ export function Footer() {
                 href={site.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn de Zo Mahefa"
+                aria-label="LinkedIn — Zo Mahefa"
               >
                 <LinkedinIcon className="size-4" />
               </a>
               <a href={site.cv} download className="footer-cv">
-                CV PDF
-              </a>
-              <a
-                href={site.profileEn}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-cv"
-              >
-                Profile EN
+                {footer.cv}
               </a>
             </div>
           </div>
@@ -81,12 +87,12 @@ export function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} Zo Mahefa RANAIVO. Tous droits réservés.</p>
-          <p className="footer-built">
-            Conçu, développé et déployé avec Next.js.
+          <p>
+            © {new Date().getFullYear()} Zo Mahefa RANAIVO. {footer.rights}
           </p>
-          <a href="#top" className="footer-back">
-            Haut de page
+          <p className="footer-built">{footer.built}</p>
+          <a href={homeHref} className="footer-back">
+            {footer.backToTop}
             <ArrowUp className="size-3.5" aria-hidden="true" />
           </a>
         </div>

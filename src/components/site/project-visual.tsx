@@ -1,4 +1,7 @@
+"use client";
+
 import type { ProjectVisualKind } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 
 type Props = {
   kind: ProjectVisualKind;
@@ -6,15 +9,18 @@ type Props = {
 };
 
 export function ProjectVisual({ kind, title }: Props) {
+  const { c } = useI18n();
+  const ui = c.ui;
+
   return (
     <div
       className={`project-visual visual-${kind}`}
       role="img"
-      aria-label={`Schéma conceptuel du projet ${title}`}
+      aria-label={`${ui.visualAria} — ${title}`}
     >
       <div className="visual-grid" aria-hidden="true" />
       <div className="visual-bar">
-        <span className="mono">SYSTEM_VIEW</span>
+        <span className="mono">{ui.visualSystem}</span>
         <span className="visual-dots" aria-hidden="true">
           <i />
           <i />
@@ -33,15 +39,15 @@ export function ProjectVisual({ kind, title }: Props) {
           <div className="incident-main">
             <div className="incident-kpis">
               <div>
-                <span className="mini-label">Signalées</span>
+                <span className="mini-label">{ui.visualReported}</span>
                 <strong>—</strong>
               </div>
               <div>
-                <span className="mini-label">En cours</span>
+                <span className="mini-label">{ui.visualInProgress}</span>
                 <strong>—</strong>
               </div>
               <div>
-                <span className="mini-label">Résolues</span>
+                <span className="mini-label">{ui.visualResolved}</span>
                 <strong>—</strong>
               </div>
             </div>
@@ -52,7 +58,7 @@ export function ProjectVisual({ kind, title }: Props) {
               <span className="map-pin pin-a" />
               <span className="map-pin pin-b" />
               <span className="map-pin pin-c" />
-              <span className="map-tooltip">Panne · priorité haute</span>
+              <span className="map-tooltip">{ui.visualHighPriority}</span>
             </div>
             <div className="incident-timeline">
               <span className="timeline-dot is-active" />
@@ -60,7 +66,7 @@ export function ProjectVisual({ kind, title }: Props) {
               <span className="timeline-dot" />
               <span className="timeline-line" />
               <span className="timeline-dot" />
-              <span className="timeline-label">Signalée → Assignée → Résolue</span>
+              <span className="timeline-label">{ui.visualTimeline}</span>
             </div>
           </div>
         </div>
@@ -71,7 +77,12 @@ export function ProjectVisual({ kind, title }: Props) {
           <div className="erp-sidebar">
             <span className="mini-logo">BE</span>
             <span className="sidebar-title">ERP</span>
-            {["Stock", "Ventes", "Clients", "Trésorerie"].map((item, index) => (
+            {[
+              ui.visualStock,
+              ui.visualSales,
+              ui.visualClients,
+              ui.visualTreasury,
+            ].map((item, index) => (
               <span
                 className={`sidebar-row ${index === 0 ? "is-active" : ""}`}
                 key={item}
@@ -82,8 +93,8 @@ export function ProjectVisual({ kind, title }: Props) {
           </div>
           <div className="erp-main">
             <div className="erp-head">
-              <span className="mini-label">Tableau de bord</span>
-              <span className="mini-chip">Exercice 2026</span>
+              <span className="mini-label">{ui.visualDashboard}</span>
+              <span className="mini-chip">{ui.visualYear}</span>
             </div>
             <div className="erp-chart">
               {[38, 62, 44, 78, 56, 88, 70, 94].map((height, index) => (
@@ -103,7 +114,7 @@ export function ProjectVisual({ kind, title }: Props) {
                 <div className="erp-row" key={name}>
                   <span>{name}</span>
                   <span className="mono">{value}</span>
-                  <span className="stock-pill">Stock</span>
+                  <span className="stock-pill">{ui.visualStock}</span>
                 </div>
               ))}
             </div>
@@ -133,23 +144,29 @@ export function ProjectVisual({ kind, title }: Props) {
           </div>
           <div className="pipeline-metrics">
             <div>
-              <span className="mini-label">Tests auto</span>
-              <span className="metric-line"><i style={{ width: "92%" }} /></span>
+              <span className="mini-label">{ui.visualAutoTests}</span>
+              <span className="metric-line">
+                <i style={{ width: "92%" }} />
+              </span>
             </div>
             <div>
-              <span className="mini-label">Logs</span>
-              <span className="metric-line"><i style={{ width: "78%" }} /></span>
+              <span className="mini-label">{ui.visualLogs}</span>
+              <span className="metric-line">
+                <i style={{ width: "78%" }} />
+              </span>
             </div>
             <div>
-              <span className="mini-label">Alertes</span>
-              <span className="metric-line"><i style={{ width: "100%" }} /></span>
+              <span className="mini-label">{ui.visualAlerts}</span>
+              <span className="metric-line">
+                <i style={{ width: "100%" }} />
+              </span>
             </div>
           </div>
         </div>
       )}
 
       <span className="visual-foot mono" aria-hidden="true">
-        SCHÉMA CONCEPTUEL · {kind.toUpperCase()}
+        {ui.visualConcept} · {kind.toUpperCase()}
       </span>
     </div>
   );

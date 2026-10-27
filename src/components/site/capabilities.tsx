@@ -1,9 +1,14 @@
-import { ArrowUpRight } from "lucide-react";
-import { practices, stackLevels } from "@/lib/content";
+"use client";
+
+import { ArrowUpRight, Bug, ShieldCheck } from "lucide-react";
+import { useI18n } from "@/components/language-provider";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 
 export function Capabilities() {
+  const { c } = useI18n();
+  const { practices, stack, qa, sections } = c;
+
   return (
     <section
       id="expertise"
@@ -12,10 +17,10 @@ export function Capabilities() {
     >
       <div className="site-shell">
         <SectionHeading
-          index="02"
-          label="Expertise"
-          title="Trois façons de rendre un produit fiable."
-          intro="Je ne juxtapose pas des technologies : je relie le produit, l'infrastructure et la qualité pour réduire les mauvaises surprises entre la démo et la production."
+          index={sections.expertise.index}
+          label={sections.expertise.label}
+          title={sections.expertise.title}
+          intro={sections.expertise.intro}
           id="expertise-title"
         />
 
@@ -25,7 +30,9 @@ export function Capabilities() {
               <article className="practice-card">
                 <div className="practice-top">
                   <span className="practice-letter">{practice.index}</span>
-                  <span className="mono text-muted-foreground">{practice.code}</span>
+                  <span className="mono text-muted-foreground">
+                    {practice.code}
+                  </span>
                 </div>
                 <h3>{practice.title}</h3>
                 <p className="practice-intro">{practice.intro}</p>
@@ -47,20 +54,59 @@ export function Capabilities() {
           ))}
         </div>
 
+        <Reveal className="qa-panel" distance={24}>
+          <div className="qa-panel-head">
+            <div>
+              <span className="mono text-muted-foreground">{qa.kicker}</span>
+              <h3>{qa.title}</h3>
+            </div>
+            <p>{qa.intro}</p>
+          </div>
+
+          <div className="qa-grid">
+            {qa.categories.map((category, index) => (
+              <article className="qa-card" key={category.title}>
+                <div className="qa-card-head">
+                  <span className="mono">0{index + 1}</span>
+                  <Bug className="size-4" aria-hidden="true" />
+                </div>
+                <h4>{category.title}</h4>
+                <p>{category.note}</p>
+                <ul className="qa-tools">
+                  {category.tools.map((tool) => (
+                    <li key={tool}>{tool}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          <div className="qa-mindset">
+            <span className="mono text-muted-foreground">
+              <ShieldCheck className="inline size-3.5" aria-hidden="true" />{" "}
+              QA MINDSET
+            </span>
+            <ul>
+              {qa.mindset.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="qa-footnote mono">{qa.footnote}</p>
+        </Reveal>
+
         <Reveal className="stack-panel" distance={24}>
           <div className="stack-panel-head">
             <div>
-              <span className="mono text-muted-foreground">CORE STACK / NIVEAUX RÉELS</span>
-              <h3>Ce que je peux défendre en entretien.</h3>
+              <span className="mono text-muted-foreground">{stack.kicker}</span>
+              <h3>{stack.title}</h3>
             </div>
-            <p>
-              Pas de pourcentage inventé. Chaque niveau correspond à un usage
-              réel : production, projet complet ou notions en progression.
-            </p>
+            <p>{stack.intro}</p>
           </div>
 
           <div className="stack-levels">
-            {stackLevels.map((level, index) => (
+            {stack.levels.map((level, index) => (
               <div className="stack-level" key={level.level}>
                 <div className="stack-level-head">
                   <span className="mono">0{index + 1}</span>
@@ -76,10 +122,7 @@ export function Capabilities() {
             ))}
           </div>
 
-          <p className="stack-footnote mono">
-            UNE TECHNOLOGIE N&apos;EST PAS UNE COMPÉTENCE TANT QU&apos;ELLE N&apos;A
-            PAS ÉTÉ LIVRÉE, TESTÉE ET EXPLIQUÉE.
-          </p>
+          <p className="stack-footnote mono">{stack.footnote}</p>
         </Reveal>
       </div>
     </section>

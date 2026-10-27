@@ -1,3 +1,7 @@
+"use client";
+
+import { useI18n } from "@/components/language-provider";
+
 const stack = [
   "Spring Boot",
   "Next.js",
@@ -6,18 +10,22 @@ const stack = [
   "GitHub Actions",
   "Prometheus",
   "Django",
-  "Linux",
+  "Playwright",
   "Kubernetes",
   "TypeScript",
-  "Grafana",
+  "Cypress",
+  "Postman",
+  "K6",
   "Nginx",
 ];
 
 export function StackMarquee() {
+  const { c } = useI18n();
+
   return (
     <div className="marquee border-y border-border bg-card/60">
       <p className="sr-only">
-        Technologies principales : {stack.join(", ")}.
+        {c.ui.stackLabel} : {stack.join(", ")}.
       </p>
       <div className="marquee-track" aria-hidden="true">
         {[0, 1].map((copy) => (

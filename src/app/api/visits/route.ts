@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { addPageView, getVisitStats } from "@/lib/db";
-import { verifyPassword } from "@/lib/auth";
+import { isAuthorized } from "@/lib/auth";
 
 const rateLimits = new Map<string, { count: number; resetAt: number }>();
 
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  if (!verifyPassword(request.headers.get("authorization"))) {
+  if (!isAuthorized(request)) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 

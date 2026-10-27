@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import type { ProjectCapture } from "@/lib/content";
+import { useI18n } from "@/components/language-provider";
 
 type Props = {
   captures: ProjectCapture[];
@@ -12,6 +13,8 @@ type Props = {
 };
 
 export function ProjectGallery({ captures, title }: Props) {
+  const { c } = useI18n();
+  const ui = c.ui;
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
@@ -37,13 +40,23 @@ export function ProjectGallery({ captures, title }: Props) {
     setIndex((next + count) % count);
   };
 
+  const stateLabel = count > 1
+    ? reduceMotion
+      ? ui.galleryManual
+      : manualPaused
+        ? ui.galleryPaused
+        : hovered
+          ? ui.galleryHover
+          : ui.galleryAuto
+    : ui.galleryPreview;
+
   return (
     <div
       ref={containerRef}
       className={`project-gallery ${paused ? "is-paused" : ""}`}
       role="region"
-      aria-roledescription="carrousel"
-      aria-label={`Captures du projet ${title}`}
+      aria-roledescription="carousel"
+      aria-label={`${ui.galleryRegion} — ${title}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setHovered(true)}
@@ -60,17 +73,7 @@ export function ProjectGallery({ captures, title }: Props) {
           <i />
         </span>
         <span className="mono gallery-app-name">{title}</span>
-        <span className="mono gallery-state">
-          {count > 1
-            ? reduceMotion
-              ? "manuel"
-              : manualPaused
-                ? "pause"
-                : hovered
-                  ? "survol"
-                  : "auto · 5s"
-            : "aperçu"}
-        </span>
+        <span className="mono gallery-state">{stateLabel}</span>
       </div>
 
       <div
@@ -112,7 +115,7 @@ export function ProjectGallery({ captures, title }: Props) {
 
         <div className="gallery-overlay">
           <span className="mono">
-            CAPTURE {String(index + 1).padStart(2, "0")} /{" "}
+            {ui.galleryCapture} {String(index + 1).padStart(2, "0")} /{" "}
             {String(count).padStart(2, "0")}
           </span>
           <span className="gallery-caption">{current.label}</span>
@@ -126,9 +129,7 @@ export function ProjectGallery({ captures, title }: Props) {
                 className="gallery-arrow gallery-pause"
                 onClick={() => setManualPaused((value) => !value)}
                 aria-label={
-                  manualPaused
-                    ? "Reprendre le défilement automatique"
-                    : "Mettre le défilement automatique en pause"
+                  manualPaused ? ui.galleryPlay : ui.galleryPause
                 }
                 aria-pressed={manualPaused}
               >
@@ -143,7 +144,7 @@ export function ProjectGallery({ captures, title }: Props) {
               type="button"
               className="gallery-arrow"
               onClick={() => goTo(index - 1)}
-              aria-label={`Capture précédente de ${title}`}
+              aria-label={`${ui.galleryPrev} — ${title}`}
             >
               <ChevronLeft className="size-4" aria-hidden="true" />
             </button>
@@ -151,7 +152,7 @@ export function ProjectGallery({ captures, title }: Props) {
               type="button"
               className="gallery-arrow"
               onClick={() => goTo(index + 1)}
-              aria-label={`Capture suivante de ${title}`}
+              aria-label={`${ui.galleryNext} — ${title}`}
             >
               <ChevronRight className="size-4" aria-hidden="true" />
             </button>
@@ -161,14 +162,14 @@ export function ProjectGallery({ captures, title }: Props) {
 
       <div className="gallery-footer">
         {count > 1 ? (
-          <div className="gallery-pagination" aria-label="Choisir une capture">
+          <div className="gallery-pagination" aria-label={ui.galleryChoose}>
             {captures.map((capture, slideIndex) => (
               <button
                 key={capture.src}
                 type="button"
                 className={`gallery-dot ${slideIndex === index ? "is-active" : ""}`}
                 onClick={() => goTo(slideIndex)}
-                aria-label={`Afficher : ${capture.label}`}
+                aria-label={`${ui.galleryShow} : ${capture.label}`}
                 aria-current={slideIndex === index ? "true" : undefined}
               >
                 <span />
@@ -176,15 +177,16 @@ export function ProjectGallery({ captures, title }: Props) {
             ))}
           </div>
         ) : (
-          <span className="mono text-muted-foreground">01 CAPTURE</span>
+          <span className="mono text-muted-foreground">01 {ui.galleryCapture}</span>
         )}
-        <span className="sr-only">
-          Capture {index + 1} sur {count} : {current.label}
+        <span className="sr-only" aria-live="polite">
+          {ui.galleryCapture} {index + 1} {ui.galleryOf} {count} :{" "}
+          {current.label}
         </span>
         <span className="mono gallery-hint">
           <ChevronLeft className="size-3" aria-hidden="true" />
           <ChevronRight className="size-3" aria-hidden="true" />
-          flèches / survol
+          {ui.galleryHint}
         </span>
       </div>
     </div>

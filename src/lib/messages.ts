@@ -19,7 +19,7 @@ export async function addNewMessage(
   phone: string,
   message: string
 ): Promise<Message> {
-  const id = Date.now().toString();
+  const id = crypto.randomUUID();
   await addMessage(id, name, email, phone, message);
   return { id, name, email, phone, message, createdAt: new Date().toISOString() };
 }

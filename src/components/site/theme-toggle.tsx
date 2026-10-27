@@ -2,9 +2,11 @@
 
 import { SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useI18n } from "@/components/language-provider";
 
 export function ThemeToggle() {
   const { setTheme } = useTheme();
+  const { c } = useI18n();
 
   function toggleTheme() {
     const isDark = document.documentElement.classList.contains("dark");
@@ -16,8 +18,8 @@ export function ThemeToggle() {
       type="button"
       className="icon-button"
       onClick={toggleTheme}
-      aria-label="Changer de thème clair ou sombre"
-      title="Changer de thème"
+      aria-label={c.ui.themeLabel}
+      title={c.ui.themeLabel}
     >
       <SunMoon className="size-4" aria-hidden="true" />
     </button>
