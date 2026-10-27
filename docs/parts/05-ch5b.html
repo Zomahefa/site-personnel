@@ -1,0 +1,279 @@
+<h2>5.8 Parcours, formation, certifications</h2>
+<p>
+  Tout est dans <code>about</code>. C’est le bloc le plus long après les
+  projets. Il alimente la section « Parcours » et le prompt de l’assistant.
+</p>
+
+<h3>Textes de présentation</h3>
+<pre>about: {
+  lead: "Je m'appelle Zo Mahefa RANAIVO...",
+  body1: "Formé à l'ENI, j'ai appris à relier le produit, le système et la qualité...",
+  body2: "Je documente mes décisions, je teste ce que je livre...",
+  targetKicker: "CE QUE JE RECHERCHE",
+  targetItems: ["Web &amp; mobile · backend", "DevOps &amp; cloud", "Qualité &amp; automatisation"],
+  languagesLabel: "LANGUES",
+  languages: "Français courant · Anglais technique... · Malgache natif",
+  formatLabel: "FORMAT",
+  format: "Remote friendly · réponse sous 48 h ouvrées",
+}</pre>
+
+<h3>Expériences</h3>
+<pre>experiences: [
+  {
+    period: "2024 — Présent",
+    title: "Développeur web &amp; DevOps",
+    company: "Freelance · Projets personnels",
+    text: "Conception et développement d'applications métier...",
+    tags: ["Spring Boot", "React", "Docker", "CI/CD"],
+  },
+  // ...
+]</pre>
+<p>
+  Chaque expérience affiche la période, le titre, l’entreprise, le texte et
+  les tags. L’ordre du tableau est l’ordre d’affichage : le plus récent
+  d’abord.
+</p>
+
+<h3>Formation</h3>
+<pre>education: [
+  {
+    period: "2025 — 2026",
+    title: "Master 1 en informatique",
+    school: "ENI — École Nationale d'Informatique",
+    detail: "Ingénierie des systèmes d'information. Formation en cours.",
+  },
+  // ...
+]</pre>
+
+<h3>Certifications</h3>
+<pre>certifications: [
+  {
+    title: "Certification Spring Boot",
+    issuer: "Mind Luster",
+    year: "2026",
+    image: "/certifcatSping-boot2.jpeg",
+    href: "/certificatSpringBoot.pdf",
+  },
+  {
+    title: "Certification UML",
+    issuer: "Mind Luster",
+    year: "2026",
+    image: "/uml-certification.jpeg",
+    href: "/uml-certification-zo.pdf",
+  },
+]</pre>
+<ul>
+  <li><code>image</code> est la vignette affichée (JPEG/PNG dans <code>public/</code>).</li>
+  <li><code>href</code> est le PDF ouvert au clic, dans un nouvel onglet.</li>
+  <li>Les noms de fichiers actuels contiennent une faute (<code>certifcatSping-boot2.jpeg</code>). Si vous les renommez, mettez à jour <code>image</code> et <code>href</code>.</li>
+  <li>Pour ajouter une certification : déposez la vignette et le PDF dans <code>public/</code>, puis ajoutez un objet dans les tableaux FR et EN.</li>
+</ul>
+
+<div class="callout tip">
+  <span class="callout-label">Taille des vignettes</span>
+  <p>
+    Le composant <code>about.tsx</code> déclare <code>width={1600}</code> et
+    <code>height={1131}</code> pour les images de certification. Utilisez de
+    préférence un format paysage proche de ce ratio pour éviter les recadrages
+    étranges. Les images sont optimisées par <code>next/image</code>.
+  </p>
+</div>
+
+<h3>Savoir-être</h3>
+<pre>softSkills: [
+  {
+    title: "Résolution de problèmes",
+    text: "Partir du symptôme, isoler la cause...",
+    proof: "Diagnostics sur les pipelines, les environnements...",
+  },
+  // ...
+]</pre>
+<p>
+  Chaque qualité est reliée à une preuve concrète. C’est ce qui distingue ce
+  bloc d’une liste de mots-clés. Si vous ajoutez une qualité, ajoutez une
+  preuve vérifiable.
+</p>
+
+<h2>5.9 Témoignages</h2>
+<pre>testimonials: {
+  items: [
+    {
+      name: "Quincaillerie Boutique de l'Évolution",
+      company: "Boutique de l'Évolution · Quincaillerie",
+      phone: "034 16 118 50",
+      phoneHref: "tel:+261341611850",
+      quote: "Nous suivions nos stocks et nos ventes sur des cahiers...",
+      context: "ERP — stocks, ventes &amp; trésorerie",
+    },
+  ],
+  note: "Témoignages recueillis auprès de clients...",
+}</pre>
+<div class="callout warn">
+  <span class="callout-label">Données personnelles</span>
+  <p>
+    Les témoignages contiennent des noms et des numéros de téléphone. Ne
+    publiez que des personnes qui ont donné leur accord. Pour retirer un
+    témoignage, supprimez l’objet dans <code>fr</code> et <code>en</code>.
+    La clé React étant <code>testimonial.name</code>, deux témoignages avec
+    le même nom provoqueraient un avertissement React.
+  </p>
+</div>
+
+<h2>5.10 Contact et formulaire</h2>
+<p>
+  Le bloc <code>contact</code> contient les libellés de la colonne de gauche
+  et tous les textes du formulaire. Les champs eux-mêmes sont dans
+  <code>src/components/site/contact-form.tsx</code> ; les textes sont dans
+  <code>contact.form</code>.
+</p>
+<pre>contact: {
+  directLabel: "ÉCRIRE DIRECTEMENT",
+  recruiterLabel: "RECRUTEUR",
+  recruiterTitle: "Un poste, un stage ou une alternance",
+  recruiterText: "CV, disponibilité et références de projets.",
+  clientLabel: "CLIENT",
+  clientTitle: "Un produit à concevoir ou à fiabiliser",
+  clientText: "Un premier échange de 30 minutes, sans engagement.",
+  locationNote: "remote possible",
+  cv: "CV PDF",
+  types: [
+    "Site ou application web",
+    "Application mobile",
+    "DevOps / CI-CD",
+    "Qualité &amp; tests",
+    "Recrutement",
+    "Autre",
+  ],
+  form: {
+    head: "BRIEF / CONTACT",
+    response: "RÉPONSE &lt; 48 H",
+    name: "Nom complet",
+    // ...
+  },
+}</pre>
+<ul>
+  <li><code>types</code> alimente la liste déroulante « Type de besoin ». Le choix est préfixé au message enregistré.</li>
+  <li><code>form.consent</code> est le texte du consentement. Il est obligatoire pour envoyer.</li>
+  <li><code>form.errorSend</code> et <code>form.fallbackLink</code> gèrent le repli e-mail.</li>
+  <li>Les sujets des deux liens recruteur/client sont dans <code>contact-section.tsx</code>, pas dans <code>content.ts</code> : cherchez « Opportunité — recrutement » et « Mission — cadrage de projet ».</li>
+</ul>
+
+<h2>5.11 Footer et micro-libellés</h2>
+<p>
+  <code>footer</code> contient l’accroche, les libellés et les mentions.
+  <code>ui</code> contient tous les petits textes d’interface : boutons,
+  galerie, accessibilité, thème, langue, menu. Si un bouton affiche un texte
+  inattendu, cherchez-le dans <code>ui</code>.
+</p>
+<pre>footer: {
+  taglineLine1: "Ingénieur logiciel — web, mobile,",
+  taglineLine2: "DevOps et testeur QA.",
+  navLabel: "Navigation de pied de page",
+  contactLabel: "CONTACT",
+  cv: "CV PDF",
+  backToTop: "Haut de page",
+  rights: "Tous droits réservés.",
+  built: "Conçu, développé et déployé avec Next.js.",
+}</pre>
+
+<h2>5.12 Textes de l’assistant IA</h2>
+<p>
+  Deux endroits distincts :
+</p>
+<ol>
+  <li><code>content.ts</code> → <code>ai</code> : les textes visibles du widget (titre, accueil, suggestions, erreurs, disclaimer).</li>
+  <li><code>src/lib/assistant-prompt.ts</code> : les règles et le contexte envoyés au modèle (ton, périmètre, profil, projets, stack…).</li>
+</ol>
+<div class="callout">
+  <span class="callout-label">Mise à jour automatique du contexte</span>
+  <p>
+    Le prompt est construit à partir de <code>defaultContent</code> (le
+    français). Si vous modifiez un projet, une expérience ou une certification
+    dans <code>content.ts</code>, l’assistant apprendra l’information au
+    prochain build, sans toucher à <code>assistant-prompt.ts</code>. Vous ne
+    modifiez ce fichier que pour changer les <em>règles</em> ou le ton.
+  </p>
+</div>
+
+<h2>5.13 CV, photo et images</h2>
+<table>
+  <thead><tr><th style="width:28%;">Besoin</th><th style="width:30%;">Fichier</th><th>Où le référencer</th></tr></thead>
+  <tbody>
+    <tr><td>Remplacer le CV</td><td><code>public/cv-zomahefa-ranaivo-2026-10.pdf</code></td><td><code>site.cv</code>. Conservez le même nom pour éviter les liens morts, ou mettez à jour <code>site.cv</code>.</td></tr>
+    <tr><td>Remplacer le portrait</td><td><code>public/photo-cv.png</code></td><td>Utilisé par <code>hero.tsx</code> et le JSON-LD (<code>image</code>).</td></tr>
+    <tr><td>Image de partage LinkedIn / réseaux</td><td><code>public/og-image.png</code></td><td>Open Graph et Twitter dans <code>layout.tsx</code>. Format 1200×630.</td></tr>
+    <tr><td>Captures de projets</td><td><code>public/projects/*.png</code></td><td><code>featuredProjects[].gallery[].src</code>.</td></tr>
+    <tr><td>Vignettes de certification</td><td><code>public/*.jpeg</code></td><td><code>about.certifications[].image</code>.</td></tr>
+    <tr><td>Attestations PDF</td><td><code>public/*.pdf</code></td><td><code>about.certifications[].href</code>.</td></tr>
+    <tr><td>Icône Apple</td><td><code>public/apple-icon.png</code></td><td><code>layout.tsx</code> et <code>manifest.ts</code>.</td></tr>
+    <tr><td>Polices</td><td><code>public/fonts/</code></td><td><code>globals.css</code> et préchargement dans <code>layout.tsx</code>.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="callout-label">Noms de fichiers</span>
+  <p>
+    Les chemins sont sensibles à la casse sur Vercel (Linux). Utilisez des
+    minuscules, sans espaces ni accents : <code>mon-projet-capture-01.png</code>.
+    Un fichier nommé <code>Capture 01.PNG</code> fonctionnera peut-être en
+    local sur macOS/Windows mais renverra 404 en production.
+  </p>
+</div>
+
+<h2>5.14 SEO, métadonnées et partage</h2>
+<h3>Le titre et la description globaux</h3>
+<p>
+  Dans <code>src/app/layout.tsx</code> :
+</p>
+<pre>const title = "Zo Mahefa RANAIVO — Développeur web, DevOps &amp; QA";
+const description = "Portfolio de Zo Mahefa RANAIVO, développeur web &amp; mobile...";</pre>
+<p>
+  Le template de titre ajoute automatiquement « — Zo Mahefa RANAIVO » aux
+  pages qui définissent leur propre titre (comme l’admin).
+</p>
+
+<h3>Les autres champs à connaître</h3>
+<table class="compact">
+  <thead><tr><th style="width:26%;">Champ</th><th>Effet</th></tr></thead>
+  <tbody>
+    <tr><td><code>metadataBase</code></td><td>Base des URLs absolues pour Open Graph et Twitter. Dépend de <code>siteUrl</code>.</td></tr>
+    <tr><td><code>keywords</code></td><td>Mots-clés (peu utilisés par Google, utiles pour d’autres moteurs).</td></tr>
+    <tr><td><code>alternates.canonical</code></td><td>URL canonique de la page d’accueil.</td></tr>
+    <tr><td><code>openGraph</code></td><td>Titre, description, image 1200×630, locale <code>fr_FR</code>.</td></tr>
+    <tr><td><code>twitter</code></td><td>Carte <code>summary_large_image</code>.</td></tr>
+    <tr><td><code>robots</code></td><td>Indexation et directives Googlebot.</td></tr>
+    <tr><td><code>verification.google</code></td><td>Code de vérification Search Console. Le fichier HTML de vérification est aussi dans <code>public/</code>.</td></tr>
+    <tr><td><code>schema</code> (JSON-LD)</td><td>Décrit la personne, le site et la page de profil pour les moteurs.</td></tr>
+  </tbody>
+</table>
+
+<h3>Changer de domaine</h3>
+<ol>
+  <li>Ajoutez le domaine dans Vercel (Settings → Domains).</li>
+  <li>Configurez les enregistrements DNS demandés.</li>
+  <li>Mettez <code>NEXT_PUBLIC_SITE_URL</code> à la nouvelle URL, sans slash final.</li>
+  <li>Redéployez.</li>
+  <li>Vérifiez <code>/sitemap.xml</code>, <code>/robots.txt</code> et le code source (canonical, JSON-LD).</li>
+  <li>Demandez à Google Search Console de réindexer, et rafraîchissez l’aperçu LinkedIn.</li>
+</ol>
+
+<h3>Le JSON-LD</h3>
+<p>
+  Le JSON-LD décrit <code>Person</code>, <code>WebSite</code> et
+  <code>ProfilePage</code>. Il contient le nom, les rôles, la photo, l’e-mail,
+  le téléphone, l’adresse, les réseaux, l’école, les langues et les
+  compétences. Si vous changez de nom, de téléphone ou de réseau social,
+  mettez à jour <code>site</code> <strong>et</strong> le JSON-LD de
+  <code>layout.tsx</code> (certaines valeurs y sont encore écrites en dur).
+</p>
+
+<h2>5.15 Vérifier après chaque modification</h2>
+<ul class="checklist">
+  <li>La même clé a été modifiée dans <code>fr</code> et dans <code>en</code>.</li>
+  <li><code>npm test</code> passe (parité FR/EN, aucun texte vide).</li>
+  <li><code>npm run build</code> passe (TypeScript, imports, routes).</li>
+  <li>Le rendu local est correct en français et en anglais.</li>
+  <li>Les liens ajoutés répondent (GitHub, démo, PDF).</li>
+  <li>Les images ajoutées sont dans <code>public/</code> avec un nom en minuscules.</li>
+  <li>Le texte ne contient pas de secret ni de donnée personnelle non autorisée.</li>
+  <li>Le commit est poussé : Vercel redéploie automatiquement.</li>
+</ul>

@@ -1,0 +1,227 @@
+<!-- ================= CHAPITRE 12 ================= -->
+<h1 class="chapter" id="ch12"><span class="num">Chapitre 12</span>Publication LinkedIn</h1>
+
+<p class="lead">
+  Voici un texte prêt à copier. Il présente le portfolio sans exagérer, en
+  mettant en avant les trois projets, la double compétence produit/infrastructure/qualité
+  et la recherche de stage, d’alternance ou de mission. Remplacez simplement
+  le lien si votre domaine final est différent.
+</p>
+
+<h2>12.1 Version principale — à copier</h2>
+<div class="copybox">
+  <p>
+    Après plusieurs mois à construire, déployer et tester des applications,
+    je suis heureux de mettre enfin mon portfolio en ligne.
+  </p>
+  <p>
+    On y trouve trois projets détaillés, avec le contexte, mon rôle et le
+    résultat :
+  </p>
+  <p>
+    • <strong>Signaleo</strong> — signalement de pannes sur le terrain, suivi
+    des interventions et supervision en temps réel.<br />
+    • <strong>E-Fandrosoana</strong> — un ERP pour une quincaillerie :
+    stocks, ventes, clients, facturation et trésorerie.<br />
+    • <strong>Pipeline CI/CD &amp; observabilité</strong> — une chaîne de
+    livraison complète, de Docker à Prometheus/Grafana, avec déploiement
+    blue/green.
+  </p>
+  <p>
+    Le site présente aussi mon parcours, mes certifications, des témoignages
+    clients et un assistant IA qui répond aux questions sur mon profil.
+  </p>
+  <p>
+    Je suis à la recherche d’un <strong>stage</strong>, d’une
+    <strong>alternance</strong> ou d’une <strong>mission</strong> en
+    développement web/mobile, DevOps ou QA. Basé à Fianarantsoa, Madagascar,
+    je suis ouvert au télétravail.
+  </p>
+  <p>
+    👉 <strong>https://zo-mahefa-it.vercel.app/</strong>
+  </p>
+  <p>
+    Vos retours sont les bienvenus. Et si vous connaissez une équipe qui
+    cherche un profil polyvalent, produit + infrastructure + qualité, je
+    serais ravi d’échanger.
+  </p>
+</div>
+
+<h2>12.2 Version courte — si vous préférez un post bref</h2>
+<div class="copybox">
+  <p>
+    Mon portfolio est en ligne. Développement web/mobile, DevOps et QA :
+    trois projets détaillés (Signaleo, E-Fandrosoana, pipeline CI/CD),
+    mes certifications, des témoignages clients et un assistant IA pour
+    explorer mon profil.
+  </p>
+  <p>
+    Je cherche un stage, une alternance ou une mission — Fianarantsoa,
+    Madagascar, remote friendly.
+  </p>
+  <p>
+    👉 https://zo-mahefa-it.vercel.app/
+  </p>
+</div>
+
+<h2>12.3 Hashtags</h2>
+<p>
+  Ajoutez-les à la fin du post, sans en abuser (8 à 12 maximum) :
+</p>
+<p>
+  <span class="tag">#Portfolio</span>
+  <span class="tag">#DéveloppeurWeb</span>
+  <span class="tag">#DevOps</span>
+  <span class="tag">#QA</span>
+  <span class="tag">#NextJS</span>
+  <span class="tag">#SpringBoot</span>
+  <span class="tag">#Madagascar</span>
+  <span class="tag">#Fianarantsoa</span>
+  <span class="tag">#Alternance</span>
+  <span class="tag">#Stage</span>
+  <span class="tag">#Remote</span>
+</p>
+<pre>#Portfolio #DéveloppeurWeb #DevOps #QA #NextJS #SpringBoot #Madagascar #Fianarantsoa #Alternance #Stage #Remote</pre>
+
+<h2>12.4 Conseils de publication</h2>
+<ul>
+  <li><strong>Image</strong> : joignez une capture du site ou l’image <code>og-image.png</code>. Un post avec visuel attire davantage l’attention.</li>
+  <li><strong>Lien</strong> : LinkedIn réduit parfois la portée des posts contenant un lien. Vous pouvez publier le texte avec l’image, puis mettre le lien dans le premier commentaire. Dans ce cas, écrivez « Lien en commentaire » dans le post.</li>
+  <li><strong>Moment</strong> : un mardi, mercredi ou jeudi matin (heure de Madagascar) est un créneau classique pour les posts professionnels.</li>
+  <li><strong>Mention</strong> : ne taguez pas des recruteurs ou des entreprises sans leur accord.</li>
+  <li><strong>Vérité</strong> : ne rajoutez pas de chiffres ou de clients que le portfolio ne peut pas prouver.</li>
+  <li><strong>Réponses</strong> : prévoyez de répondre aux commentaires le jour même ; c’est ce qui transforme une publication en conversation.</li>
+  <li><strong>Réutilisation</strong> : le même texte peut servir de description sur GitHub, dans un CV ou dans un e-mail de candidature, en l’adaptant.</li>
+</ul>
+
+<div class="callout tip">
+  <span class="callout-label">Après publication</span>
+  <p>
+    Ajoutez le lien du portfolio dans votre profil LinkedIn (section
+    « Coordonnées » ou « Site web »), dans votre signature e-mail et sur
+    votre CV. Un portfolio sert surtout quand il est facile à retrouver.
+  </p>
+</div>
+
+<!-- ================= CHAPITRE 13 ================= -->
+<h1 class="chapter" id="ch13"><span class="num">Chapitre 13</span>Annexes</h1>
+
+<h2>13.1 Les dix erreurs à éviter</h2>
+<ol>
+  <li><strong>Modifier seulement le français.</strong> Le test de parité échouera, ou l’anglais affichera l’ancien texte.</li>
+  <li><strong>Chercher les projets en base.</strong> Ils sont dans <code>content.ts</code>.</li>
+  <li><strong>Inventer une valeur de <code>visual</code>.</strong> Le type n’accepte que trois valeurs ; ajoutez le rendu ou utilisez une galerie.</li>
+  <li><strong>Mettre une image externe sans <code>remotePatterns</code>.</strong> <code>next/image</code> la refusera.</li>
+  <li><strong>Utiliser un nom de fichier avec des espaces ou des majuscules.</strong> Vercel est sensible à la casse.</li>
+  <li><strong>Oublier de redéployer après un changement de variable.</strong> Les variables ne sont pas toujours rechargées par un simple push.</li>
+  <li><strong>Mettre l’URL avec un slash final.</strong> <code>siteUrl</code> le retire, mais autant écrire l’URL propre.</li>
+  <li><strong>Utiliser la base de production pour les previews.</strong> Les tests polluent les vrais messages et les vraies visites.</li>
+  <li><strong>Committer <code>.env.local</code>.</strong> Vérifiez <code>git status</code> avant chaque premier push.</li>
+  <li><strong>Croire qu’un test vert suffit.</strong> Le formulaire, l’admin et l’assistant doivent être testés à la main après déploiement.</li>
+</ol>
+
+<h2>13.2 Commandes utiles</h2>
+<table class="compact">
+  <thead><tr><th style="width:38%;">Commande</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>npm install</code> / <code>npm ci</code></td><td>Installer les dépendances.</td></tr>
+    <tr><td><code>npm run dev</code></td><td>Serveur de développement.</td></tr>
+    <tr><td><code>npm run dev -- --port 3100</code></td><td>Changer le port.</td></tr>
+    <tr><td><code>npm test</code></td><td>Tests unitaires.</td></tr>
+    <tr><td><code>npm run lint</code></td><td>ESLint.</td></tr>
+    <tr><td><code>npx tsc --noEmit</code></td><td>Vérification TypeScript.</td></tr>
+    <tr><td><code>npm run build</code></td><td>Build de production.</td></tr>
+    <tr><td><code>npm run start</code></td><td>Démarrer le build de production.</td></tr>
+    <tr><td><code>npm run db:init</code></td><td>Créer les tables et index.</td></tr>
+    <tr><td><code>turso db list</code></td><td>Lister les bases Turso.</td></tr>
+    <tr><td><code>turso db show &lt;db&gt; --url</code></td><td>Afficher l’URL libSQL.</td></tr>
+    <tr><td><code>turso db tokens create &lt;db&gt;</code></td><td>Créer un jeton.</td></tr>
+    <tr><td><code>turso db shell &lt;db&gt;</code></td><td>Ouvrir un shell SQL.</td></tr>
+    <tr><td><code>turso db shell &lt;db&gt; ".dump"</code></td><td>Exporter la base.</td></tr>
+    <tr><td><code>git status</code></td><td>Vérifier les fichiers avant commit.</td></tr>
+  </tbody>
+</table>
+
+<h2>13.3 Où modifier quoi — aide-mémoire</h2>
+<table class="compact">
+  <thead><tr><th style="width:38%;">Besoin</th><th>Fichier / clé</th></tr></thead>
+  <tbody>
+    <tr><td>Nom, e-mail, téléphone, réseaux, CV</td><td><code>content.ts</code> → <code>site</code></td></tr>
+    <tr><td>Titre du hero, intro, boutons, stats</td><td><code>content.ts</code> → <code>hero</code></td></tr>
+    <tr><td>Rôles animés</td><td><code>content.ts</code> → <code>roles</code></td></tr>
+    <tr><td>Titres des sections</td><td><code>content.ts</code> → <code>sections</code></td></tr>
+    <tr><td>Projets vedettes</td><td><code>content.ts</code> → <code>featuredProjects</code></td></tr>
+    <tr><td>Projets d’archive</td><td><code>content.ts</code> → <code>archive.projects</code></td></tr>
+    <tr><td>Pôles d’expertise</td><td><code>content.ts</code> → <code>practices</code></td></tr>
+    <tr><td>Stack par niveaux</td><td><code>content.ts</code> → <code>stack.levels</code></td></tr>
+    <tr><td>Bandeau de technologies</td><td><code>components/site/stack-marquee.tsx</code> → <code>const stack</code></td></tr>
+    <tr><td>Bloc QA</td><td><code>content.ts</code> → <code>qa</code></td></tr>
+    <tr><td>Méthode</td><td><code>content.ts</code> → <code>process</code></td></tr>
+    <tr><td>Pipeline</td><td><code>content.ts</code> → <code>pipeline</code></td></tr>
+    <tr><td>Parcours, formation, certifications</td><td><code>content.ts</code> → <code>about</code></td></tr>
+    <tr><td>Témoignages</td><td><code>content.ts</code> → <code>testimonials</code></td></tr>
+    <tr><td>Contact et formulaire</td><td><code>content.ts</code> → <code>contact</code></td></tr>
+    <tr><td>Footer</td><td><code>content.ts</code> → <code>footer</code></td></tr>
+    <tr><td>Micro-libellés</td><td><code>content.ts</code> → <code>ui</code></td></tr>
+    <tr><td>Textes de l’assistant</td><td><code>content.ts</code> → <code>ai</code></td></tr>
+    <tr><td>Règles de l’assistant</td><td><code>lib/assistant-prompt.ts</code></td></tr>
+    <tr><td>SEO global</td><td><code>app/layout.tsx</code></td></tr>
+    <tr><td>Sitemap / robots</td><td><code>app/sitemap.ts</code>, <code>app/robots.ts</code></td></tr>
+    <tr><td>En-têtes de sécurité</td><td><code>next.config.ts</code></td></tr>
+    <tr><td>Schéma de base</td><td><code>lib/db.ts</code>, <code>scripts/init-db.mjs</code></td></tr>
+    <tr><td>Authentification admin</td><td><code>lib/auth.ts</code></td></tr>
+    <tr><td>Interface admin</td><td><code>app/admin/page.tsx</code></td></tr>
+  </tbody>
+</table>
+
+<h2>13.4 Maintenance recommandée</h2>
+<table>
+  <thead><tr><th style="width:18%;">Fréquence</th><th>Action</th></tr></thead>
+  <tbody>
+    <tr><td>À chaque contenu modifié</td><td><code>npm test</code>, <code>npm run build</code>, vérification FR/EN, commit.</td></tr>
+    <tr><td>Chaque mois</td><td>Vérifier les messages reçus, supprimer les messages traités, consulter l’audience, tester le formulaire.</td></tr>
+    <tr><td>Chaque trimestre</td><td>Mettre à jour le CV, les projets, les certifications ; vérifier les liens GitHub/démo ; lancer <code>npm audit --omit=dev</code>.</td></tr>
+    <tr><td>Chaque semestre</td><td>Mettre à jour les dépendances avec prudence, revoir le SEO, rafraîchir l’image Open Graph, sauvegarder Turso.</td></tr>
+    <tr><td>En cas d’incident</td><td>Consulter les logs Vercel, vérifier Turso, tester <code>/api/messages</code> et <code>/api/visits</code>, faire un rollback si nécessaire.</td></tr>
+  </tbody>
+</table>
+
+<h2>13.5 Glossaire</h2>
+<table class="compact">
+  <thead><tr><th style="width:24%;">Terme</th><th>Définition</th></tr></thead>
+  <tbody>
+    <tr><td>App Router</td><td>Système de routage de Next.js basé sur le dossier <code>app/</code>.</td></tr>
+    <tr><td>SSR</td><td>Rendu côté serveur : le HTML est généré à la requête.</td></tr>
+    <tr><td>Hydratation</td><td>Processus par lequel React attache les interactions au HTML déjà rendu.</td></tr>
+    <tr><td>libSQL</td><td>Fork de SQLite utilisé par Turso, accessible en réseau.</td></tr>
+    <tr><td>Turso</td><td>Service de base de données libSQL hébergée.</td></tr>
+    <tr><td>HMAC</td><td>Signature cryptographique utilisée pour le cookie de session.</td></tr>
+    <tr><td>Rate limit</td><td>Limitation du nombre de requêtes sur une période.</td></tr>
+    <tr><td>Open Graph</td><td>Balises qui contrôlent l’aperçu d’un lien sur les réseaux sociaux.</td></tr>
+    <tr><td>JSON-LD</td><td>Données structurées pour les moteurs de recherche.</td></tr>
+    <tr><td>Preview Deployment</td><td>Déploiement Vercel d’une branche, avant fusion en production.</td></tr>
+  </tbody>
+</table>
+
+<h2>13.6 Fin du guide</h2>
+<p>
+  Ce document décrit l’état du projet à sa date de rédaction. Si une
+  procédure ou un fichier change, mettez à jour le guide en même temps que le
+  code : c’est ce qui évite de se retrouver, six mois plus tard, devant une
+  documentation qui ne correspond plus à la réalité.
+</p>
+<p>
+  Pour toute modification sensible — base de données, authentification,
+  variables d’environnement — faites une sauvegarde et testez d’abord sur une
+  base ou un déploiement de test.
+</p>
+
+<div class="footer-note">
+  <strong>Guide du portfolio — Zo Mahefa RANAIVO</strong><br />
+  Édition 2026 · v1.0 · Document généré pour la maintenance et le déploiement.<br />
+  Aucun secret n’est inclus dans ce PDF. Les valeurs sensibles restent dans
+  <code>.env.local</code> et dans les variables d’environnement Vercel.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!-- ================= CHAPITRE 8 ================= -->
+<h1 class="chapter" id="ch8"><span class="num">Chapitre 08</span>Assistant IA</h1>
+
+<p class="lead">
+  L’assistant est un widget flottant présent sur toutes les pages publiques,
+  sauf l’administration. Il répond aux questions sur le parcours, les projets,
+  les compétences et la disponibilité. Il ne voit que des informations
+  publiques et ne stocke aucune conversation en base.
+</p>
+
+<h2>8.1 Le parcours d’une question</h2>
+<div class="flow">
+  <div class="flow-node"><b>Widget</b><code>ai-assistant.tsx</code><br />historique local</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>POST</b><code>/api/assistant</code><br />8 derniers messages</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Prompt</b><code>assistant-prompt.ts</code><br />contenu public</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Modèle</b>Groq ou Gemini<br />température 0,35</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Réponse</b><code>{ reply }</code><br />affichée dans le widget</div>
+</div>
+
+<h2>8.2 Les variables d’environnement</h2>
+<table>
+  <thead><tr><th style="width:26%;">Variable</th><th style="width:16%;">Obligatoire</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>GROQ_API_KEY</code></td><td>Oui si Groq</td><td>Clé API Groq. Utilisée par défaut si présente.</td></tr>
+    <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>Oui si Gemini</td><td>Clé Google AI Studio.</td></tr>
+    <tr><td><code>AI_PROVIDER</code></td><td>Non</td><td><code>groq</code> ou <code>google</code>. Force le fournisseur si la clé correspondante existe.</td></tr>
+    <tr><td><code>GROQ_MODEL</code></td><td>Non</td><td>Modèle Groq. Défaut : <code>openai/gpt-oss-120b</code>.</td></tr>
+    <tr><td><code>GOOGLE_AI_MODEL</code></td><td>Non</td><td>Modèle Gemini. Défaut : <code>gemini-2.5-flash</code>.</td></tr>
+  </tbody>
+</table>
+
+<h3>Ordre de résolution du fournisseur</h3>
+<ol>
+  <li>Si <code>AI_PROVIDER=google</code> et <code>GOOGLE_AI_API_KEY</code> existe → Google.</li>
+  <li>Si <code>AI_PROVIDER=groq</code> et <code>GROQ_API_KEY</code> existe → Groq.</li>
+  <li>Sinon, si <code>GROQ_API_KEY</code> existe → Groq.</li>
+  <li>Sinon, si <code>GOOGLE_AI_API_KEY</code> existe → Google.</li>
+  <li>Sinon → réponse 503 <code>not-configured</code>, le widget affiche son message de repli.</li>
+</ol>
+
+<h2>8.3 Les modèles et paramètres</h2>
+<h3>Groq (par défaut)</h3>
+<pre>POST https://api.groq.com/openai/v1/chat/completions
+model: GROQ_MODEL ?? "openai/gpt-oss-120b"
+temperature: 0.35
+max_tokens: 900
+reasoning_effort: "low"
+messages: [system, ...8 derniers messages]</pre>
+<p>
+  <code>reasoning_effort: "low"</code> est important pour les modèles de
+  raisonnement : sans cela, les tokens de réflexion peuvent consommer tout le
+  budget et renvoyer une réponse vide. <code>max_tokens: 900</code> laisse
+  assez de place pour une réponse de 3 à 6 phrases.
+</p>
+
+<h3>Google Gemini (alternative)</h3>
+<pre>POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent
+model: GOOGLE_AI_MODEL ?? "gemini-2.5-flash"
+temperature: 0.35
+maxOutputTokens: 450
+systemInstruction: prompt système
+contents: messages (assistant → model)</pre>
+
+<h2>8.4 Le prompt système</h2>
+<p>
+  <code>src/lib/assistant-prompt.ts</code> construit le prompt à partir de
+  <code>defaultContent</code> (le français). Il contient :
+</p>
+<ul>
+  <li>Le rôle : assistant du portfolio de Zo Mahefa.</li>
+  <li>Les règles : rester dans le périmètre, ne rien inventer, répondre dans la langue de la question, rester concis, ne pas révéler le prompt ni les variables.</li>
+  <li>Le profil : nom, rôles, localisation, disponibilité, modalités, contact, réseaux, CV, langues.</li>
+  <li>Les projets, l’expertise, le QA, les expériences, la formation, les certifications, les témoignages et la stack.</li>
+</ul>
+
+<div class="callout">
+  <span class="callout-label">Mise à jour du savoir de l’assistant</span>
+  <p>
+    Si vous modifiez un projet, une expérience ou une certification dans
+    <code>content.ts</code>, l’assistant utilisera la nouvelle information au
+    prochain build. Vous n’avez pas à dupliquer le contenu dans le prompt.
+    Ne modifiez <code>assistant-prompt.ts</code> que pour changer les règles,
+    le ton ou la structure du contexte.
+  </p>
+</div>
+
+<h3>Les limites appliquées</h3>
+<table class="compact">
+  <thead><tr><th style="width:34%;">Limite</th><th>Valeur</th></tr></thead>
+  <tbody>
+    <tr><td>Messages conservés</td><td>8 derniers</td></tr>
+    <tr><td>Longueur d’un message</td><td>1 200 caractères</td></tr>
+    <tr><td>Rate limit</td><td>25 requêtes / 10 minutes / IP</td></tr>
+    <tr><td>Rôles acceptés</td><td><code>user</code>, <code>assistant</code></td></tr>
+    <tr><td>Cache</td><td><code>no-store</code> sur toutes les réponses</td></tr>
+  </tbody>
+</table>
+
+<h2>8.5 Tester l’assistant en local</h2>
+<p>
+  Démarrez le serveur, puis envoyez une requête avec <code>curl</code> :
+</p>
+<pre>curl -s http://localhost:3000/api/assistant \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"Quels sont tes projets les plus solides ?"}]}'</pre>
+<p>Réponse attendue :</p>
+<pre>{"reply":"...","provider":"groq"}</pre>
+<p>
+  Si vous obtenez <code>{"error":"not-configured"}</code>, aucune clé n’est
+  chargée. Vérifiez <code>.env.local</code> et redémarrez <code>npm run dev</code> :
+  Next.js ne recharge pas toujours les variables sans redémarrage.
+</p>
+
+<h2>8.6 Changer de fournisseur</h2>
+<h3>Passer à Gemini</h3>
+<ol>
+  <li>Créez une clé sur Google AI Studio.</li>
+  <li>Dans <code>.env.local</code> ou Vercel : <code>GOOGLE_AI_API_KEY=...</code>.</li>
+  <li>Ajoutez <code>AI_PROVIDER=google</code>.</li>
+  <li>Redémarrez ou redéployez.</li>
+  <li>Vérifiez que <code>/api/assistant</code> répond avec <code>"provider":"google"</code>.</li>
+</ol>
+
+<h3>Changer de modèle Groq</h3>
+<pre>GROQ_MODEL=openai/gpt-oss-120b</pre>
+<p>
+  Utilisez un modèle disponible sur votre compte Groq. Si le modèle n’existe
+  pas ou n’est pas accessible, l’API renvoie une erreur et la route répond
+  502 <code>provider-error</code>.
+</p>
+
+<h2>8.7 Dépannage de l’assistant</h2>
+<table>
+  <thead><tr><th style="width:22%;">Symptôme</th><th style="width:18%;">Code</th><th>Cause probable / solution</th></tr></thead>
+  <tbody>
+    <tr><td>Message de repli dans le widget</td><td>503 <code>not-configured</code></td><td>Aucune clé IA chargée. Ajoutez <code>GROQ_API_KEY</code> ou <code>GOOGLE_AI_API_KEY</code>, puis redéployez.</td></tr>
+    <tr><td>« Réessayez dans un instant »</td><td>429 <code>rate-limited</code></td><td>25 requêtes en 10 minutes dépassées. Attendez ou testez depuis une autre IP.</td></tr>
+    <tr><td>Réponse vide / erreur</td><td>502 <code>provider-error</code></td><td>Clé invalide, quota, modèle inexistant, panne du fournisseur. Vérifiez les logs Vercel et le nom du modèle.</td></tr>
+    <tr><td>Requête refusée</td><td>400 <code>empty</code></td><td>Le tableau <code>messages</code> est vide ou ne contient aucun rôle valide.</td></tr>
+    <tr><td>Le widget ne s’ouvre pas</td><td>—</td><td>Vérifiez que <code>AiAssistant</code> est bien monté dans <code>layout.tsx</code> et que le chemin n’est pas <code>/admin</code>.</td></tr>
+    <tr><td>Réponse hors sujet</td><td>—</td><td>Le prompt système ou le contenu public contient une information ambiguë. Renforcez les règles dans <code>assistant-prompt.ts</code>.</td></tr>
+  </tbody>
+</table>
+
+<h2>8.8 Coût, confidentialité et limites</h2>
+<ul>
+  <li>Chaque question consomme des tokens chez le fournisseur. Le paramètre <code>max_tokens</code> limite la dépense, mais ne la supprime pas.</li>
+  <li>Aucune conversation n’est enregistrée en base. L’historique vit dans l’état React du widget et disparaît au rechargement.</li>
+  <li>Le prompt ne contient que des informations publiques. Il ne faut jamais y ajouter de données personnelles, de secrets ou de messages reçus.</li>
+  <li>Le modèle peut se tromper. Le widget affiche un disclaimer et propose d’écrire directement.</li>
+  <li>Les réponses sont générées à la volée : elles ne sont pas validées par un humain avant affichage.</li>
+</ul>

@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guide du portfolio — Zo Mahefa RANAIVO</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 17mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    background: #ffffff;
+    color: #171812;
+    font-family: "DejaVu Sans", "Segoe UI", Arial, sans-serif;
+    font-size: 9.8pt;
+    line-height: 1.55;
+  }
+  p { margin: 0 0 8px; }
+  ul, ol { margin: 4px 0 10px 18px; padding: 0; }
+  li { margin: 3px 0; }
+  strong { color: #10110d; }
+  a { color: #1b5e4a; text-decoration: none; }
+  code, .mono, kbd {
+    font-family: "DejaVu Sans Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 0.88em;
+  }
+  code { background: #f1efe7; border: 1px solid #e2ded1; border-radius: 3px; padding: 1px 4px; }
+  pre {
+    margin: 8px 0 12px;
+    padding: 10px 12px;
+    background: #14150f;
+    color: #ece8dc;
+    border-radius: 5px;
+    font-family: "DejaVu Sans Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 8.1pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+    page-break-inside: avoid;
+  }
+  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: inherit; }
+  .tree { font-size: 7.8pt; line-height: 1.42; }
+  h1, h2, h3, h4 { color: #10110d; page-break-after: avoid; }
+  h1.chapter {
+    font-size: 26pt;
+    line-height: 1.06;
+    letter-spacing: -0.6pt;
+    margin: 0 0 6mm;
+    padding-top: 2mm;
+    border-top: 2.4pt solid #1b5e4a;
+    page-break-before: always;
+  }
+  h1.chapter .num {
+    display: block;
+    color: #1b5e4a;
+    font-size: 9.5pt;
+    letter-spacing: 2.2pt;
+    text-transform: uppercase;
+    margin-bottom: 4mm;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 14pt;
+    line-height: 1.2;
+    margin: 8mm 0 3mm;
+    padding-left: 3mm;
+    border-left: 3pt solid #1b5e4a;
+  }
+  h3 { font-size: 11pt; margin: 5mm 0 2mm; }
+  h4 { font-size: 9.8pt; margin: 4mm 0 1.5mm; }
+  .lead { font-size: 11pt; line-height: 1.55; color: #3d4037; margin-bottom: 6mm; }
+  .muted { color: #64675c; }
+  .small { font-size: 8.4pt; }
+  .tag {
+    display: inline-block;
+    font-size: 7.6pt;
+    letter-spacing: 0.8pt;
+    text-transform: uppercase;
+    border: 1px solid #c9c4b5;
+    padding: 2px 7px;
+    margin: 0 4px 4px 0;
+    border-radius: 20px;
+    color: #4d5046;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0 12px;
+    font-size: 8.6pt;
+    line-height: 1.4;
+  }
+  th {
+    background: #ece9df;
+    text-align: left;
+    font-weight: 700;
+    color: #10110d;
+    border: 1px solid #d3cdc0;
+    padding: 5px 6px;
+    vertical-align: top;
+  }
+  td {
+    border: 1px solid #d9d4c6;
+    padding: 5px 6px;
+    vertical-align: top;
+  }
+  tr { page-break-inside: avoid; }
+  .compact td, .compact th { padding: 3px 5px; font-size: 8.2pt; }
+  .callout {
+    border: 1px solid #d6d1c2;
+    border-left: 3.5pt solid #1b5e4a;
+    background: #f7f5ee;
+    padding: 9px 12px;
+    margin: 8px 0 12px;
+    page-break-inside: avoid;
+  }
+  .callout.warn { border-left-color: #a35a12; background: #fdf6ea; }
+  .callout.danger { border-left-color: #a12b20; background: #fdf0ee; }
+  .callout.tip { border-left-color: #2e5f8a; background: #f0f5fa; }
+  .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+  .callout-label {
+    display: block;
+    font-size: 7.6pt;
+    letter-spacing: 1.3pt;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 3px;
+    color: #1b5e4a;
+  }
+  .callout.warn .callout-label { color: #8a4b12; }
+  .callout.danger .callout-label { color: #8d2018; }
+  .callout.tip .callout-label { color: #2e5f8a; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+  .card {
+    border: 1px solid #d9d4c6;
+    background: #fbfaf5;
+    padding: 4mm;
+    page-break-inside: avoid;
+  }
+  .card h4 { margin-top: 0; }
+  .kpi { font-size: 18pt; line-height: 1; color: #1b5e4a; font-weight: 700; margin-bottom: 2mm; }
+  .cols { column-count: 2; column-gap: 8mm; }
+  .cols p, .cols li { break-inside: avoid; }
+  .toc { margin-top: 4mm; }
+  .toc a { color: #171812; }
+  .toc-row {
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    padding: 2.1mm 0;
+    border-bottom: 1px dotted #c9c4b5;
+    font-size: 9.6pt;
+  }
+  .toc-row .n { width: 9mm; color: #1b5e4a; font-weight: 700; font-size: 8.6pt; }
+  .toc-row .t { flex: 1; }
+  .toc-row .d { color: #6f6c62; font-size: 8.2pt; text-align: right; }
+  .chapter-intro {
+    display: block;
+    border-bottom: 1px solid #d9d4c6;
+    padding-bottom: 4mm;
+    margin-bottom: 6mm;
+  }
+  .chapter-intro strong { color: #1b5e4a; }
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 2mm;
+    margin: 5mm 0 7mm;
+    font-size: 7.8pt;
+  }
+  .flow-node {
+    flex: 1;
+    border: 1px solid #cfc9ba;
+    background: #fbfaf5;
+    padding: 3mm 2.5mm;
+    text-align: center;
+    border-radius: 3px;
+  }
+  .flow-node b { display: block; font-size: 8.6pt; margin-bottom: 1mm; }
+  .flow-arrow { align-self: center; color: #1b5e4a; font-size: 13pt; font-weight: 700; }
+  .cover {
+    min-height: 250mm;
+    background: #12130e;
+    color: #f3f0e8;
+    padding: 20mm 17mm 15mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+  }
+  .cover .brandline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 8pt;
+    letter-spacing: 1.6pt;
+    text-transform: uppercase;
+    color: #b9b5a6;
+  }
+  .cover .mark {
+    font-family: "DejaVu Serif", Georgia, serif;
+    font-size: 25pt;
+    line-height: 1;
+    color: #f3f0e8;
+    letter-spacing: -1pt;
+  }
+  .cover .mark span { color: #7fbfa4; }
+  .cover h1 {
+    font-family: "DejaVu Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 42pt;
+    line-height: 0.98;
+    letter-spacing: -1.4pt;
+    margin: 14mm 0 6mm;
+    color: #f6f2e8;
+  }
+  .cover h1 em { color: #9fd0b9; font-style: italic; }
+  .cover .sub {
+    font-size: 12.5pt;
+    line-height: 1.45;
+    color: #c9c5b7;
+    max-width: 130mm;
+  }
+  .cover .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm 8mm;
+    border-top: 1px solid #3a3c31;
+    padding-top: 5mm;
+    font-size: 8.4pt;
+    color: #b9b5a6;
+  }
+  .cover .meta b { display: block; color: #f3f0e8; font-size: 9.6pt; margin-top: 1mm; }
+  .cover .pill {
+    display: inline-block;
+    border: 1px solid #4a4c40;
+    color: #b9d8c8;
+    font-size: 7.6pt;
+    letter-spacing: 1.5pt;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 5mm;
+  }
+  .cover .foot {
+    font-size: 8pt;
+    color: #8d8f82;
+    line-height: 1.5;
+  }
+  .page-break { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  .checklist { list-style: none; margin-left: 0; }
+  .checklist li { padding-left: 6mm; position: relative; }
+  .checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    color: #1b5e4a;
+    font-family: "DejaVu Sans", sans-serif;
+  }
+  .kbd {
+    display: inline-block;
+    border: 1px solid #c9c4b5;
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    background: #fbfaf5;
+    padding: 0 4px;
+    font-size: 8pt;
+  }
+  .path {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 8.4pt;
+    background: #f1efe7;
+    border: 1px solid #e2ded1;
+    padding: 1px 4px;
+    border-radius: 3px;
+    word-break: break-all;
+  }
+  .toc-note { font-size: 8.4pt; color: #6f6c62; margin-top: 5mm; }
+  .quote {
+    font-family: "DejaVu Serif", Georgia, serif;
+    font-size: 13pt;
+    line-height: 1.4;
+    color: #23251d;
+    border-top: 1px solid #d9d4c6;
+    border-bottom: 1px solid #d9d4c6;
+    padding: 6mm 0;
+    margin: 7mm 0;
+  }
+  .copybox {
+    border: 1px solid #cfc9ba;
+    background: #fbfaf5;
+    padding: 6mm;
+    margin: 4mm 0 8mm;
+    page-break-inside: avoid;
+  }
+  .copybox p { font-size: 9.4pt; line-height: 1.6; }
+  .footer-note {
+    margin-top: 10mm;
+    border-top: 1px solid #d9d4c6;
+    padding-top: 3mm;
+    font-size: 8pt;
+    color: #6f6c62;
+  }
+  @media print {
+    .avoid-print-break { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= COUVERTURE ================= -->
+<section class="cover">
+  <div>
+    <div class="brandline">
+      <div class="mark">ZM<span>.</span></div>
+      <div>Documentation technique<br />Édition 2026 · v1.0</div>
+    </div>
+
+    <div style="margin-top: 30mm;">
+      <span class="pill">Guide de maintenance &amp; de déploiement</span>
+      <h1>Le portfolio,<br />expliqué <em>de A à Z.</em></h1>
+      <p class="sub">
+        Architecture, rôle de chaque fichier, mise à jour des contenus,
+        ajout de projets, administration, assistant IA et déploiement
+        complet sur <strong style="color:#f3f0e8;">Vercel + Turso</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <div class="meta">
+      <div>Projet<b>Portfolio — Zo Mahefa RANAIVO</b></div>
+      <div>Site public<b>zo-mahefa-it.vercel.app</b></div>
+      <div>Stack<b>Next.js 16 · React 19 · Tailwind v4 · libSQL</b></div>
+      <div>Usage<b>Maintenance, évolution, déploiement</b></div>
+    </div>
+    <p class="foot" style="margin-top:6mm;">
+      Document interne. Aucun mot de passe, jeton Turso ou clé API réel n’est
+      reproduit dans ce PDF : les secrets restent dans <code>.env.local</code>
+      et dans les variables d’environnement Vercel.
+    </p>
+  </div>
+</section>
+
+<!-- ================= MODE D'EMPLOI + SOMMAIRE ================= -->
+<section>
+  <p class="tag">Mode d’emploi</p>
+  <h1 style="font-family:'DejaVu Serif',Georgia,serif; font-size:30pt; font-weight:400; line-height:1.05; margin:2mm 0 5mm; letter-spacing:-0.8pt;">
+    Ce guide est fait pour être ouvert<br />au moment où vous en avez besoin.
+  </h1>
+  <p class="lead">
+    Vous n’avez pas besoin de lire 40 pages avant de modifier une phrase.
+    Le tableau ci-dessous vous envoie directement au bon fichier et à la bonne
+    recette. Les chapitres 1 à 4 expliquent le fonctionnement général ;
+    les chapitres 5 à 8 sont des recettes de modification ; le chapitre 11
+    est la procédure de déploiement pas à pas.
+  </p>
+
+  <table class="compact">
+    <thead>
+      <tr><th style="width:38%;">Ce que vous voulez faire</th><th style="width:34%;">Fichier à ouvrir</th><th>Chapitre</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Changer nom, e-mail, téléphone, LinkedIn, GitHub, CV</td><td><code>src/lib/content.ts</code> → <code>site</code></td><td>5.1</td></tr>
+      <tr><td>Changer les textes du hero, les statistiques</td><td><code>content.ts</code> → <code>hero</code> (FR et EN)</td><td>5.2</td></tr>
+      <tr><td>Changer les titres de sections</td><td><code>content.ts</code> → <code>sections</code></td><td>5.3</td></tr>
+      <tr><td>Modifier un projet vedette</td><td><code>content.ts</code> → <code>featuredProjects</code></td><td>5.4 / 6</td></tr>
+      <tr><td>Ajouter un projet vedette</td><td><code>content.ts</code> + <code>public/projects/</code></td><td>6.1</td></tr>
+      <tr><td>Ajouter un projet d’archive</td><td><code>content.ts</code> → <code>archive.projects</code></td><td>6.2</td></tr>
+      <tr><td>Modifier stack, QA, méthode, pipeline</td><td><code>content.ts</code> → <code>stack</code>, <code>qa</code>, <code>process</code>, <code>pipeline</code></td><td>5.6 / 5.7</td></tr>
+      <tr><td>Modifier parcours, formation, certifications</td><td><code>content.ts</code> → <code>about</code></td><td>5.8</td></tr>
+      <tr><td>Modifier les témoignages</td><td><code>content.ts</code> → <code>testimonials</code></td><td>5.9</td></tr>
+      <tr><td>Modifier le formulaire de contact</td><td><code>content.ts</code> → <code>contact</code></td><td>5.10</td></tr>
+      <tr><td>Modifier le bandeau de technologies qui défile</td><td><code>src/components/site/stack-marquee.tsx</code></td><td>5.6</td></tr>
+      <tr><td>Modifier les métadonnées SEO / Open Graph</td><td><code>src/app/layout.tsx</code>, <code>public/og-image.png</code></td><td>5.14</td></tr>
+      <tr><td>Changer le CV ou la photo</td><td><code>public/</code> + <code>site.cv</code></td><td>5.13</td></tr>
+      <tr><td>Changer le texte de l’assistant IA</td><td><code>content.ts</code> → <code>ai</code>, <code>src/lib/assistant-prompt.ts</code></td><td>8.4</td></tr>
+      <tr><td>Déployer sur Vercel + Turso</td><td>Procédure complète</td><td>11</td></tr>
+      <tr><td>Publier sur LinkedIn</td><td>Texte prêt à copier</td><td>12</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <span class="callout-label">Règle d’or</span>
+    <p>
+      Tout le contenu éditorial vit dans <code>src/lib/content.ts</code>, en deux
+      exemplaires : <code>fr</code> et <code>en</code>. Si vous modifiez une
+      phrase d’un côté, modifiez la même clé de l’autre côté. Le test
+      <code>src/lib/content.test.ts</code> vérifie que les deux langues ont
+      exactement la même structure et aucun texte vide.
+    </p>
+  </div>
+
+  <h2 style="margin-top:7mm;">Sommaire</h2>
+  <div class="toc">
+    <a href="#ch1"><div class="toc-row"><span class="n">01</span><span class="t">Comprendre le portfolio</span><span class="d">Architecture &amp; principes</span></div></a>
+    <a href="#ch2"><div class="toc-row"><span class="n">02</span><span class="t">Arborescence commentée</span><span class="d">Où vit chaque chose</span></div></a>
+    <a href="#ch3"><div class="toc-row"><span class="n">03</span><span class="t">Chaque fichier, son rôle</span><span class="d">Référence complète</span></div></a>
+    <a href="#ch4"><div class="toc-row"><span class="n">04</span><span class="t">Flux de fonctionnement</span><span class="d">Rendu, i18n, formulaires, IA</span></div></a>
+    <a href="#ch5"><div class="toc-row"><span class="n">05</span><span class="t">Modifier les contenus</span><span class="d">Recettes concrètes</span></div></a>
+    <a href="#ch6"><div class="toc-row"><span class="n">06</span><span class="t">Ajouter un projet</span><span class="d">Vedette &amp; archive</span></div></a>
+    <a href="#ch7"><div class="toc-row"><span class="n">07</span><span class="t">Admin, base de données, sécurité</span><span class="d">Messages &amp; audience</span></div></a>
+    <a href="#ch8"><div class="toc-row"><span class="n">08</span><span class="t">Assistant IA</span><span class="d">Groq / Gemini</span></div></a>
+    <a href="#ch9"><div class="toc-row"><span class="n">09</span><span class="t">Qualité, tests &amp; sécurité</span><span class="d">Vérifier avant de livrer</span></div></a>
+    <a href="#ch10"><div class="toc-row"><span class="n">10</span><span class="t">Développement local</span><span class="d">Installation &amp; commandes</span></div></a>
+    <a href="#ch11"><div class="toc-row"><span class="n">11</span><span class="t">Déploiement Vercel + Turso</span><span class="d">Guide pas à pas</span></div></a>
+    <a href="#ch12"><div class="toc-row"><span class="n">12</span><span class="t">Publication LinkedIn</span><span class="d">Texte prêt à copier</span></div></a>
+    <a href="#ch13"><div class="toc-row"><span class="n">13</span><span class="t">Annexes</span><span class="d">Checklists &amp; commandes</span></div></a>
+  </div>
+
+  <p class="toc-note">
+    Conventions : les chemins sont relatifs à la racine du projet. Les blocs
+    sur fond sombre sont des commandes ou des extraits de code. Les encadrés
+    orange signalent un piège ; les encadrés bleus, une astuce.
+  </p>
+</section>
+<!-- ================= CHAPITRE 1 ================= -->
+<h1 class="chapter" id="ch1"><span class="num">Chapitre 01</span>Comprendre le portfolio</h1>
+
+<p class="lead">
+  Le portfolio est une application <strong>Next.js</strong> qui sert une page
+  unique, bilingue français/anglais, enrichie de quelques fonctions serveur :
+  formulaire de contact, suivi d’audience, administration privée et assistant
+  IA. Le contenu éditorial est <strong>statique</strong> ; seuls les messages
+  et les visites passent par une base de données.
+</p>
+
+<h2>1.1 Ce que fait réellement le site</h2>
+<p>
+  La page d’accueil raconte un parcours professionnel en six sections :
+  projets, expertise, méthode, parcours, témoignages et contact. Autour de
+  cette page, quatre capacités techniques tournent :
+</p>
+<ul>
+  <li><strong>Un sélecteur de langue FR/EN</strong> qui change instantanément tous les textes sans recharger la page.</li>
+  <li><strong>Un formulaire de contact</strong> qui écrit dans la table <code>messages</code>, avec repli vers l’e-mail si la base est indisponible.</li>
+  <li><strong>Un compteur de visites</strong> qui écrit dans la table <code>page_views</code>, consultable dans <code>/admin</code>.</li>
+  <li><strong>Un assistant IA</strong> qui répond aux questions sur le parcours à partir d’un prompt construit avec le contenu public du portfolio.</li>
+</ul>
+
+<div class="callout">
+  <span class="callout-label">À retenir</span>
+  <p>
+    Les projets, expériences, certifications et témoignages ne sont
+    <strong>pas</strong> stockés en base. Ils sont écrits dans
+    <code>src/lib/content.ts</code>, compilés avec le site et affichés
+    immédiatement. La base ne contient que deux choses : les messages reçus
+    et les visites.
+  </p>
+</div>
+
+<h2>1.2 La stack technique</h2>
+<table>
+  <thead><tr><th style="width:24%;">Technologie</th><th style="width:20%;">Version</th><th>Rôle dans le projet</th></tr></thead>
+  <tbody>
+    <tr><td>Next.js (App Router)</td><td>16.4.x</td><td>Framework principal : pages, routes API, rendu serveur, métadonnées SEO, redirections.</td></tr>
+    <tr><td>React</td><td>19.2.x</td><td>Interface et composants interactifs (hero, galerie, formulaire, admin, assistant).</td></tr>
+    <tr><td>TypeScript</td><td>5.x</td><td>Typage strict du contenu, des réponses API et des composants.</td></tr>
+    <tr><td>Tailwind CSS</td><td>v4</td><td>Utilitaires de style, surtout dans l’administration et les composants <code>ui/</code>.</td></tr>
+    <tr><td>CSS global</td><td>—</td><td><code>src/app/globals.css</code> contient le design system, les sections, les animations et le responsive.</td></tr>
+    <tr><td>Framer Motion</td><td>12.x</td><td>Animations d’apparition, respect de <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td>next-themes</td><td>0.4.x</td><td>Thème clair/sombre, classe <code>dark</code> sur <code>&lt;html&gt;</code>.</td></tr>
+    <tr><td>libSQL / Turso</td><td>0.17.x</td><td>Base de données des messages et des visites ; SQLite local en développement.</td></tr>
+    <tr><td>Groq / Google Gemini</td><td>API</td><td>Fournisseur du modèle derrière l’assistant IA.</td></tr>
+    <tr><td>Vitest</td><td>4.x</td><td>Tests unitaires du contenu, de l’authentification et des règles de validation.</td></tr>
+    <tr><td>Vercel</td><td>—</td><td>Hébergement, build, variables d’environnement, domaine.</td></tr>
+  </tbody>
+</table>
+
+<h2>1.3 Statique ou dynamique ?</h2>
+<table>
+  <thead><tr><th style="width:34%;">Élément</th><th style="width:18%;">Nature</th><th>Où il vit</th></tr></thead>
+  <tbody>
+    <tr><td>Textes, projets, expériences, témoignages</td><td>Statique</td><td><code>src/lib/content.ts</code>, compilé dans le bundle.</td></tr>
+    <tr><td>Images, CV, attestations</td><td>Statique</td><td><code>public/</code>. Servis par Next.js/Vercel.</td></tr>
+    <tr><td>Langue, thème</td><td>Client</td><td><code>localStorage</code> : clés <code>zm_locale</code> et <code>theme</code>.</td></tr>
+    <tr><td>Messages du formulaire</td><td>Dynamique</td><td>Table <code>messages</code> (Turso en production, SQLite local sinon).</td></tr>
+    <tr><td>Visites</td><td>Dynamique</td><td>Table <code>page_views</code>.</td></tr>
+    <tr><td>Réponses de l’assistant</td><td>Dynamique</td><td>Route <code>/api/assistant</code> → Groq ou Gemini. Aucun stockage.</td></tr>
+    <tr><td>Session admin</td><td>Cookie</td><td>Cookie <code>zm_admin_session</code>, signé HMAC, 8 heures.</td></tr>
+  </tbody>
+</table>
+
+<h2>1.4 Vue d’ensemble de l’architecture</h2>
+<div class="flow">
+  <div class="flow-node"><b>Navigateur</b>Visiteur<br />FR / EN</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Next.js sur Vercel</b>Page unique<br />SSR + hydratation</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Routes API</b><code>/api/messages</code><br /><code>/api/visits</code><br /><code>/api/assistant</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Services</b>Turso (libSQL)<br />Groq / Gemini</div>
+</div>
+
+<p>
+  Le rendu initial de la page est produit par le serveur Next.js. Les
+  composants interactifs (header, hero, galeries, formulaire, assistant)
+  sont ensuite hydratés côté client. La page reste donc lisible et
+  indexable même si JavaScript est lent à charger ; les animations et les
+  interactions arrivent après.
+</p>
+
+<h3>Les quatre chemins réseau à connaître</h3>
+<table class="compact">
+  <thead><tr><th style="width:22%;">Route</th><th style="width:12%;">Méthode</th><th style="width:18%;">Accès</th><th>Ce qu’elle fait</th></tr></thead>
+  <tbody>
+    <tr><td><code>/api/messages</code></td><td>POST</td><td>Public (rate limit)</td><td>Enregistre un message du formulaire. Validation, honeypot côté client, repli e-mail.</td></tr>
+    <tr><td><code>/api/messages</code></td><td>GET</td><td>Admin</td><td>Liste tous les messages, du plus récent au plus ancien.</td></tr>
+    <tr><td><code>/api/messages/[id]</code></td><td>DELETE</td><td>Admin</td><td>Supprime un message par son identifiant.</td></tr>
+    <tr><td><code>/api/visits</code></td><td>POST</td><td>Public (rate limit)</td><td>Enregistre une vue de page. Ignore les robots et <code>/admin</code>.</td></tr>
+    <tr><td><code>/api/visits</code></td><td>GET</td><td>Admin</td><td>Renvoie les statistiques agrégées d’audience.</td></tr>
+    <tr><td><code>/api/assistant</code></td><td>POST</td><td>Public (rate limit)</td><td>Transmet les messages au fournisseur IA et renvoie la réponse.</td></tr>
+    <tr><td><code>/api/admin/login</code></td><td>POST</td><td>Public</td><td>Vérifie le mot de passe et pose le cookie de session.</td></tr>
+    <tr><td><code>/api/admin/logout</code></td><td>POST</td><td>Public</td><td>Efface le cookie de session.</td></tr>
+    <tr><td><code>/api/admin/session</code></td><td>GET</td><td>Cookie</td><td>Indique si la session courante est valide.</td></tr>
+  </tbody>
+</table>
+
+<h2>1.5 Les trois vérités à retenir</h2>
+<div class="grid3">
+  <div class="card">
+    <div class="kpi">01</div>
+    <h4>Le contenu est centralisé</h4>
+    <p class="small">Une seule source : <code>content.ts</code>. Pas de base de données pour les projets, pas de CMS. C’est volontaire : simplicité, rapidité, versionnement Git.</p>
+  </div>
+  <div class="card">
+    <div class="kpi">02</div>
+    <h4>La base est minimale</h4>
+    <p class="small">Deux tables : <code>messages</code> et <code>page_views</code>. Si Turso tombe, le site continue d’afficher le contenu ; le formulaire propose l’e-mail.</p>
+  </div>
+  <div class="card">
+    <div class="kpi">03</div>
+    <h4>Les secrets restent dehors</h4>
+    <p class="small">Mot de passe admin, jeton Turso et clé IA vivent dans <code>.env.local</code> et dans Vercel. Jamais dans Git, jamais dans ce PDF.</p>
+  </div>
+</div>
+
+<div class="callout warn">
+  <span class="callout-label">Piège classique</span>
+  <p>
+    Ne cherchez pas les projets dans la base de données ni dans un fichier
+    JSON : ils sont dans <code>src/lib/content.ts</code>. Et ne modifiez pas
+    <code>src/types/index.ts</code> en croyant changer les projets :
+    ce fichier ne sert qu’au type <code>Message</code> de l’administration ;
+    les types <code>Project</code>, <code>Skill</code> et
+    <code>Experience</code> qu’il contient sont d’anciens types non utilisés
+    par la page d’accueil.
+  </p>
+</div>
+
+<!-- ================= CHAPITRE 2 ================= -->
+<h1 class="chapter" id="ch2"><span class="num">Chapitre 02</span>Arborescence commentée</h1>
+
+<p class="lead">
+  Voici l’arborescence réelle du dépôt, sans <code>node_modules</code>, sans
+  <code>.next</code> et sans les fichiers générés. Chaque ligne importante est
+  commentée pour que vous sachiez où chercher avant d’ouvrir un fichier.
+</p>
+
+<pre class="tree">portfolio/
+├── <b>src/</b>
+│   ├── <b>app/</b>                        # Routes, pages et API (App Router)
+│   │   ├── layout.tsx                  # SEO global, providers, header/footer, IA, tracker
+│   │   ├── page.tsx                    # Page d'accueil : ordre des sections
+│   │   ├── globals.css                 # Design system + styles de toutes les sections
+│   │   ├── icon.svg                    # Favicon servi sur /icon.svg
+│   │   ├── manifest.ts                 # Manifest PWA
+│   │   ├── robots.ts                   # /robots.txt
+│   │   ├── sitemap.ts                  # /sitemap.xml
+│   │   ├── admin/
+│   │   │   ├── layout.tsx              # Métadonnées noindex de l'admin
+│   │   │   └── page.tsx                # UI admin : connexion, messages, audience
+│   │   ├── api/
+│   │   │   ├── admin/login/route.ts    # Connexion par mot de passe
+│   │   │   ├── admin/logout/route.ts   # Déconnexion
+│   │   │   ├── admin/session/route.ts  # Vérification de session
+│   │   │   ├── assistant/route.ts      # Proxy Groq / Gemini
+│   │   │   ├── messages/route.ts       # GET (admin) + POST (public)
+│   │   │   ├── messages/[id]/route.ts  # DELETE (admin)
+│   │   │   └── visits/route.ts         # POST public + GET stats admin
+│   │   ├── competences/page.tsx        # Redirection 307 vers /#expertise
+│   │   ├── contact/page.tsx            # Redirection 307 vers /#contact
+│   │   └── projets/page.tsx            # Redirection 307 vers /#projets
+│   ├── <b>components/</b>
+│   │   ├── icons.tsx                   # Icônes GitHub / LinkedIn
+│   │   ├── language-provider.tsx       # Contexte FR/EN + persistance
+│   │   ├── theme-provider.tsx          # Thème clair/sombre (next-themes)
+│   │   ├── site/                       # Composants de la page publique
+│   │   │   ├── header.tsx              # Navigation, progression, menu mobile
+│   │   │   ├── hero.tsx                # Première section + compteurs
+│   │   │   ├── stack-marquee.tsx       # Bandeau technologies (liste locale)
+│   │   │   ├── selected-work.tsx       # Projets vedettes + archive
+│   │   │   ├── project-gallery.tsx     # Carrousel de captures
+│   │   │   ├── project-visual.tsx      # Schémas SVG si pas de captures
+│   │   │   ├── capabilities.tsx        # Expertise, stack, QA
+│   │   │   ├── process.tsx             # Méthode en 4 étapes
+│   │   │   ├── pipeline.tsx            # Chaîne de livraison
+│   │   │   ├── about.tsx               # Parcours, formation, certifications
+│   │   │   ├── testimonials.tsx        # Témoignages clients
+│   │   │   ├── contact-section.tsx     # Coordonnées, parcours recruteur/client
+│   │   │   ├── contact-form.tsx        # Formulaire + validation + repli mailto
+│   │   │   ├── footer.tsx              # Pied de page
+│   │   │   ├── ai-assistant.tsx        # Widget flottant de l'assistant
+│   │   │   ├── visit-tracker.tsx       # Envoi d'une vue à /api/visits
+│   │   │   ├── copy-email.tsx          # Bouton copier l'e-mail
+│   │   │   ├── language-toggle.tsx     # Bouton FR/EN
+│   │   │   ├── theme-toggle.tsx        # Bouton clair/sombre
+│   │   │   ├── local-clock.tsx         # Heure locale de Fianarantsoa
+│   │   │   ├── count-up.tsx            # Compteur animé
+│   │   │   ├── typewriter.tsx          # Rôles animés
+│   │   │   ├── reveal.tsx              # Apparition au scroll
+│   │   │   └── section-heading.tsx     # Titre de section réutilisable
+│   │   └── ui/sonner.tsx               # Toaster (notifications)
+│   ├── <b>lib/</b>
+│   │   ├── content.ts                  # ★ TOUT le contenu FR/EN + types
+│   │   ├── assistant-prompt.ts         # Prompt système de l'assistant
+│   │   ├── db.ts                       # Schéma + requêtes libSQL
+│   │   ├── messages.ts                 # Mapping messages ↔ base
+│   │   ├── auth.ts                     # Mot de passe, HMAC, cookie, rate limit
+│   │   ├── content.test.ts             # Parité FR/EN + textes non vides
+│   │   ├── auth.test.ts                # Mot de passe et robustesse
+│   │   └── validation.test.ts          # Regex e-mail/téléphone (inline)
+│   ├── <b>types/</b>/index.ts          # Type Message + anciens types non utilisés
+│   └── <b>test/</b>/setup.ts           # Configuration Vitest / jest-dom
+├── <b>public/</b>
+│   ├── cv-zomahefa-ranaivo-2026-10.pdf # CV téléchargé par le bouton CV
+│   ├── photo-cv.png                    # Portrait du hero
+│   ├── og-image.png                    # Image de partage 1200×630
+│   ├── apple-icon.png                  # Icône Apple
+│   ├── certificatSpringBoot.pdf        # Attestation Spring Boot
+│   ├── certifcatSping-boot2.jpeg       # Vignette de l'attestation
+│   ├── uml-certification-zo.pdf        # Attestation UML
+│   ├── uml-certification.jpeg          # Vignette de l'attestation
+│   ├── google81dfecfc5d73987c.html     # Vérification Google Search Console
+│   ├── profile-en.pdf                  # Ancien CV EN, non référencé
+│   ├── fonts/                          # Polices locales (Geist, Instrument Serif)
+│   └── projects/                       # Captures des projets
+├── <b>scripts/</b>/init-db.mjs          # npm run db:init (Turso ou SQLite)
+├── <b>docs/</b>                          # Ce guide (HTML source + PDF)
+├── .env.example                        # Modèle de variables, versionné
+├── .env.local                          # Secrets locaux, NON versionné
+├── next.config.ts                      # En-têtes de sécurité, images
+├── package.json                        # Scripts et dépendances
+├── tsconfig.json                       # Alias @/ → src/
+├── vitest.config.ts                    # Configuration des tests
+├── Dockerfile / run.sh                 # Déploiement Docker optionnel
+├── README.md                           # Résumé du projet
+└── .gitignore                          # Exclut .env*, /data, .next, etc.</pre>
+
+<h2>2.1 Les dossiers en une phrase</h2>
+<table>
+  <thead><tr><th style="width:20%;">Dossier</th><th>Responsabilité</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/app/</code></td><td>Le routage Next.js : une page d’accueil, trois redirections, l’admin et les routes API.</td></tr>
+    <tr><td><code>src/components/site/</code></td><td>Les composants visuels de la page publique. Chacun reçoit ses textes du contexte de langue.</td></tr>
+    <tr><td><code>src/components/</code></td><td>Les providers transverses (langue, thème) et les icônes.</td></tr>
+    <tr><td><code>src/lib/</code></td><td>La logique : contenu, base de données, authentification, prompt IA. C’est ici que vivent les règles métier.</td></tr>
+    <tr><td><code>src/types/</code></td><td>Le type <code>Message</code> utilisé par l’admin. Les autres types sont historiques.</td></tr>
+    <tr><td><code>public/</code></td><td>Les fichiers servis tels quels : CV, images, polices, attestations.</td></tr>
+    <tr><td><code>scripts/</code></td><td>Les scripts d’exploitation, ici l’initialisation de la base.</td></tr>
+    <tr><td><code>docs/</code></td><td>La documentation du projet et ce PDF.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout tip">
+  <span class="callout-label">Astuce de navigation</span>
+  <p>
+    Dans votre éditeur, utilisez la recherche globale sur les clés du contenu :
+    <code>featuredProjects</code>, <code>testimonials</code>,
+    <code>certifications</code>, <code>stats:</code>. Vous arriverez
+    directement à la bonne zone de <code>content.ts</code>, sans dépendre
+    des numéros de ligne qui changent à chaque modification.
+  </p>
+</div>
+<!-- ================= CHAPITRE 3 ================= -->
+<h1 class="chapter" id="ch3"><span class="num">Chapitre 03</span>Chaque fichier, son rôle</h1>
+
+<p class="lead">
+  Ce chapitre est la référence à garder ouverte. Pour chaque fichier, il
+  indique <strong>ce qu’il fait</strong> et <strong>quand le modifier</strong>.
+  Les fichiers critiques — <code>content.ts</code>, <code>layout.tsx</code>,
+  <code>db.ts</code>, <code>auth.ts</code> — ont une fiche plus détaillée.
+</p>
+
+<h2>3.1 Racine du projet et configuration</h2>
+<table>
+  <thead><tr><th style="width:23%;">Fichier</th><th style="width:42%;">Rôle</th><th>Quand le modifier</th></tr></thead>
+  <tbody>
+    <tr><td><code>package.json</code></td><td>Nom, scripts (<code>dev</code>, <code>build</code>, <code>start</code>, <code>lint</code>, <code>test</code>, <code>db:init</code>), dépendances et versions.</td><td>Ajouter une librairie, un script, changer une version.</td></tr>
+    <tr><td><code>package-lock.json</code></td><td>Verrou exact des dépendances installées.</td><td>Jamais à la main : généré par <code>npm install</code>.</td></tr>
+    <tr><td><code>next.config.ts</code></td><td>En-têtes de sécurité (CSP, HSTS, X-Frame-Options…), optimisation des images, compression.</td><td>Ajouter un domaine d’image ou ajuster une politique de sécurité.</td></tr>
+    <tr><td><code>tsconfig.json</code></td><td>TypeScript strict, alias <code>@/</code> vers <code>src/</code>.</td><td>Rarement. Pour ajouter un alias ou changer la cible.</td></tr>
+    <tr><td><code>postcss.config.mjs</code></td><td>Branche Tailwind v4 sur PostCSS.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>eslint.config.mjs</code></td><td>Règles ESLint Next.js (core-web-vitals + TypeScript).</td><td>Ajouter une règle ou ignorer un dossier.</td></tr>
+    <tr><td><code>vitest.config.ts</code></td><td>Environnement de test <code>jsdom</code>, alias <code>@</code>, setup.</td><td>Ajouter un setup ou changer l’environnement.</td></tr>
+    <tr><td><code>.env.example</code></td><td>Modèle documenté des variables d’environnement, versionné.</td><td>À chaque nouvelle variable. Ne jamais y mettre de valeur réelle.</td></tr>
+    <tr><td><code>.env.local</code></td><td>Vos secrets locaux (admin, Turso, IA).</td><td>En local uniquement. Ignoré par Git.</td></tr>
+    <tr><td><code>.gitignore</code></td><td>Exclut <code>.env*</code> (sauf <code>.env.example</code>), <code>/data</code>, <code>.next</code>, <code>node_modules</code>…</td><td>Ajouter un dossier généré ou secret.</td></tr>
+    <tr><td><code>README.md</code></td><td>Résumé du projet, stack, commandes, variables, admin, IA, sécurité.</td><td>Changer une procédure ou une variable.</td></tr>
+    <tr><td><code>Dockerfile</code></td><td>Image Node 20 Alpine, build Next.js, démarrage <code>npm run start</code>.</td><td>Déploiement Docker auto-hébergé (optionnel).</td></tr>
+    <tr><td><code>run.sh</code></td><td>Script de lancement Docker local avec <code>.env.local</code> et volume <code>data/</code>.</td><td>Déploiement Docker local (optionnel).</td></tr>
+    <tr><td><code>.dockerignore</code></td><td>Exclut les fichiers inutiles de l’image Docker.</td><td>Ajouter un gros dossier à exclure.</td></tr>
+    <tr><td><code>components.json</code></td><td>Configuration shadcn/ui (alias, style).</td><td>Ajout de composants shadcn.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.2 Le cœur : <code>src/lib/content.ts</code></h2>
+<p>
+  C’est le fichier le plus important du projet. Il contient :
+</p>
+<ul>
+  <li><code>siteUrl</code> : l’URL publique, lue depuis <code>NEXT_PUBLIC_SITE_URL</code> avec un domaine par défaut.</li>
+  <li><code>site</code> : les informations neutres, identiques en français et en anglais (nom, e-mail, téléphone, réseaux, CV, coordonnées, fuseau).</li>
+  <li>Les <strong>types</strong> de toutes les structures : <code>FeaturedProject</code>, <code>ArchiveProject</code>, <code>Practice</code>, <code>StackLevel</code>, <code>QaCategory</code>, <code>Experience</code>, <code>Certification</code>, <code>Testimonial</code>, <code>SiteContent</code>…</li>
+  <li><code>const fr: SiteContent</code> : tout le contenu français.</li>
+  <li><code>const en: SiteContent</code> : tout le contenu anglais, avec la même structure.</li>
+  <li><code>contentByLocale</code>, <code>defaultContent</code>, <code>getContent(locale)</code> et <code>mailtoForProject(title)</code>.</li>
+</ul>
+
+<p>Ordre réel du fichier, de haut en bas :</p>
+<pre>siteUrl
+site
+types (lignes ~24 à ~403)
+const fr: SiteContent = { ... }      # contenu français
+const en: SiteContent = { ... }      # contenu anglais
+export const contentByLocale = { fr, en }
+export const defaultContent = fr
+export function getContent(locale)
+export function mailtoForProject(title)</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Ne pas se fier aux numéros de ligne</span>
+  <p>
+    Le fichier fait plus de 2 000 lignes et bouge à chaque ajout. Utilisez
+    les ancres textuelles : <code>const fr: SiteContent</code>,
+    <code>const en: SiteContent</code>, <code>featuredProjects:</code>,
+    <code>archive:</code>, <code>about:</code>, <code>testimonials:</code>.
+  </p>
+</div>
+
+<h3>Les blocs de <code>SiteContent</code></h3>
+<table class="compact">
+  <thead><tr><th style="width:18%;">Bloc</th><th>Sections du site concernées</th></tr></thead>
+  <tbody>
+    <tr><td><code>availability</code>, <code>workModes</code>, <code>location</code>, <code>roles</code></td><td>Disponibilité affichée dans le header, le hero, le contact et le prompt IA.</td></tr>
+    <tr><td><code>nav</code></td><td>Menu du header et du footer. Les <code>id</code> doivent correspondre aux <code>id</code> des sections.</td></tr>
+    <tr><td><code>hero</code></td><td>Section d’ouverture : titres, intro, boutons, statistiques, portrait, notes.</td></tr>
+    <tr><td><code>sections</code></td><td>Titres et intros des six sections (projets, expertise, méthode, parcours, témoignages, contact).</td></tr>
+    <tr><td><code>featuredProjects</code></td><td>Les projets détaillés (Signaleo, E-Fandrosoana…).</td></tr>
+    <tr><td><code>archive</code></td><td>Les autres projets, en lignes compactes.</td></tr>
+    <tr><td><code>practices</code></td><td>Les trois pôles : web/mobile, DevOps, QA.</td></tr>
+    <tr><td><code>stack</code></td><td>Les niveaux de maîtrise réels.</td></tr>
+    <tr><td><code>qa</code></td><td>Le bloc qualité : catégories, outils, mindset, citation.</td></tr>
+    <tr><td><code>process</code></td><td>La méthode en quatre étapes + engagements.</td></tr>
+    <tr><td><code>pipeline</code></td><td>La chaîne commit → test → build → ship → observe.</td></tr>
+    <tr><td><code>about</code></td><td>Parcours, expériences, formation, certifications, savoir-être, langues.</td></tr>
+    <tr><td><code>testimonials</code></td><td>Les témoignages clients et leur note.</td></tr>
+    <tr><td><code>contact</code></td><td>Coordonnées, parcours recruteur/client, libellés du formulaire, types de besoin.</td></tr>
+    <tr><td><code>footer</code></td><td>Accroche, libellés, CV, retour en haut, mentions.</td></tr>
+    <tr><td><code>ui</code></td><td>Tous les micro-libellés : boutons, galerie, accessibilité, thème, langue, menu.</td></tr>
+    <tr><td><code>ai</code></td><td>Textes du widget assistant : titre, accueil, suggestions, erreurs, disclaimer.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.3 Les fichiers de <code>src/app/</code></h2>
+<table>
+  <thead><tr><th style="width:24%;">Fichier</th><th style="width:44%;">Rôle</th><th>Quand le modifier</th></tr></thead>
+  <tbody>
+    <tr><td><code>layout.tsx</code></td><td>Enveloppe globale : balises <code>&lt;html&gt;</code> et <code>&lt;body&gt;</code>, métadonnées SEO, JSON-LD, préchargement des polices, providers thème/langue, header, footer, tracker, assistant, toaster.</td><td>Changer le titre SEO, la description, les mots-clés, l’Open Graph, le JSON-LD, les polices préchargées.</td></tr>
+    <tr><td><code>page.tsx</code></td><td>Compose la page d’accueil dans l’ordre : Hero, StackMarquee, SelectedWork, Capabilities, Process, Pipeline, About, Testimonials, ContactSection.</td><td>Réordonner ou retirer une section.</td></tr>
+    <tr><td><code>globals.css</code></td><td>Design system complet : variables de couleurs, typographies, layout, styles de chaque section, animations, responsive, thème sombre.</td><td>Changer l’apparence, les espacements, les couleurs, une animation. Prudence : 5 000+ lignes.</td></tr>
+    <tr><td><code>icon.svg</code></td><td>Favicon moderne servi sur <code>/icon.svg</code>.</td><td>Changer le logo de l’onglet.</td></tr>
+    <tr><td><code>manifest.ts</code></td><td>Manifest PWA : nom, description, couleurs, icônes, langue.</td><td>Changer le nom de l’application ou les icônes.</td></tr>
+    <tr><td><code>robots.ts</code></td><td>Génère <code>/robots.txt</code> : autorise le site, exclut <code>/admin/</code> et <code>/api/</code>, indique le sitemap.</td><td>Changer les règles d’indexation.</td></tr>
+    <tr><td><code>sitemap.ts</code></td><td>Génère <code>/sitemap.xml</code> avec l’URL racine et une fréquence mensuelle.</td><td>Ajouter une vraie page indexable (rare).</td></tr>
+    <tr><td><code>admin/layout.tsx</code></td><td>Métadonnées <code>noindex, nofollow, nocache</code> pour l’administration.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>admin/page.tsx</code></td><td>Interface client complète : écran de connexion, chargement des messages et des stats, onglets Messages/Audience, recherche, suppression, déconnexion.</td><td>Changer l’interface d’administration.</td></tr>
+    <tr><td><code>api/admin/login/route.ts</code></td><td>Vérifie le mot de passe, limite à 6 tentatives par 15 minutes et par IP, pose le cookie HMAC 8 h.</td><td>Changer la durée de session ou la politique de limitation.</td></tr>
+    <tr><td><code>api/admin/logout/route.ts</code></td><td>Efface le cookie de session.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>api/admin/session/route.ts</code></td><td>Répond <code>authenticated: true</code> si le cookie est valide, 401 sinon.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>api/messages/route.ts</code></td><td>POST public : validation (nom, e-mail, téléphone, message ≥ 10 caractères), honeypot côté client, rate limit 5/10 min, insertion. GET admin : liste.</td><td>Changer les règles de validation ou les limites.</td></tr>
+    <tr><td><code>api/messages/[id]/route.ts</code></td><td>DELETE admin : supprime un message par identifiant.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>api/visits/route.ts</code></td><td>POST public : ignore robots et <code>/admin</code>, déduit appareil et pays, enregistre. GET admin : statistiques agrégées.</td><td>Changer les métriques suivies ou ignorer d’autres chemins.</td></tr>
+    <tr><td><code>api/assistant/route.ts</code></td><td>Proxy serveur vers Groq ou Gemini : validation des messages, 8 derniers messages, 1 200 caractères max, rate limit 25/10 min, repli propre.</td><td>Changer de modèle, de fournisseur, de limite ou de paramètres.</td></tr>
+    <tr><td><code>competences/page.tsx</code>, <code>contact/page.tsx</code>, <code>projets/page.tsx</code></td><td>Anciennes URLs conservées : redirection 307 vers l’ancre correspondante, <code>noindex</code>, canonical vers l’ancre.</td><td>Ne pas y remettre de contenu : elles existent pour éviter les liens morts.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.4 Les routes API en détail</h2>
+<h3><code>/api/messages</code> — recevoir un message</h3>
+<ol>
+  <li>Lecture de l’IP via <code>x-forwarded-for</code> (premier segment) ou <code>unknown</code>.</li>
+  <li>Limitation : 5 requêtes par 10 minutes et par IP (en mémoire de l’instance).</li>
+  <li>Nettoyage : <code>trim</code> puis coupe à 120 (nom), 180 (e-mail), 30 (téléphone), 5 000 (message), 80 (type de projet).</li>
+  <li>Validation : nom requis, e-mail regex, téléphone regex si fourni, message ≥ 10 caractères.</li>
+  <li>Si un <code>projectType</code> est fourni, il est préfixé au message : <code>Type de besoin : …</code>.</li>
+  <li>Insertion en base, réponse 201 avec le message créé.</li>
+  <li>En cas d’erreur base : réponse 503 avec <code>fallback: "email"</code>, et le formulaire propose un lien <code>mailto:</code> prérempli.</li>
+</ol>
+
+<h3><code>/api/visits</code> — mesurer l’audience</h3>
+<ol>
+  <li>Limitation : 60 requêtes par 10 minutes et par IP ; au-delà, réponse 204 silencieuse.</li>
+  <li>Filtrage des robots : <code>bot</code>, <code>crawler</code>, <code>spider</code>, <code>headless</code>, <code>lighthouse</code>.</li>
+  <li>Chemin nettoyé (200 caractères), doit commencer par <code>/</code> et ne pas commencer par <code>/admin</code>.</li>
+  <li>Référent (300 caractères), identifiant visiteur (80 caractères, <code>anonymous</code> par défaut).</li>
+  <li>Pays lu dans <code>x-vercel-ip-country</code> ou <code>cf-ipcountry</code>.</li>
+  <li>Appareil déduit du <code>user-agent</code> : Tablet, Mobile, Desktop.</li>
+  <li>Insertion puis réponse 204, sans corps.</li>
+</ol>
+
+<h3><code>/api/assistant</code> — répondre aux questions</h3>
+<ol>
+  <li>Rate limit : 25 requêtes par 10 minutes et par IP.</li>
+  <li>Résolution du fournisseur : <code>AI_PROVIDER</code> explicite si la clé existe, sinon Groq, sinon Google, sinon 503.</li>
+  <li>Nettoyage : garde les 8 derniers messages, tronque chaque contenu à 1 200 caractères, ignore les rôles invalides.</li>
+  <li>Construction du prompt système via <code>buildAssistantSystemPrompt()</code>.</li>
+  <li>Appel du fournisseur, réponse JSON <code>{ reply, provider }</code>, en-tête <code>no-store</code>.</li>
+</ol>
+
+<h2>3.5 Les composants de la page publique</h2>
+<table>
+  <thead><tr><th style="width:24%;">Composant</th><th style="width:46%;">Responsabilité</th><th>Détail utile</th></tr></thead>
+  <tbody>
+    <tr><td><code>header.tsx</code></td><td>Barre de navigation fixe, logo, liens d’ancrage, barre de progression de lecture, section active, menu mobile, thème, langue, heure locale.</td><td>Les liens viennent de <code>c.nav</code> ; les <code>id</code> doivent exister dans les sections.</td></tr>
+    <tr><td><code>hero.tsx</code></td><td>Ouverture : nom, rôles animés, titre, intro, boutons, statistiques, portrait, notes.</td><td>Les statistiques utilisent <code>CountUp</code> avec <code>value</code>, <code>pad</code>, <code>prefix</code>, <code>suffix</code>.</td></tr>
+    <tr><td><code>stack-marquee.tsx</code></td><td>Bandeau défilant des technologies.</td><td><strong>Liste locale codée en dur</strong>, séparée de <code>content.ts</code>.</td></tr>
+    <tr><td><code>selected-work.tsx</code></td><td>Projets vedettes (étude de cas, stack, liens) puis archive.</td><td>Si <code>gallery</code> existe → carrousel ; sinon → <code>ProjectVisual</code>.</td></tr>
+    <tr><td><code>project-gallery.tsx</code></td><td>Carrousel de captures avec autoplay 5 s, pause au survol, flèches, clavier, points, compteur.</td><td>Désactive l’autoplay si <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td><code>project-visual.tsx</code></td><td>Schéma SVG stylisé pour les projets sans captures : <code>incident</code>, <code>erp</code>, <code>pipeline</code>.</td><td>Un nouveau type visuel doit être ajouté ici.</td></tr>
+    <tr><td><code>capabilities.tsx</code></td><td>Trois pôles d’expertise, stack par niveaux, bloc QA complet.</td><td>Lit <code>practices</code>, <code>stack</code>, <code>qa</code>.</td></tr>
+    <tr><td><code>process.tsx</code></td><td>Méthode en quatre étapes et engagements.</td><td>Lit <code>process.steps</code> et <code>process.engagements</code>.</td></tr>
+    <tr><td><code>pipeline.tsx</code></td><td>Chaîne de livraison illustrée, section sombre.</td><td>Lit <code>pipeline.steps</code>.</td></tr>
+    <tr><td><code>about.tsx</code></td><td>Parcours, expériences, formation, certifications, savoir-être.</td><td>Les certifications ouvrent un PDF dans un nouvel onglet.</td></tr>
+    <tr><td><code>testimonials.tsx</code></td><td>Cartes de témoignages avec nom, entreprise, contexte, téléphone.</td><td>La clé React est <code>testimonial.name</code> : éviter les doublons.</td></tr>
+    <tr><td><code>contact-section.tsx</code></td><td>Coordonnées, copie d’e-mail, parcours recruteur/client, réseaux, CV, formulaire.</td><td>Deux liens <code>mailto:</code> avec sujets préremplis.</td></tr>
+    <tr><td><code>contact-form.tsx</code></td><td>Formulaire contrôlé, validation, honeypot, consentement, envoi API, succès, erreur, repli mailto.</td><td>Le champ <code>website</code> est un honeypot invisible.</td></tr>
+    <tr><td><code>footer.tsx</code></td><td>Identité, coordonnées GPS, heure locale, navigation, contact, réseaux, retour en haut.</td><td>Lit <code>footer</code> et <code>nav</code>.</td></tr>
+    <tr><td><code>ai-assistant.tsx</code></td><td>Bouton flottant, panneau de discussion, suggestions, historique local, envoi, erreur, reset.</td><td>Masqué sur <code>/admin</code>.</td></tr>
+    <tr><td><code>visit-tracker.tsx</code></td><td>Envoie une vue à chaque changement de chemin, sauf <code>/admin</code>.</td><td>Identifiant visiteur dans <code>localStorage</code> (<code>zm_visitor_id</code>).</td></tr>
+    <tr><td><code>copy-email.tsx</code></td><td>Copie l’e-mail dans le presse-papiers avec retour visuel.</td><td>Utilise <code>navigator.clipboard</code>.</td></tr>
+    <tr><td><code>language-toggle.tsx</code></td><td>Bascule FR ↔ EN.</td><td>Met à jour <code>document.documentElement.lang</code>.</td></tr>
+    <tr><td><code>theme-toggle.tsx</code></td><td>Bascule clair ↔ sombre.</td><td>Persistance via next-themes.</td></tr>
+    <tr><td><code>local-clock.tsx</code></td><td>Affiche l’heure de Fianarantsoa (UTC+3).</td><td>Mise à jour toutes les 30 s.</td></tr>
+    <tr><td><code>count-up.tsx</code></td><td>Compteur animé au premier passage dans le viewport.</td><td>Respecte <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td><code>typewriter.tsx</code></td><td>Rôles qui s’écrivent et s’effacent, et titre de pipeline.</td><td>Respecte <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td><code>reveal.tsx</code></td><td>Animation d’apparition au scroll via Framer Motion.</td><td>Utilisé dans toutes les sections.</td></tr>
+    <tr><td><code>section-heading.tsx</code></td><td>Titre de section réutilisable : index, label, titre, intro, filet.</td><td>Garantit la cohérence visuelle.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.6 Les fichiers de <code>src/lib/</code></h2>
+<table>
+  <thead><tr><th style="width:22%;">Fichier</th><th style="width:48%;">Rôle</th><th>Quand le modifier</th></tr></thead>
+  <tbody>
+    <tr><td><code>content.ts</code></td><td>Source unique du contenu FR/EN, types et helpers.</td><td>À chaque changement éditorial.</td></tr>
+    <tr><td><code>assistant-prompt.ts</code></td><td>Construit le prompt système de l’assistant à partir du contenu public : profil, projets, expertise, QA, expériences, formation, certifications, témoignages, stack.</td><td>Changer le ton, les règles ou les informations données au modèle.</td></tr>
+    <tr><td><code>db.ts</code></td><td>Client libSQL, schéma <code>messages</code> et <code>page_views</code>, création paresseuse des tables, requêtes CRUD et statistiques.</td><td>Ajouter une table, une métrique ou changer une requête.</td></tr>
+    <tr><td><code>messages.ts</code></td><td>Couche métier entre les routes et la base : mapping <code>created_at</code> → <code>createdAt</code>, ajout, suppression.</td><td>Changer la forme d’un message.</td></tr>
+    <tr><td><code>auth.ts</code></td><td>Vérification du mot de passe en temps constant, signature HMAC du cookie, lecture du cookie, rate limit, détection de mot de passe faible.</td><td>Changer la durée de session, la politique de mot de passe ou le nom du cookie.</td></tr>
+    <tr><td><code>content.test.ts</code></td><td>Vérifie que FR et EN ont la même structure et aucun texte vide.</td><td>Ne pas modifier pour faire passer un test : corriger le contenu.</td></tr>
+    <tr><td><code>auth.test.ts</code></td><td>Vérifie le mot de passe correct/incorrect et la détection de faiblesse.</td><td>Ajouter des cas de test.</td></tr>
+    <tr><td><code>validation.test.ts</code></td><td>Teste des regex e-mail/téléphone définies dans le test lui-même. Il n’existe pas de <code>validation.ts</code>.</td><td>À savoir : la validation réelle est dans les routes API et le formulaire.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.7 Les autres fichiers</h2>
+<table>
+  <thead><tr><th style="width:26%;">Fichier</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/types/index.ts</code></td><td><code>Message</code> est utilisé par l’admin. <code>Project</code>, <code>Skill</code> et <code>Experience</code> sont des types historiques non utilisés par la page d’accueil.</td></tr>
+    <tr><td><code>src/components/icons.tsx</code></td><td>Icônes SVG GitHub et LinkedIn, réutilisées dans le contact et les projets.</td></tr>
+    <tr><td><code>src/components/language-provider.tsx</code></td><td>Contexte de langue : <code>locale</code>, <code>setLocale</code>, <code>toggleLocale</code>, <code>c</code> (contenu courant). Persiste <code>zm_locale</code> et met à jour <code>lang</code>.</td></tr>
+    <tr><td><code>src/components/theme-provider.tsx</code></td><td>Enveloppe next-themes : thème clair par défaut, pas de thème système, classe <code>dark</code>.</td></tr>
+    <tr><td><code>src/components/ui/sonner.tsx</code></td><td>Toaster de notifications, monté dans le layout.</td></tr>
+    <tr><td><code>src/test/setup.ts</code></td><td>Charge <code>@testing-library/jest-dom</code> pour les assertions DOM.</td></tr>
+    <tr><td><code>scripts/init-db.mjs</code></td><td>Crée les tables et index sur Turso (si <code>TURSO_DB_URL</code>) ou en SQLite local, puis affiche un compte rendu.</td></tr>
+    <tr><td><code>public/profile-en.pdf</code></td><td>Ancien CV anglais, plus référencé par le site. Peut être conservé comme archive ou supprimé.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <span class="callout-label">Le seul fichier à retenir</span>
+  <p>
+    Pour 90 % des mises à jour de contenu, vous n’ouvrirez que
+    <code>src/lib/content.ts</code>. Pour les images et le CV, vous déposerez
+    un fichier dans <code>public/</code>. Pour le SEO global, vous ouvrirez
+    <code>src/app/layout.tsx</code>. Le reste sert surtout au fonctionnement.
+  </p>
+</div>
+<!-- ================= CHAPITRE 4 ================= -->
+<h1 class="chapter" id="ch4"><span class="num">Chapitre 04</span>Flux de fonctionnement</h1>
+
+<p class="lead">
+  Comprendre un flux évite de modifier le mauvais fichier. Voici les sept
+  parcours qui font vivre le portfolio, de l’affichage d’une page à la
+  réponse de l’assistant.
+</p>
+
+<h2>4.1 Affichage d’une page</h2>
+<div class="flow">
+  <div class="flow-node"><b>1. Requête</b><code>GET /</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>2. Layout</b><code>layout.tsx</code><br />SEO + providers</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>3. Page</b><code>page.tsx</code><br />ordre des sections</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>4. Composants</b><code>useI18n()</code><br /><code>c.hero</code>, <code>c.projects</code>…</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>5. HTML</b>Hydratation<br />interactions</div>
+</div>
+<p>
+  Le serveur rend le HTML avec le contenu français par défaut. Au chargement,
+  <code>LanguageProvider</code> lit <code>zm_locale</code> dans
+  <code>localStorage</code> : si le visiteur avait choisi l’anglais, React
+  remplace les textes sans rechargement. Le HTML initial reste en français,
+  ce qui est cohérent avec <code>lang="fr"</code> et le référencement.
+</p>
+
+<h2>4.2 Le changement de langue</h2>
+<ol>
+  <li>Le visiteur clique sur <code>LanguageToggle</code>.</li>
+  <li><code>toggleLocale()</code> bascule <code>fr</code> ↔ <code>en</code> dans le contexte.</li>
+  <li><code>useMemo</code> recalcule <code>c = getContent(locale)</code>.</li>
+  <li>Tous les composants abonnés à <code>useI18n()</code> se re-rendent avec les nouveaux textes.</li>
+  <li>Un effet met à jour <code>document.documentElement.lang</code> et écrit <code>zm_locale</code>.</li>
+</ol>
+<div class="callout warn">
+  <span class="callout-label">Conséquence pour le SEO</span>
+  <p>
+    Le site n’a pas deux URLs (<code>/fr</code> et <code>/en</code>) ni de
+    balises <code>hreflang</code>. Le contenu anglais est une bascule
+    cliente. Les moteurs indexent donc principalement la version française.
+    C’est un choix assumé : une seule page, un seul canonical, pas de contenu
+    dupliqué. Si vous voulez un vrai SEO bilingue plus tard, il faudra créer
+    des routes <code>/en</code> et des métadonnées dédiées — ce n’est pas le
+    fonctionnement actuel.
+  </p>
+</div>
+
+<h2>4.3 Le thème clair/sombre</h2>
+<ol>
+  <li>Un script inline dans <code>layout.tsx</code> lit <code>theme</code> dans <code>localStorage</code> avant le rendu et ajoute la classe <code>light</code> ou <code>dark</code> sur <code>&lt;html&gt;</code>.</li>
+  <li><code>ThemeProvider</code> (next-themes) prend le relais : thème clair par défaut, pas de suivi du système.</li>
+  <li><code>ThemeToggle</code> change la classe et persiste le choix.</li>
+  <li><code>globals.css</code> définit les variables de couleurs pour <code>:root</code> et <code>.dark</code>.</li>
+</ol>
+
+<h2>4.4 Le formulaire de contact</h2>
+<div class="flow">
+  <div class="flow-node"><b>Saisie</b>Nom, e-mail,<br />téléphone, type</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Validation client</b>Champs requis<br />regex e-mail<br />consentement</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>POST</b><code>/api/messages</code><br />rate limit 5/10 min</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Base</b><code>messages</code><br />Turso / SQLite</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Admin</b><code>/admin</code><br />lecture + suppression</div>
+</div>
+<ul>
+  <li>Le champ <code>website</code> est un <strong>honeypot</strong> : s’il est rempli, le formulaire simule un succès sans envoyer.</li>
+  <li>Le consentement est obligatoire côté client.</li>
+  <li>Le type de besoin est choisi dans <code>contact.types</code> et préfixé au message.</li>
+  <li>En cas d’échec réseau ou base, le formulaire affiche un lien <code>mailto:</code> prérempli : le message n’est pas perdu silencieusement.</li>
+</ul>
+
+<h2>4.5 Le suivi d’audience</h2>
+<ol>
+  <li><code>VisitTracker</code> s’exécute à chaque changement de <code>pathname</code>.</li>
+  <li>Il ignore <code>/admin</code>.</li>
+  <li>Il fabrique ou récupère un identifiant visiteur dans <code>localStorage</code> (<code>zm_visitor_id</code>).</li>
+  <li>Il envoie <code>{ path, referrer, visitorId }</code> à <code>/api/visits</code> avec <code>keepalive</code>.</li>
+  <li>La route ignore les robots, déduit l’appareil et le pays, puis insère dans <code>page_views</code>.</li>
+  <li><code>/admin</code> appelle <code>GET /api/visits</code> pour obtenir les agrégats.</li>
+</ol>
+<div class="callout tip">
+  <span class="callout-label">Vie privée</span>
+  <p>
+    Aucun cookie publicitaire n’est posé. L’identifiant visiteur est un UUID
+    stocké localement, utilisé uniquement pour compter les visiteurs uniques.
+    Les robots sont filtrés et l’admin n’est pas mesuré. Si vous ajoutez un
+    bandeau de consentement, faites-le avant le tracking.
+  </p>
+</div>
+
+<h2>4.6 L’administration</h2>
+<div class="flow">
+  <div class="flow-node"><b>Connexion</b>Mot de passe<br />POST login</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Vérification</b>Comparaison<br />temps constant</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Cookie</b><code>zm_admin_session</code><br />HMAC · 8 h</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Chargement</b>GET messages<br />GET visites</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Actions</b>Rechercher<br />Supprimer · Déconnexion</div>
+</div>
+<p>
+  Le cookie est <code>HttpOnly</code>, <code>SameSite=Strict</code>, et
+  <code>Secure</code> en production. Il contient une date d’expiration et une
+  signature HMAC-SHA256 calculée avec <code>ADMIN_PASSWORD</code> comme
+  secret. Changer le mot de passe invalide donc toutes les sessions en cours.
+  Le serveur accepte aussi, pour compatibilité, l’ancien en-tête
+  <code>Authorization: Bearer &lt;mot_de_passe&gt;</code>.
+</p>
+<p>
+  L’écran admin ne stocke pas de jeton dans <code>localStorage</code> : il
+  s’appuie uniquement sur le cookie. Au premier chargement, il appelle
+  <code>/api/admin/session</code>. Si la réponse est 401, l’écran de
+  connexion reste affiché. Si une requête ultérieure renvoie 401, la session
+  est considérée expirée.
+</p>
+
+<h2>4.7 L’assistant IA</h2>
+<div class="flow">
+  <div class="flow-node"><b>Question</b>Widget<br />jusqu’à 8 messages</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Route</b><code>/api/assistant</code><br />rate limit 25/10 min</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Prompt</b><code>assistant-prompt.ts</code><br />contenu public</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Fournisseur</b>Groq<br />ou Gemini</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Réponse</b>JSON<br /><code>{ reply }</code></div>
+</div>
+<p>
+  Le modèle ne reçoit que des informations publiques : nom, rôles,
+  localisation, disponibilité, projets, expertise, QA, expériences, formation,
+  certifications, témoignages et stack. Il ne voit ni les messages, ni les
+  visites, ni les variables d’environnement, ni le mot de passe admin.
+</p>
+
+<h2>4.8 Le SEO et le partage social</h2>
+<ol>
+  <li><code>siteUrl</code> est calculé depuis <code>NEXT_PUBLIC_SITE_URL</code> (sans slash final) ou vaut le domaine par défaut.</li>
+  <li><code>layout.tsx</code> utilise cette URL pour <code>metadataBase</code>, le canonical, l’Open Graph, Twitter et le JSON-LD.</li>
+  <li><code>sitemap.ts</code> et <code>robots.ts</code> utilisent la même valeur.</li>
+  <li><code>public/og-image.png</code> (1200×630) est l’image de partage.</li>
+  <li>Les pages <code>/projets</code>, <code>/contact</code>, <code>/competences</code> sont en <code>noindex</code> et redirigent vers les ancres.</li>
+</ol>
+<div class="callout warn">
+  <span class="callout-label">Si vous changez de domaine</span>
+  <p>
+    Modifiez <code>NEXT_PUBLIC_SITE_URL</code> dans Vercel, puis
+    <strong>redéployez</strong>. Les métadonnées sont générées au build :
+    sans redéploiement, le canonical, le sitemap et le JSON-LD continueront
+    de pointer vers l’ancien domaine.
+  </p>
+</div>
+<!-- ================= CHAPITRE 5 ================= -->
+<h1 class="chapter" id="ch5"><span class="num">Chapitre 05</span>Modifier les contenus</h1>
+
+<p class="lead">
+  Toutes les recettes de ce chapitre suivent le même principe : ouvrir
+  <code>src/lib/content.ts</code>, repérer la clé, modifier la version
+  française <strong>et</strong> la version anglaise, puis lancer les tests.
+  Aucune base de données, aucun CMS, aucune interface d’administration pour
+  le contenu éditorial.
+</p>
+
+<div class="callout">
+  <span class="callout-label">Procédure standard</span>
+  <ol style="margin-bottom:0;">
+    <li>Ouvrir <code>src/lib/content.ts</code>.</li>
+    <li>Chercher la clé (ex. <code>featuredProjects:</code>).</li>
+    <li>Modifier le bloc dans <code>const fr</code>, puis le même bloc dans <code>const en</code>.</li>
+    <li>Lancer <code>npm test</code> : il vérifie la parité des structures et l’absence de texte vide.</li>
+    <li>Lancer <code>npm run build</code> pour vérifier TypeScript et la compilation.</li>
+    <li>Commit + push : Vercel redéploie automatiquement.</li>
+  </ol>
+</div>
+
+<h2>5.1 Identité, coordonnées et liens</h2>
+<p>
+  Ces informations sont <strong>neutres</strong> : elles ne sont pas traduites.
+  Elles vivent dans l’objet <code>site</code>, tout en haut de
+  <code>content.ts</code>.
+</p>
+<pre>export const site = {
+  name: "Zo Mahefa RANAIVO",
+  shortName: "Zo Mahefa",
+  initials: "ZM",
+  email: "zomahefaranaivo@gmail.com",
+  phone: "+261 38 54 422 52",
+  phoneHref: "tel:+261385442252",
+  location: "Fianarantsoa, Madagascar",
+  coordinates: "21°27′S 47°05′E",
+  timezone: "Indian/Antananarivo",
+  github: "https://github.com/Zomahefa",
+  linkedin: "https://www.linkedin.com/in/zo-mahefa-ranaivo-338026346/",
+  cv: "/cv-zomahefa-ranaivo-2026-10.pdf",
+  responseTime: "Réponse sous 48 h ouvrées",
+} as const;</pre>
+<table class="compact">
+  <thead><tr><th style="width:24%;">Champ</th><th>Où il apparaît</th></tr></thead>
+  <tbody>
+    <tr><td><code>name</code>, <code>shortName</code>, <code>initials</code></td><td>Header, hero, footer, métadonnées, JSON-LD.</td></tr>
+    <tr><td><code>email</code></td><td>Contact, footer, prompt IA, liens <code>mailto:</code>.</td></tr>
+    <tr><td><code>phone</code>, <code>phoneHref</code></td><td>Contact, footer, témoignages (téléphone séparé), JSON-LD.</td></tr>
+    <tr><td><code>location</code>, <code>coordinates</code>, <code>timezone</code></td><td>Hero, contact, footer, horloge locale, JSON-LD.</td></tr>
+    <tr><td><code>github</code>, <code>linkedin</code></td><td>Contact, footer, projets, JSON-LD <code>sameAs</code>.</td></tr>
+    <tr><td><code>cv</code></td><td>Bouton CV du hero, contact et footer.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="callout-label">Cohérence du téléphone</span>
+  <p>
+    <code>phone</code> est la version affichée ; <code>phoneHref</code> est la
+    version <code>tel:</code> sans espaces. Si vous changez l’un, changez
+    l’autre. Le JSON-LD de <code>layout.tsx</code> contient aussi le numéro en
+    dur (<code>+261385442252</code>) : pensez à le mettre à jour.
+  </p>
+</div>
+
+<h2>5.2 Le hero et les statistiques</h2>
+<p>
+  Le bloc <code>hero</code> existe en français et en anglais. Les champs
+  importants :
+</p>
+<pre>hero: {
+  eyebrowLeft: "PORTFOLIO / ÉDITION 2026",
+  eyebrowCenter: "FIANARANTSOA, MADAGASCAR · UTC+3",
+  eyebrowRight: "DISPONIBLE POUR COLLABORER",
+  kicker: "Ingénieur logiciel",
+  title: {
+    sr: "Zo Mahefa RANAIVO — Développeur web & mobile, ...",
+    line1: "Du premier",
+    line2Em: "commit",
+    line2After: " au",
+    line3Em: "dernier",
+    line3After: " test.",
+  },
+  roleLabel: "RÔLE_",
+  intro: "Je conçois des applications web et mobiles, ...",
+  primaryCta: "Voir mes preuves",
+  secondaryCta: "Parler d'un projet",
+  cvCta: "CV PDF",
+  stats: [
+    { value: 9, pad: 2, label: "projets documentés" },
+    { value: 3, pad: 2, label: "pôles d'expertise" },
+    { value: 8, pad: 2, label: "dépôts publics" },
+    { value: 48, prefix: "&lt;", suffix: "h", label: "délai de réponse" },
+  ],
+}</pre>
+<ul>
+  <li><code>title.line2Em</code> et <code>line3Em</code> sont les mots mis en italique. <code>line2After</code> et <code>line3After</code> sont le texte qui suit.</li>
+  <li><code>title.sr</code> est le titre complet pour les lecteurs d’écran et le SEO. Il doit rester descriptif.</li>
+  <li><code>stats[].value</code> est le nombre cible. <code>pad: 2</code> affiche <code>09</code> au lieu de <code>9</code>.</li>
+  <li><code>prefix</code> et <code>suffix</code> sont optionnels : <code>&lt;</code> + <code>48</code> + <code>h</code> donne <code>&lt;48h</code>.</li>
+  <li><code>roles</code> (au niveau racine de <code>SiteContent</code>) alimente l’animation des rôles sous le titre.</li>
+</ul>
+<div class="callout">
+  <span class="callout-label">Règle de crédibilité</span>
+  <p>
+    Ne mettez dans les statistiques que des chiffres que vous pouvez
+    défendre : nombre de projets réellement documentés, nombre de dépôts
+    publics, nombre de pôles. Évitez les pourcentages inventés.
+  </p>
+</div>
+
+<h2>5.3 Les titres et intros de sections</h2>
+<p>
+  Le bloc <code>sections</code> contient six objets :
+  <code>projects</code>, <code>expertise</code>, <code>method</code>,
+  <code>about</code>, <code>testimonials</code>, <code>contact</code>.
+  Chacun a <code>index</code>, <code>label</code>, <code>title</code> et
+  <code>intro</code>.
+</p>
+<pre>sections: {
+  projects: {
+    index: "01",
+    label: "Travaux sélectionnés",
+    title: "Des preuves, pas des promesses.",
+    intro: "Trois projets, trois problèmes réels. ...",
+  },
+  // ...
+}</pre>
+<p>
+  Les index <code>01</code> à <code>06</code> sont affichés dans les titres.
+  Si vous ajoutez une section, mettez à jour les index, le menu
+  <code>nav</code> et l’ordre dans <code>src/app/page.tsx</code>.
+</p>
+
+<h2>5.4 Modifier un projet vedette</h2>
+<p>
+  Les projets vedettes sont dans <code>featuredProjects</code>. Chaque objet
+  contient les champs suivants :
+</p>
+<table class="compact">
+  <thead><tr><th style="width:20%;">Champ</th><th style="width:10%;">Requis</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>Oui</td><td>Identifiant unique, en kebab-case. Sert de clé React.</td></tr>
+    <tr><td><code>index</code></td><td>Oui</td><td>Numéro affiché (01, 02, 03…).</td></tr>
+    <tr><td><code>title</code>, <code>subtitle</code></td><td>Oui</td><td>Nom du projet et accroche courte.</td></tr>
+    <tr><td><code>year</code>, <code>category</code></td><td>Oui</td><td>Année et catégorie affichées dans les métadonnées.</td></tr>
+    <tr><td><code>summary</code></td><td>Oui</td><td>Résumé en une phrase.</td></tr>
+    <tr><td><code>context</code></td><td>Oui</td><td>Cadre du projet (licence, freelance, stage…).</td></tr>
+    <tr><td><code>problem</code>, <code>role</code>, <code>outcome</code></td><td>Oui</td><td>Les trois blocs de l’étude de cas.</td></tr>
+    <tr><td><code>stack</code></td><td>Oui</td><td>Tableau de technologies affichées en tags.</td></tr>
+    <tr><td><code>visual</code></td><td>Oui</td><td><code>incident</code>, <code>erp</code> ou <code>pipeline</code>.</td></tr>
+    <tr><td><code>gallery</code></td><td>Non</td><td>Captures d’écran. Si présent, remplace le schéma SVG par un carrousel.</td></tr>
+    <tr><td><code>repo</code>, <code>demo</code>, <code>demoLabel</code></td><td>Non</td><td>Liens vers le code et la démo.</td></tr>
+    <tr><td><code>privateCode</code></td><td>Non</td><td>Si <code>true</code>, affiche « Étude de cas sur demande » avec un lien mailto.</td></tr>
+  </tbody>
+</table>
+
+<h3>Exemple réel : Signaleo</h3>
+<pre>{
+  id: "signaleo",
+  index: "01",
+  title: "Signaleo",
+  subtitle: "Signalement de pannes · terrain &amp; supervision",
+  year: "2025",
+  category: "Web app / DevOps",
+  summary: "Un outil unique pour signaler une panne, la localiser et suivre sa résolution en temps réel.",
+  context: "Projet de licence L3, conduit du cadrage jusqu'à la mise en production et à la supervision.",
+  problem: "Les interventions étaient suivies sans vue d'ensemble : statuts dispersés, faible traçabilité...",
+  role: "Conception du parcours de signalement, tableau de bord d'administration, suivi des statuts...",
+  outcome: "Une application déployée et observée, avec un flux de livraison reproductible...",
+  stack: ["React", "Django", "MySQL", "Docker", "GitHub Actions", "Nginx", "Prometheus", "Grafana"],
+  visual: "incident",
+  gallery: [
+    {
+      src: "/projects/signaleo-signalement.png",
+      alt: "Capture de l'écran de signalement d'une panne sur Signaleo",
+      label: "Signalement d'une panne",
+    },
+  ],
+  repo: "https://github.com/Zomahefa/gestion-de-panne-devops",
+  demo: "https://signaleo.onrender.com/",
+  demoLabel: "Consulter la démo",
+}</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Le champ <code>visual</code> est typé</span>
+  <p>
+    <code>ProjectVisualKind</code> n’accepte que <code>"incident"</code>,
+    <code>"erp"</code> ou <code>"pipeline"</code>. Si vous inventez une valeur
+    comme <code>"mobile"</code>, TypeScript refusera le build. Pour un nouveau
+    type, il faut modifier le type dans <code>content.ts</code> <em>et</em>
+    ajouter le rendu correspondant dans
+    <code>src/components/site/project-visual.tsx</code>. Le plus simple reste
+    de fournir une <code>gallery</code> : le carrousel remplace le schéma.
+  </p>
+</div>
+
+<h2>5.5 Modifier l’archive</h2>
+<p>
+  L’archive est le bloc <code>archive</code>. Chaque entrée est volontairement
+  courte :
+</p>
+<pre>archive: {
+  kicker: "ARCHIVE / 06",
+  title: "Autres projets &amp; labs",
+  copy: "Le reste du terrain : desktop, réseau, systèmes et projets académiques...",
+  footerNote: "ZÉRO LIEN MORT — LES PROJETS PRIVÉS SONT SIGNALÉS",
+  allRepos: "Tous mes dépôts publics",
+  projects: [
+    {
+      title: "Gestion de station essence",
+      category: "Desktop · JavaFX",
+      year: "2024",
+      stack: "JavaFX · PostgreSQL",
+      href: "https://github.com/Zomahefa/Gestion-de-station-essence",
+      label: "Code",
+    },
+    {
+      title: "Administration Linux &amp; Windows Server",
+      category: "Systèmes · ENI",
+      year: "2023 — 2024",
+      stack: "Active Directory · Bash · iptables",
+      label: "Lab",
+    },
+  ],
+}</pre>
+<ul>
+  <li>Si <code>href</code> est présent, la ligne est un lien et affiche « Code ».</li>
+  <li>Si <code>href</code> est absent, la ligne est statique et affiche <code>label</code> (« Lab », « Labs »…).</li>
+  <li><code>kicker</code> contient le nombre affiché ; pensez à l’ajuster si vous ajoutez des lignes.</li>
+</ul>
+
+<h2>5.6 Expertise, stack et QA</h2>
+<h3><code>practices</code> — les trois pôles</h3>
+<pre>practices: [
+  {
+    index: "A",
+    title: "Web &amp; mobile",
+    intro: "Des interfaces claires et des API solides...",
+    deliverables: [
+      "Applications métier et tableaux de bord",
+      "API REST sécurisées et modélisation des données",
+      "Interfaces React/Next.js responsive et accessibles",
+      "Applications Flutter/Kotlin selon le besoin",
+    ],
+    code: "UI / API / DATA",
+  },
+  // B = DevOps, C = QA
+]</pre>
+
+<h3><code>stack</code> — les niveaux réels</h3>
+<pre>stack: {
+  kicker: "CORE STACK / NIVEAUX RÉELS",
+  title: "Ce que je peux défendre en entretien.",
+  intro: "Pas de pourcentage inventé...",
+  footnote: "UNE TECHNOLOGIE N'EST PAS UNE COMPÉTENCE...",
+  levels: [
+    { level: "Maîtrisé en production", note: "...", items: ["Java", "Spring Boot", "..."] },
+    { level: "Opérationnel", note: "...", items: ["Kubernetes", "..."] },
+    { level: "Notions", note: "...", items: ["AWS", "..."] },
+  ],
+}</pre>
+
+<h3><code>qa</code> — le bloc qualité</h3>
+<pre>qa: {
+  kicker: "QA / MANUAL &amp; AUTOMATION",
+  title: "La qualité, du scénario au pipeline.",
+  intro: "...",
+  categories: [
+    { title: "Gestion &amp; recette", note: "...", tools: ["Jira", "Xray", "Zephyr", "TestRail"] },
+    { title: "Tests d'API", note: "...", tools: ["Postman", "Bruno", "Insomnia", "cURL"] },
+    // ...
+  ],
+  mindset: ["QA manuel &amp; SDET", "Esprit critique", "..."],
+  footnote: "UN BUG TROUVÉ AVANT LA PRODUCTION COÛTE MOINS CHER...",
+}</pre>
+
+<div class="callout warning">
+  <span class="callout-label">Deux listes de technologies différentes</span>
+  <p>
+    Le bandeau défilant du haut de page est codé en dur dans
+    <code>src/components/site/stack-marquee.tsx</code> (constante
+    <code>stack</code>), et il n’est pas traduit. La liste détaillée par
+    niveaux est dans <code>content.ts</code> → <code>stack.levels</code>.
+    Si vous ajoutez une technologie importante, mettez-la dans les deux
+    endroits pour rester cohérent.
+  </p>
+</div>
+
+<h2>5.7 Méthode et chaîne de livraison</h2>
+<h3><code>process</code></h3>
+<pre>process: {
+  steps: [
+    { number: "01", title: "Cadrer", text: "...", deliverable: "Mini-cahier des charges" },
+    { number: "02", title: "Construire", text: "...", deliverable: "Incréments testés" },
+    { number: "03", title: "Livrer", text: "...", deliverable: "Déploiement reproductible" },
+    { number: "04", title: "Veiller", text: "...", deliverable: "Runbook &amp; documentation" },
+  ],
+  engagements: ["Premier échange de 30 min", "Devis sous 5 jours ouvrés", "Code et documentation remis", "Réponse sous 48 h ouvrées"],
+  engagementsKicker: "ENGAGEMENTS / SIMPLES",
+  engagementsTitle: "Des règles lisibles avant même de commencer.",
+  cta: "Cadrer un besoin",
+}</pre>
+
+<h3><code>pipeline</code></h3>
+<pre>pipeline: {
+  label: "Chaîne de livraison",
+  title: "Du commit au monitoring.",
+  intro: "...",
+  principleLabel: "Principe :",
+  principle: "un déploiement doit pouvoir être rejoué, observé et annulé...",
+  deliverablesLabel: "LIVRABLES / RUNBOOK",
+  deliverables: "Pipeline, procédure de rollback et documentation de supervision...",
+  cta: "Cadrer un projet",
+  footerLeft: "FLUX REJOUABLE · TESTS · LOGS · MÉTRIQUES",
+  footerRight: "DOCKER / GH ACTIONS / PROMETHEUS / VERCEL",
+  steps: [
+    { number: "01", title: "Commit", label: "Git push", text: "..." },
+    // 02 Test, 03 Build, 04 Ship, 05 Observe
+  ],
+}</pre>
+<p>
+  La section pipeline n’a pas d’entrée dans le menu principal : elle vit entre
+  « Méthode » et « Parcours », avec l’ancre <code>#livraison</code>. Si vous
+  voulez l’ajouter au menu, ajoutez une entrée dans <code>nav</code> avec
+  <code>id: "livraison"</code>.
+</p>
+<h2>5.8 Parcours, formation, certifications</h2>
+<p>
+  Tout est dans <code>about</code>. C’est le bloc le plus long après les
+  projets. Il alimente la section « Parcours » et le prompt de l’assistant.
+</p>
+
+<h3>Textes de présentation</h3>
+<pre>about: {
+  lead: "Je m'appelle Zo Mahefa RANAIVO...",
+  body1: "Formé à l'ENI, j'ai appris à relier le produit, le système et la qualité...",
+  body2: "Je documente mes décisions, je teste ce que je livre...",
+  targetKicker: "CE QUE JE RECHERCHE",
+  targetItems: ["Web &amp; mobile · backend", "DevOps &amp; cloud", "Qualité &amp; automatisation"],
+  languagesLabel: "LANGUES",
+  languages: "Français courant · Anglais technique... · Malgache natif",
+  formatLabel: "FORMAT",
+  format: "Remote friendly · réponse sous 48 h ouvrées",
+}</pre>
+
+<h3>Expériences</h3>
+<pre>experiences: [
+  {
+    period: "2024 — Présent",
+    title: "Développeur web &amp; DevOps",
+    company: "Freelance · Projets personnels",
+    text: "Conception et développement d'applications métier...",
+    tags: ["Spring Boot", "React", "Docker", "CI/CD"],
+  },
+  // ...
+]</pre>
+<p>
+  Chaque expérience affiche la période, le titre, l’entreprise, le texte et
+  les tags. L’ordre du tableau est l’ordre d’affichage : le plus récent
+  d’abord.
+</p>
+
+<h3>Formation</h3>
+<pre>education: [
+  {
+    period: "2025 — 2026",
+    title: "Master 1 en informatique",
+    school: "ENI — École Nationale d'Informatique",
+    detail: "Ingénierie des systèmes d'information. Formation en cours.",
+  },
+  // ...
+]</pre>
+
+<h3>Certifications</h3>
+<pre>certifications: [
+  {
+    title: "Certification Spring Boot",
+    issuer: "Mind Luster",
+    year: "2026",
+    image: "/certifcatSping-boot2.jpeg",
+    href: "/certificatSpringBoot.pdf",
+  },
+  {
+    title: "Certification UML",
+    issuer: "Mind Luster",
+    year: "2026",
+    image: "/uml-certification.jpeg",
+    href: "/uml-certification-zo.pdf",
+  },
+]</pre>
+<ul>
+  <li><code>image</code> est la vignette affichée (JPEG/PNG dans <code>public/</code>).</li>
+  <li><code>href</code> est le PDF ouvert au clic, dans un nouvel onglet.</li>
+  <li>Les noms de fichiers actuels contiennent une faute (<code>certifcatSping-boot2.jpeg</code>). Si vous les renommez, mettez à jour <code>image</code> et <code>href</code>.</li>
+  <li>Pour ajouter une certification : déposez la vignette et le PDF dans <code>public/</code>, puis ajoutez un objet dans les tableaux FR et EN.</li>
+</ul>
+
+<div class="callout tip">
+  <span class="callout-label">Taille des vignettes</span>
+  <p>
+    Le composant <code>about.tsx</code> déclare <code>width={1600}</code> et
+    <code>height={1131}</code> pour les images de certification. Utilisez de
+    préférence un format paysage proche de ce ratio pour éviter les recadrages
+    étranges. Les images sont optimisées par <code>next/image</code>.
+  </p>
+</div>
+
+<h3>Savoir-être</h3>
+<pre>softSkills: [
+  {
+    title: "Résolution de problèmes",
+    text: "Partir du symptôme, isoler la cause...",
+    proof: "Diagnostics sur les pipelines, les environnements...",
+  },
+  // ...
+]</pre>
+<p>
+  Chaque qualité est reliée à une preuve concrète. C’est ce qui distingue ce
+  bloc d’une liste de mots-clés. Si vous ajoutez une qualité, ajoutez une
+  preuve vérifiable.
+</p>
+
+<h2>5.9 Témoignages</h2>
+<pre>testimonials: {
+  items: [
+    {
+      name: "Quincaillerie Boutique de l'Évolution",
+      company: "Boutique de l'Évolution · Quincaillerie",
+      phone: "034 16 118 50",
+      phoneHref: "tel:+261341611850",
+      quote: "Nous suivions nos stocks et nos ventes sur des cahiers...",
+      context: "ERP — stocks, ventes &amp; trésorerie",
+    },
+  ],
+  note: "Témoignages recueillis auprès de clients...",
+}</pre>
+<div class="callout warn">
+  <span class="callout-label">Données personnelles</span>
+  <p>
+    Les témoignages contiennent des noms et des numéros de téléphone. Ne
+    publiez que des personnes qui ont donné leur accord. Pour retirer un
+    témoignage, supprimez l’objet dans <code>fr</code> et <code>en</code>.
+    La clé React étant <code>testimonial.name</code>, deux témoignages avec
+    le même nom provoqueraient un avertissement React.
+  </p>
+</div>
+
+<h2>5.10 Contact et formulaire</h2>
+<p>
+  Le bloc <code>contact</code> contient les libellés de la colonne de gauche
+  et tous les textes du formulaire. Les champs eux-mêmes sont dans
+  <code>src/components/site/contact-form.tsx</code> ; les textes sont dans
+  <code>contact.form</code>.
+</p>
+<pre>contact: {
+  directLabel: "ÉCRIRE DIRECTEMENT",
+  recruiterLabel: "RECRUTEUR",
+  recruiterTitle: "Un poste, un stage ou une alternance",
+  recruiterText: "CV, disponibilité et références de projets.",
+  clientLabel: "CLIENT",
+  clientTitle: "Un produit à concevoir ou à fiabiliser",
+  clientText: "Un premier échange de 30 minutes, sans engagement.",
+  locationNote: "remote possible",
+  cv: "CV PDF",
+  types: [
+    "Site ou application web",
+    "Application mobile",
+    "DevOps / CI-CD",
+    "Qualité &amp; tests",
+    "Recrutement",
+    "Autre",
+  ],
+  form: {
+    head: "BRIEF / CONTACT",
+    response: "RÉPONSE &lt; 48 H",
+    name: "Nom complet",
+    // ...
+  },
+}</pre>
+<ul>
+  <li><code>types</code> alimente la liste déroulante « Type de besoin ». Le choix est préfixé au message enregistré.</li>
+  <li><code>form.consent</code> est le texte du consentement. Il est obligatoire pour envoyer.</li>
+  <li><code>form.errorSend</code> et <code>form.fallbackLink</code> gèrent le repli e-mail.</li>
+  <li>Les sujets des deux liens recruteur/client sont dans <code>contact-section.tsx</code>, pas dans <code>content.ts</code> : cherchez « Opportunité — recrutement » et « Mission — cadrage de projet ».</li>
+</ul>
+
+<h2>5.11 Footer et micro-libellés</h2>
+<p>
+  <code>footer</code> contient l’accroche, les libellés et les mentions.
+  <code>ui</code> contient tous les petits textes d’interface : boutons,
+  galerie, accessibilité, thème, langue, menu. Si un bouton affiche un texte
+  inattendu, cherchez-le dans <code>ui</code>.
+</p>
+<pre>footer: {
+  taglineLine1: "Ingénieur logiciel — web, mobile,",
+  taglineLine2: "DevOps et testeur QA.",
+  navLabel: "Navigation de pied de page",
+  contactLabel: "CONTACT",
+  cv: "CV PDF",
+  backToTop: "Haut de page",
+  rights: "Tous droits réservés.",
+  built: "Conçu, développé et déployé avec Next.js.",
+}</pre>
+
+<h2>5.12 Textes de l’assistant IA</h2>
+<p>
+  Deux endroits distincts :
+</p>
+<ol>
+  <li><code>content.ts</code> → <code>ai</code> : les textes visibles du widget (titre, accueil, suggestions, erreurs, disclaimer).</li>
+  <li><code>src/lib/assistant-prompt.ts</code> : les règles et le contexte envoyés au modèle (ton, périmètre, profil, projets, stack…).</li>
+</ol>
+<div class="callout">
+  <span class="callout-label">Mise à jour automatique du contexte</span>
+  <p>
+    Le prompt est construit à partir de <code>defaultContent</code> (le
+    français). Si vous modifiez un projet, une expérience ou une certification
+    dans <code>content.ts</code>, l’assistant apprendra l’information au
+    prochain build, sans toucher à <code>assistant-prompt.ts</code>. Vous ne
+    modifiez ce fichier que pour changer les <em>règles</em> ou le ton.
+  </p>
+</div>
+
+<h2>5.13 CV, photo et images</h2>
+<table>
+  <thead><tr><th style="width:28%;">Besoin</th><th style="width:30%;">Fichier</th><th>Où le référencer</th></tr></thead>
+  <tbody>
+    <tr><td>Remplacer le CV</td><td><code>public/cv-zomahefa-ranaivo-2026-10.pdf</code></td><td><code>site.cv</code>. Conservez le même nom pour éviter les liens morts, ou mettez à jour <code>site.cv</code>.</td></tr>
+    <tr><td>Remplacer le portrait</td><td><code>public/photo-cv.png</code></td><td>Utilisé par <code>hero.tsx</code> et le JSON-LD (<code>image</code>).</td></tr>
+    <tr><td>Image de partage LinkedIn / réseaux</td><td><code>public/og-image.png</code></td><td>Open Graph et Twitter dans <code>layout.tsx</code>. Format 1200×630.</td></tr>
+    <tr><td>Captures de projets</td><td><code>public/projects/*.png</code></td><td><code>featuredProjects[].gallery[].src</code>.</td></tr>
+    <tr><td>Vignettes de certification</td><td><code>public/*.jpeg</code></td><td><code>about.certifications[].image</code>.</td></tr>
+    <tr><td>Attestations PDF</td><td><code>public/*.pdf</code></td><td><code>about.certifications[].href</code>.</td></tr>
+    <tr><td>Icône Apple</td><td><code>public/apple-icon.png</code></td><td><code>layout.tsx</code> et <code>manifest.ts</code>.</td></tr>
+    <tr><td>Polices</td><td><code>public/fonts/</code></td><td><code>globals.css</code> et préchargement dans <code>layout.tsx</code>.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="callout-label">Noms de fichiers</span>
+  <p>
+    Les chemins sont sensibles à la casse sur Vercel (Linux). Utilisez des
+    minuscules, sans espaces ni accents : <code>mon-projet-capture-01.png</code>.
+    Un fichier nommé <code>Capture 01.PNG</code> fonctionnera peut-être en
+    local sur macOS/Windows mais renverra 404 en production.
+  </p>
+</div>
+
+<h2>5.14 SEO, métadonnées et partage</h2>
+<h3>Le titre et la description globaux</h3>
+<p>
+  Dans <code>src/app/layout.tsx</code> :
+</p>
+<pre>const title = "Zo Mahefa RANAIVO — Développeur web, DevOps &amp; QA";
+const description = "Portfolio de Zo Mahefa RANAIVO, développeur web &amp; mobile...";</pre>
+<p>
+  Le template de titre ajoute automatiquement « — Zo Mahefa RANAIVO » aux
+  pages qui définissent leur propre titre (comme l’admin).
+</p>
+
+<h3>Les autres champs à connaître</h3>
+<table class="compact">
+  <thead><tr><th style="width:26%;">Champ</th><th>Effet</th></tr></thead>
+  <tbody>
+    <tr><td><code>metadataBase</code></td><td>Base des URLs absolues pour Open Graph et Twitter. Dépend de <code>siteUrl</code>.</td></tr>
+    <tr><td><code>keywords</code></td><td>Mots-clés (peu utilisés par Google, utiles pour d’autres moteurs).</td></tr>
+    <tr><td><code>alternates.canonical</code></td><td>URL canonique de la page d’accueil.</td></tr>
+    <tr><td><code>openGraph</code></td><td>Titre, description, image 1200×630, locale <code>fr_FR</code>.</td></tr>
+    <tr><td><code>twitter</code></td><td>Carte <code>summary_large_image</code>.</td></tr>
+    <tr><td><code>robots</code></td><td>Indexation et directives Googlebot.</td></tr>
+    <tr><td><code>verification.google</code></td><td>Code de vérification Search Console. Le fichier HTML de vérification est aussi dans <code>public/</code>.</td></tr>
+    <tr><td><code>schema</code> (JSON-LD)</td><td>Décrit la personne, le site et la page de profil pour les moteurs.</td></tr>
+  </tbody>
+</table>
+
+<h3>Changer de domaine</h3>
+<ol>
+  <li>Ajoutez le domaine dans Vercel (Settings → Domains).</li>
+  <li>Configurez les enregistrements DNS demandés.</li>
+  <li>Mettez <code>NEXT_PUBLIC_SITE_URL</code> à la nouvelle URL, sans slash final.</li>
+  <li>Redéployez.</li>
+  <li>Vérifiez <code>/sitemap.xml</code>, <code>/robots.txt</code> et le code source (canonical, JSON-LD).</li>
+  <li>Demandez à Google Search Console de réindexer, et rafraîchissez l’aperçu LinkedIn.</li>
+</ol>
+
+<h3>Le JSON-LD</h3>
+<p>
+  Le JSON-LD décrit <code>Person</code>, <code>WebSite</code> et
+  <code>ProfilePage</code>. Il contient le nom, les rôles, la photo, l’e-mail,
+  le téléphone, l’adresse, les réseaux, l’école, les langues et les
+  compétences. Si vous changez de nom, de téléphone ou de réseau social,
+  mettez à jour <code>site</code> <strong>et</strong> le JSON-LD de
+  <code>layout.tsx</code> (certaines valeurs y sont encore écrites en dur).
+</p>
+
+<h2>5.15 Vérifier après chaque modification</h2>
+<ul class="checklist">
+  <li>La même clé a été modifiée dans <code>fr</code> et dans <code>en</code>.</li>
+  <li><code>npm test</code> passe (parité FR/EN, aucun texte vide).</li>
+  <li><code>npm run build</code> passe (TypeScript, imports, routes).</li>
+  <li>Le rendu local est correct en français et en anglais.</li>
+  <li>Les liens ajoutés répondent (GitHub, démo, PDF).</li>
+  <li>Les images ajoutées sont dans <code>public/</code> avec un nom en minuscules.</li>
+  <li>Le texte ne contient pas de secret ni de donnée personnelle non autorisée.</li>
+  <li>Le commit est poussé : Vercel redéploie automatiquement.</li>
+</ul>
+<!-- ================= CHAPITRE 6 ================= -->
+<h1 class="chapter" id="ch6"><span class="num">Chapitre 06</span>Ajouter un projet</h1>
+
+<p class="lead">
+  Il existe deux niveaux de mise en avant : le <strong>projet vedette</strong>,
+  qui occupe une grande ligne avec étude de cas et visuel, et le
+  <strong>projet d’archive</strong>, qui tient sur une ligne compacte. Les deux
+  se modifient dans <code>content.ts</code>, jamais en base.
+</p>
+
+<h2>6.1 Ajouter un projet vedette — pas à pas</h2>
+
+<h3>Étape 1 — Préparer les images</h3>
+<p>
+  Déposez les captures dans <code>public/projects/</code>. Utilisez des noms
+  courts, en minuscules, sans espaces :
+</p>
+<pre>public/projects/
+├── mon-projet-tableau-de-bord.png
+├── mon-projet-liste.png
+└── mon-projet-detail.png</pre>
+<ul>
+  <li>Format conseillé : PNG ou WebP, largeur 1 200–1 600 px.</li>
+  <li>Évitez les captures avec des données personnelles réelles (noms, e-mails, numéros).</li>
+  <li>Si vous n’avez pas de capture, utilisez un <code>visual</code> existant : <code>incident</code>, <code>erp</code> ou <code>pipeline</code>.</li>
+</ul>
+
+<h3>Étape 2 — Ajouter l’objet en français</h3>
+<p>
+  Dans <code>const fr</code>, cherchez <code>featuredProjects: [</code>.
+  Ajoutez votre objet à l’endroit où vous voulez qu’il apparaisse. Pour le
+  mettre en premier, placez-le juste après le crochet ouvrant.
+</p>
+<pre>{
+  id: "mon-projet",
+  index: "04",
+  title: "Mon projet",
+  subtitle: "Gestion de stock · PME",
+  year: "2026",
+  category: "Web app / Fullstack",
+  summary: "Une application pour suivre les stocks et les ventes en temps réel.",
+  context: "Projet freelance réalisé pour une PME locale.",
+  problem: "Les stocks étaient suivis sur tableur, avec des ruptures et des doublons.",
+  role: "Cadrage, modélisation des données, API, interface et déploiement.",
+  outcome: "Un tableau de bord unique, des alertes de seuil et une mise en production reproductible.",
+  stack: ["Next.js", "TypeScript", "PostgreSQL", "Docker"],
+  visual: "erp",
+  gallery: [
+    {
+      src: "/projects/mon-projet-tableau-de-bord.png",
+      alt: "Tableau de bord du projet Mon projet avec les indicateurs de stock",
+      label: "Tableau de bord",
+    },
+    {
+      src: "/projects/mon-projet-liste.png",
+      alt: "Liste des produits et seuils d'alerte",
+      label: "Liste des produits",
+    },
+  ],
+  repo: "https://github.com/Zomahefa/mon-projet",
+  demo: "https://mon-projet.vercel.app/",
+  demoLabel: "Voir la démo",
+},</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Les champs obligatoires</span>
+  <p>
+    <code>id</code>, <code>index</code>, <code>title</code>,
+    <code>subtitle</code>, <code>year</code>, <code>category</code>,
+    <code>summary</code>, <code>context</code>, <code>problem</code>,
+    <code>role</code>, <code>outcome</code>, <code>stack</code> et
+    <code>visual</code> sont requis par le type <code>FeaturedProject</code>.
+    Un oubli fait échouer <code>npm run build</code> avec un message
+    TypeScript explicite.
+  </p>
+</div>
+
+<h3>Étape 3 — Ajouter le même objet en anglais</h3>
+<p>
+  Dans <code>const en</code>, cherchez à nouveau
+  <code>featuredProjects: [</code>. Ajoutez le même objet, avec les textes
+  traduits. Conservez strictement les mêmes <code>id</code>, <code>index</code>,
+  <code>year</code>, <code>stack</code>, chemins d’images, liens et
+  <code>visual</code>.
+</p>
+<pre>{
+  id: "mon-projet",
+  index: "04",
+  title: "My project",
+  subtitle: "Inventory management · SMB",
+  year: "2026",
+  category: "Web app / Fullstack",
+  summary: "An application to track stock and sales in real time.",
+  context: "Freelance project for a local SMB.",
+  problem: "Inventory was tracked in spreadsheets, causing stockouts and duplicates.",
+  role: "Scoping, data modeling, API, UI and deployment.",
+  outcome: "A single dashboard, threshold alerts and a reproducible production release.",
+  stack: ["Next.js", "TypeScript", "PostgreSQL", "Docker"],
+  visual: "erp",
+  gallery: [
+    {
+      src: "/projects/mon-projet-tableau-de-bord.png",
+      alt: "Mon project dashboard with inventory indicators",
+      label: "Dashboard",
+    },
+    {
+      src: "/projects/mon-projet-liste.png",
+      alt: "Product list and alert thresholds",
+      label: "Product list",
+    },
+  ],
+  repo: "https://github.com/Zomahefa/mon-projet",
+  demo: "https://mon-projet.vercel.app/",
+  demoLabel: "View demo",
+},</pre>
+
+<h3>Étape 4 — Ajuster les index et les compteurs</h3>
+<p>
+  Si vous insérez le projet au milieu, renumérotez les <code>index</code> des
+  projets suivants (<code>"01"</code>, <code>"02"</code>, <code>"03"</code>…)
+  dans les deux langues. Pensez aussi aux statistiques du hero
+  (<code>hero.stats</code>, « projets documentés ») et au <code>kicker</code>
+  de l’archive si le nombre de projets change.
+</p>
+
+<h3>Étape 5 — Vérifier</h3>
+<pre>npm test
+npm run build
+npm run dev</pre>
+<p>
+  Ouvrez <code>http://localhost:3000</code>, vérifiez le projet en français,
+  basculez en anglais, testez le carrousel au clavier (flèches gauche/droite),
+  vérifiez les liens de démo et de code. Sur mobile, vérifiez que les images
+  ne débordent pas.
+</p>
+
+<h2>6.2 Ajouter un projet d’archive</h2>
+<p>
+  C’est plus simple : une ligne, pas d’image, pas d’étude de cas. Dans
+  <code>archive.projects</code>, ajoutez :
+</p>
+<pre>{
+  title: "Mon projet d'archive",
+  category: "Desktop · JavaFX",
+  year: "2026",
+  stack: "JavaFX · SQLite",
+  href: "https://github.com/Zomahefa/mon-projet-archive",
+  label: "Code",
+},</pre>
+<ul>
+  <li><code>href</code> : si présent, la ligne est cliquable et affiche « Code ».</li>
+  <li><code>label</code> : affiché seulement si <code>href</code> est absent. Utilisez « Lab », « Labs » ou « Projet privé ».</li>
+  <li>Mettez à jour <code>archive.kicker</code> (« ARCHIVE / 07 ») et, si besoin, le texte <code>copy</code>.</li>
+</ul>
+
+<h2>6.3 Cas particuliers</h2>
+
+<h3>Projet sans dépôt public</h3>
+<p>
+  N’ajoutez pas <code>repo</code>. Ajoutez <code>privateCode: true</code> :
+  le lien « Étude de cas sur demande » apparaîtra et ouvrira un e-mail
+  prérempli avec le nom du projet.
+</p>
+<pre>privateCode: true,
+demo: "https://demo.example.com/",
+demoLabel: "Voir la démo",</pre>
+
+<h3>Projet sans capture d’écran</h3>
+<p>
+  Utilisez un <code>visual</code> existant. Les trois schémas sont définis dans
+  <code>src/components/site/project-visual.tsx</code> :
+</p>
+<table class="compact">
+  <thead><tr><th style="width:20%;">Valeur</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>incident</code></td><td>Signalement, supervision, incidents, workflow terrain.</td></tr>
+    <tr><td><code>erp</code></td><td>Tableaux de bord, gestion, stocks, ventes, trésorerie.</td></tr>
+    <tr><td><code>pipeline</code></td><td>CI/CD, tests, logs, alertes, infrastructure.</td></tr>
+  </tbody>
+</table>
+
+<h3>Créer un nouveau type de visuel</h3>
+<ol>
+  <li>Dans <code>content.ts</code>, ajoutez la valeur à l’union :
+    <pre>export type ProjectVisualKind = "incident" | "erp" | "pipeline" | "mobile";</pre>
+  </li>
+  <li>Dans <code>src/components/site/project-visual.tsx</code>, ajoutez le rendu correspondant (SVG, blocs, textes).</li>
+  <li>Utilisez la nouvelle valeur dans vos objets FR et EN.</li>
+</ol>
+<div class="callout tip">
+  <span class="callout-label">Alternative plus simple</span>
+  <p>
+    Si vous n’avez qu’une capture, utilisez <code>gallery</code> avec un seul
+    élément : le carrousel s’affiche en mode « aperçu », sans autoplay. C’est
+    souvent plus convaincant qu’un schéma générique.
+  </p>
+</div>
+
+<h3>Images externes</h3>
+<p>
+  <code>next.config.ts</code> autorise les images locales
+  (<code>localPatterns: [{ pathname: "/**" }]</code>) mais ne déclare aucun
+  <code>remotePatterns</code>. Une URL externe dans <code>gallery[].src</code>
+  sera refusée par <code>next/image</code>. Le plus sûr est de télécharger
+  l’image dans <code>public/projects/</code>. Sinon, ajoutez le domaine dans
+  <code>next.config.ts</code> :
+</p>
+<pre>images: {
+  // ...
+  remotePatterns: [
+    { protocol: "https", hostname: "images.example.com" },
+  ],
+},</pre>
+
+<h2>6.4 Checklist d’ajout de projet</h2>
+<ul class="checklist">
+  <li>Images déposées dans <code>public/projects/</code>, noms en minuscules.</li>
+  <li>Objet ajouté dans <code>featuredProjects</code> côté <code>fr</code>.</li>
+  <li>Objet identique ajouté côté <code>en</code> (mêmes id, index, stack, liens, images).</li>
+  <li>Index des autres projets renumérotés si nécessaire.</li>
+  <li>Statistiques du hero et <code>archive.kicker</code> à jour.</li>
+  <li><code>npm test</code> et <code>npm run build</code> passent.</li>
+  <li>Vérification visuelle desktop + mobile + FR/EN.</li>
+  <li>Liens de démo et de code testés.</li>
+  <li>Commit et push : déploiement Vercel automatique.</li>
+</ul>
+<!-- ================= CHAPITRE 7 ================= -->
+<h1 class="chapter" id="ch7"><span class="num">Chapitre 07</span>Admin, base de données et sécurité</h1>
+
+<p class="lead">
+  Le portfolio n’a pas de CMS. La base de données sert uniquement à recevoir
+  les messages du formulaire et à compter les visites. L’administration est
+  une page privée qui lit ces deux tables. Ce chapitre explique le schéma,
+  les règles d’accès et les opérations courantes.
+</p>
+
+<h2>7.1 Les deux tables</h2>
+<h3><code>messages</code></h3>
+<table>
+  <thead><tr><th style="width:20%;">Colonne</th><th style="width:16%;">Type</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>UUID généré par <code>crypto.randomUUID()</code>.</td></tr>
+    <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>Nom du visiteur (max 120 caractères côté API).</td></tr>
+    <tr><td><code>email</code></td><td>TEXT NOT NULL</td><td>E-mail validé par regex (max 180).</td></tr>
+    <tr><td><code>phone</code></td><td>TEXT NOT NULL</td><td>Téléphone optionnel (max 30), chaîne vide si absent.</td></tr>
+    <tr><td><code>message</code></td><td>TEXT NOT NULL</td><td>Message (max 5 000), avec le type de besoin préfixé si fourni.</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT NOT NULL</td><td>Date ISO 8601, tri décroissant dans l’admin.</td></tr>
+  </tbody>
+</table>
+
+<h3><code>page_views</code></h3>
+<table>
+  <thead><tr><th style="width:20%;">Colonne</th><th style="width:16%;">Type</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>UUID de la vue.</td></tr>
+    <tr><td><code>path</code></td><td>TEXT NOT NULL</td><td>Chemin visité, commence par <code>/</code>, max 200.</td></tr>
+    <tr><td><code>referrer</code></td><td>TEXT DEFAULT ''</td><td>Page d’origine, max 300.</td></tr>
+    <tr><td><code>country</code></td><td>TEXT DEFAULT ''</td><td>Code pays à deux lettres fourni par Vercel/Cloudflare.</td></tr>
+    <tr><td><code>device</code></td><td>TEXT DEFAULT ''</td><td><code>Desktop</code>, <code>Mobile</code> ou <code>Tablet</code>.</td></tr>
+    <tr><td><code>visitor_id</code></td><td>TEXT DEFAULT ''</td><td>UUID local du navigateur, pour les visiteurs uniques.</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT NOT NULL</td><td>Date ISO 8601.</td></tr>
+  </tbody>
+</table>
+
+<p>Trois index sont créés :</p>
+<pre>idx_messages_created_at      ON messages(created_at)
+idx_page_views_created_at    ON page_views(created_at)
+idx_page_views_visitor       ON page_views(visitor_id)</pre>
+
+<h2>7.2 Turso ou SQLite local ?</h2>
+<p>
+  <code>src/lib/db.ts</code> choisit automatiquement :
+</p>
+<pre>const isTurso = !!process.env.TURSO_DB_URL;
+
+// Si TURSO_DB_URL est défini :
+createClient({ url: TURSO_DB_URL, authToken: TURSO_DB_TOKEN })
+
+// Sinon :
+createClient({ url: "file:data/portfolio.db" })</pre>
+<ul>
+  <li><strong>En local</strong>, sans variables Turso : un fichier <code>data/portfolio.db</code> est créé. Il est ignoré par Git.</li>
+  <li><strong>En production</strong>, avec <code>TURSO_DB_URL</code> et <code>TURSO_DB_TOKEN</code> : la base distante est utilisée.</li>
+  <li>Les tables sont créées automatiquement au premier accès grâce à <code>ensureSchema()</code>, mais il est recommandé de lancer <code>npm run db:init</code> pour vérifier les droits et initialiser explicitement.</li>
+</ul>
+
+<div class="callout warn">
+  <span class="callout-label">Ne pas mélanger les environnements</span>
+  <p>
+    Si vous lancez <code>npm run dev</code> avec les variables Turso de
+    production dans <code>.env.local</code>, vous écrirez dans la vraie base
+    pendant vos tests. Utilisez soit le SQLite local, soit une base Turso
+    dédiée au développement.
+  </p>
+</div>
+
+<h2>7.3 Initialiser la base</h2>
+<pre>npm run db:init</pre>
+<p>Le script <code>scripts/init-db.mjs</code> :</p>
+<ol>
+  <li>Charge <code>.env.local</code> via <code>@next/env</code>.</li>
+  <li>Choisit Turso si <code>TURSO_DB_URL</code> existe, sinon <code>data/portfolio.db</code>.</li>
+  <li>Exécute les <code>CREATE TABLE IF NOT EXISTS</code> et les index.</li>
+  <li>Affiche la cible, le nombre de messages, le nombre de vues et les tables.</li>
+</ol>
+<pre>✓ Base initialisée
+  cible        : Turso
+  messages     : 0
+  pages vues   : 0
+  tables       : messages, page_views</pre>
+<p>
+  Le script est idempotent : vous pouvez le relancer sans perdre les données.
+</p>
+
+<h2>7.4 L’administration</h2>
+<p>
+  URL : <code>/admin</code>. La page est en <code>noindex, nofollow</code> et
+  n’est pas listée dans le sitemap. Elle n’est pas liée depuis le site public.
+</p>
+
+<h3>Connexion</h3>
+<ol>
+  <li>Le formulaire envoie le mot de passe à <code>/api/admin/login</code>.</li>
+  <li>La route limite à 6 tentatives par 15 minutes et par IP.</li>
+  <li>Si <code>ADMIN_PASSWORD</code> n’est pas configuré : réponse 503 explicite.</li>
+  <li>La comparaison se fait en temps constant (XOR caractère par caractère).</li>
+  <li>En cas de succès, un cookie <code>zm_admin_session</code> est posé : <code>HttpOnly</code>, <code>SameSite=Strict</code>, <code>Secure</code> en production, durée 8 heures.</li>
+  <li>Le jeton est <code>expiration.signature</code>, signature HMAC-SHA256 avec <code>ADMIN_PASSWORD</code>.</li>
+</ol>
+
+<h3>Onglet Messages</h3>
+<ul>
+  <li>Liste les messages du plus récent au plus ancien.</li>
+  <li>Recherche locale sur le nom, l’e-mail et le message.</li>
+  <li>Affiche les coordonnées, le type de besoin et la date formatée en heure de Fianarantsoa.</li>
+  <li>Suppression unitaire avec confirmation.</li>
+</ul>
+
+<h3>Onglet Audience</h3>
+<table class="compact">
+  <thead><tr><th style="width:32%;">Indicateur</th><th>Définition</th></tr></thead>
+  <tbody>
+    <tr><td>Vues totales</td><td><code>COUNT(*)</code> sur <code>page_views</code>.</td></tr>
+    <tr><td>7 derniers jours</td><td>Vues dont <code>created_at</code> est dans les 7 derniers jours.</td></tr>
+    <tr><td>Aujourd’hui</td><td>Vues dont la date correspond à la date courante.</td></tr>
+    <tr><td>Visiteurs uniques</td><td><code>COUNT(DISTINCT visitor_id)</code>, hors identifiants vides.</td></tr>
+    <tr><td>Activité 14 jours</td><td>Nombre de vues par jour, pour le graphique.</td></tr>
+    <tr><td>Top pages</td><td>5 chemins les plus visités.</td></tr>
+    <tr><td>Top pays</td><td>5 pays les plus fréquents (si disponible).</td></tr>
+    <tr><td>Top appareils</td><td>5 types d’appareils.</td></tr>
+    <tr><td>Visites récentes</td><td>25 dernières vues avec chemin, référent, pays, appareil, date.</td></tr>
+  </tbody>
+</table>
+
+<h2>7.5 Authentification et sécurité</h2>
+<h3>Le mot de passe admin</h3>
+<ul>
+  <li>Variable <code>ADMIN_PASSWORD</code>, jamais dans Git.</li>
+  <li>Minimum recommandé : 12 caractères, majuscules, minuscules, chiffres et symboles.</li>
+  <li><code>isWeakPassword()</code> avertit dans les logs si le mot de passe est faible, mais ne bloque pas le démarrage.</li>
+  <li>Changer le mot de passe invalide toutes les sessions existantes (la signature change).</li>
+</ul>
+
+<h3>Les limites de débit</h3>
+<table>
+  <thead><tr><th style="width:30%;">Route</th><th style="width:20%;">Limite</th><th>Fenêtre</th></tr></thead>
+  <tbody>
+    <tr><td><code>/api/admin/login</code></td><td>6 tentatives</td><td>15 minutes / IP</td></tr>
+    <tr><td><code>/api/messages</code> (POST)</td><td>5 messages</td><td>10 minutes / IP</td></tr>
+    <tr><td><code>/api/visits</code> (POST)</td><td>60 vues</td><td>10 minutes / IP</td></tr>
+    <tr><td><code>/api/assistant</code> (POST)</td><td>25 questions</td><td>10 minutes / IP</td></tr>
+  </tbody>
+</table>
+<div class="callout">
+  <span class="callout-label">Limite en mémoire</span>
+  <p>
+    Ces compteurs vivent dans une <code>Map</code> en mémoire, par instance
+    serverless. Ils ne sont pas partagés entre toutes les instances Vercel et
+    se réinitialisent à froid. C’est une protection simple contre les abus
+    basiques, pas un pare-feu. Pour une protection forte, utilisez un service
+    de rate limiting distribué (Upstash, Redis, Vercel Firewall…).
+  </p>
+</div>
+
+<h3>En-têtes de sécurité</h3>
+<p>
+  Définis dans <code>next.config.ts</code> et appliqués en production :
+</p>
+<table class="compact">
+  <thead><tr><th style="width:34%;">En-tête</th><th>Valeur / effet</th></tr></thead>
+  <tbody>
+    <tr><td><code>Content-Security-Policy</code></td><td><code>default-src 'self'</code>, scripts et styles inline autorisés, images <code>self data: blob:</code>, <code>object-src 'none'</code>, <code>frame-ancestors 'none'</code>.</td></tr>
+    <tr><td><code>X-Content-Type-Options</code></td><td><code>nosniff</code>.</td></tr>
+    <tr><td><code>X-Frame-Options</code></td><td><code>DENY</code> (pas d’iframe).</td></tr>
+    <tr><td><code>Referrer-Policy</code></td><td><code>strict-origin-when-cross-origin</code>.</td></tr>
+    <tr><td><code>Permissions-Policy</code></td><td>Caméra, micro, géolocalisation et paiement désactivés.</td></tr>
+    <tr><td><code>Strict-Transport-Security</code></td><td>HSTS 2 ans, sous-domaines, preload.</td></tr>
+    <tr><td><code>Cross-Origin-Opener-Policy</code></td><td><code>same-origin</code>.</td></tr>
+  </tbody>
+</table>
+<p class="small muted">
+  En développement, la CSP est retirée pour ne pas gêner le rechargement à
+  chaud de Next.js. Les autres en-têtes restent.
+</p>
+
+<h2>7.6 Opérations courantes</h2>
+<h3>Supprimer les messages de test</h3>
+<p>
+  Le plus simple : connectez-vous à <code>/admin</code> et supprimez-les un par
+  un. Pour repartir de zéro sur la base locale :
+</p>
+<pre>rm -f data/portfolio.db
+npm run db:init</pre>
+<div class="callout danger">
+  <span class="callout-label">Ne faites pas cela en production</span>
+  <p>
+    Ne supprimez jamais <code>data/portfolio.db</code> sur un serveur en
+    production : cela effacerait les messages et les visites. Sur Turso, une
+    suppression est explicite et doit être réfléchie.
+  </p>
+</div>
+
+<h3>Nettoyer les visites de test sur Turso</h3>
+<pre>turso db shell portfolio-zomahefa "DELETE FROM page_views;"</pre>
+<p class="small muted">
+  À utiliser uniquement juste après la mise en ligne, pour repartir d’un
+  compteur propre. Les messages se suppriment depuis l’admin.
+</p>
+
+<h3>Sauvegarder la base</h3>
+<pre>turso db shell portfolio-zomahefa ".dump" &gt; backup-portfolio.sql</pre>
+<p>
+  Conservez ce fichier hors du dépôt Git. Pour restaurer, utilisez
+  <code>turso db shell</code> avec le fichier SQL, ou recréez une base et
+  rejouez les insertions.
+</p>
+
+<h3>Vérifier le contenu d’une table</h3>
+<pre>turso db shell portfolio-zomahefa "SELECT COUNT(*) FROM messages;"
+turso db shell portfolio-zomahefa "SELECT COUNT(*) FROM page_views;"
+turso db shell portfolio-zomahefa "SELECT name FROM sqlite_master WHERE type='table';"</pre>
+
+<h2>7.7 Vie privée et données</h2>
+<ul>
+  <li>Les messages contiennent des données personnelles (nom, e-mail, téléphone). Ne les exportez pas dans un dépôt public.</li>
+  <li>L’admin n’est pas indexé, mais il est accessible à toute personne qui connaît l’URL et le mot de passe.</li>
+  <li>Les visites ne stockent pas l’IP en base : elle sert uniquement au rate limiting en mémoire.</li>
+  <li>Le pays et l’appareil sont des données agrégées, pas des identifiants individuels.</li>
+  <li>Prévoyez une politique de conservation : supprimez les messages traités après un délai raisonnable.</li>
+</ul>
+<!-- ================= CHAPITRE 8 ================= -->
+<h1 class="chapter" id="ch8"><span class="num">Chapitre 08</span>Assistant IA</h1>
+
+<p class="lead">
+  L’assistant est un widget flottant présent sur toutes les pages publiques,
+  sauf l’administration. Il répond aux questions sur le parcours, les projets,
+  les compétences et la disponibilité. Il ne voit que des informations
+  publiques et ne stocke aucune conversation en base.
+</p>
+
+<h2>8.1 Le parcours d’une question</h2>
+<div class="flow">
+  <div class="flow-node"><b>Widget</b><code>ai-assistant.tsx</code><br />historique local</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>POST</b><code>/api/assistant</code><br />8 derniers messages</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Prompt</b><code>assistant-prompt.ts</code><br />contenu public</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Modèle</b>Groq ou Gemini<br />température 0,35</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Réponse</b><code>{ reply }</code><br />affichée dans le widget</div>
+</div>
+
+<h2>8.2 Les variables d’environnement</h2>
+<table>
+  <thead><tr><th style="width:26%;">Variable</th><th style="width:16%;">Obligatoire</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>GROQ_API_KEY</code></td><td>Oui si Groq</td><td>Clé API Groq. Utilisée par défaut si présente.</td></tr>
+    <tr><td><code>GOOGLE_AI_API_KEY</code></td><td>Oui si Gemini</td><td>Clé Google AI Studio.</td></tr>
+    <tr><td><code>AI_PROVIDER</code></td><td>Non</td><td><code>groq</code> ou <code>google</code>. Force le fournisseur si la clé correspondante existe.</td></tr>
+    <tr><td><code>GROQ_MODEL</code></td><td>Non</td><td>Modèle Groq. Défaut : <code>openai/gpt-oss-120b</code>.</td></tr>
+    <tr><td><code>GOOGLE_AI_MODEL</code></td><td>Non</td><td>Modèle Gemini. Défaut : <code>gemini-2.5-flash</code>.</td></tr>
+  </tbody>
+</table>
+
+<h3>Ordre de résolution du fournisseur</h3>
+<ol>
+  <li>Si <code>AI_PROVIDER=google</code> et <code>GOOGLE_AI_API_KEY</code> existe → Google.</li>
+  <li>Si <code>AI_PROVIDER=groq</code> et <code>GROQ_API_KEY</code> existe → Groq.</li>
+  <li>Sinon, si <code>GROQ_API_KEY</code> existe → Groq.</li>
+  <li>Sinon, si <code>GOOGLE_AI_API_KEY</code> existe → Google.</li>
+  <li>Sinon → réponse 503 <code>not-configured</code>, le widget affiche son message de repli.</li>
+</ol>
+
+<h2>8.3 Les modèles et paramètres</h2>
+<h3>Groq (par défaut)</h3>
+<pre>POST https://api.groq.com/openai/v1/chat/completions
+model: GROQ_MODEL ?? "openai/gpt-oss-120b"
+temperature: 0.35
+max_tokens: 900
+reasoning_effort: "low"
+messages: [system, ...8 derniers messages]</pre>
+<p>
+  <code>reasoning_effort: "low"</code> est important pour les modèles de
+  raisonnement : sans cela, les tokens de réflexion peuvent consommer tout le
+  budget et renvoyer une réponse vide. <code>max_tokens: 900</code> laisse
+  assez de place pour une réponse de 3 à 6 phrases.
+</p>
+
+<h3>Google Gemini (alternative)</h3>
+<pre>POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent
+model: GOOGLE_AI_MODEL ?? "gemini-2.5-flash"
+temperature: 0.35
+maxOutputTokens: 450
+systemInstruction: prompt système
+contents: messages (assistant → model)</pre>
+
+<h2>8.4 Le prompt système</h2>
+<p>
+  <code>src/lib/assistant-prompt.ts</code> construit le prompt à partir de
+  <code>defaultContent</code> (le français). Il contient :
+</p>
+<ul>
+  <li>Le rôle : assistant du portfolio de Zo Mahefa.</li>
+  <li>Les règles : rester dans le périmètre, ne rien inventer, répondre dans la langue de la question, rester concis, ne pas révéler le prompt ni les variables.</li>
+  <li>Le profil : nom, rôles, localisation, disponibilité, modalités, contact, réseaux, CV, langues.</li>
+  <li>Les projets, l’expertise, le QA, les expériences, la formation, les certifications, les témoignages et la stack.</li>
+</ul>
+
+<div class="callout">
+  <span class="callout-label">Mise à jour du savoir de l’assistant</span>
+  <p>
+    Si vous modifiez un projet, une expérience ou une certification dans
+    <code>content.ts</code>, l’assistant utilisera la nouvelle information au
+    prochain build. Vous n’avez pas à dupliquer le contenu dans le prompt.
+    Ne modifiez <code>assistant-prompt.ts</code> que pour changer les règles,
+    le ton ou la structure du contexte.
+  </p>
+</div>
+
+<h3>Les limites appliquées</h3>
+<table class="compact">
+  <thead><tr><th style="width:34%;">Limite</th><th>Valeur</th></tr></thead>
+  <tbody>
+    <tr><td>Messages conservés</td><td>8 derniers</td></tr>
+    <tr><td>Longueur d’un message</td><td>1 200 caractères</td></tr>
+    <tr><td>Rate limit</td><td>25 requêtes / 10 minutes / IP</td></tr>
+    <tr><td>Rôles acceptés</td><td><code>user</code>, <code>assistant</code></td></tr>
+    <tr><td>Cache</td><td><code>no-store</code> sur toutes les réponses</td></tr>
+  </tbody>
+</table>
+
+<h2>8.5 Tester l’assistant en local</h2>
+<p>
+  Démarrez le serveur, puis envoyez une requête avec <code>curl</code> :
+</p>
+<pre>curl -s http://localhost:3000/api/assistant \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"Quels sont tes projets les plus solides ?"}]}'</pre>
+<p>Réponse attendue :</p>
+<pre>{"reply":"...","provider":"groq"}</pre>
+<p>
+  Si vous obtenez <code>{"error":"not-configured"}</code>, aucune clé n’est
+  chargée. Vérifiez <code>.env.local</code> et redémarrez <code>npm run dev</code> :
+  Next.js ne recharge pas toujours les variables sans redémarrage.
+</p>
+
+<h2>8.6 Changer de fournisseur</h2>
+<h3>Passer à Gemini</h3>
+<ol>
+  <li>Créez une clé sur Google AI Studio.</li>
+  <li>Dans <code>.env.local</code> ou Vercel : <code>GOOGLE_AI_API_KEY=...</code>.</li>
+  <li>Ajoutez <code>AI_PROVIDER=google</code>.</li>
+  <li>Redémarrez ou redéployez.</li>
+  <li>Vérifiez que <code>/api/assistant</code> répond avec <code>"provider":"google"</code>.</li>
+</ol>
+
+<h3>Changer de modèle Groq</h3>
+<pre>GROQ_MODEL=openai/gpt-oss-120b</pre>
+<p>
+  Utilisez un modèle disponible sur votre compte Groq. Si le modèle n’existe
+  pas ou n’est pas accessible, l’API renvoie une erreur et la route répond
+  502 <code>provider-error</code>.
+</p>
+
+<h2>8.7 Dépannage de l’assistant</h2>
+<table>
+  <thead><tr><th style="width:22%;">Symptôme</th><th style="width:18%;">Code</th><th>Cause probable / solution</th></tr></thead>
+  <tbody>
+    <tr><td>Message de repli dans le widget</td><td>503 <code>not-configured</code></td><td>Aucune clé IA chargée. Ajoutez <code>GROQ_API_KEY</code> ou <code>GOOGLE_AI_API_KEY</code>, puis redéployez.</td></tr>
+    <tr><td>« Réessayez dans un instant »</td><td>429 <code>rate-limited</code></td><td>25 requêtes en 10 minutes dépassées. Attendez ou testez depuis une autre IP.</td></tr>
+    <tr><td>Réponse vide / erreur</td><td>502 <code>provider-error</code></td><td>Clé invalide, quota, modèle inexistant, panne du fournisseur. Vérifiez les logs Vercel et le nom du modèle.</td></tr>
+    <tr><td>Requête refusée</td><td>400 <code>empty</code></td><td>Le tableau <code>messages</code> est vide ou ne contient aucun rôle valide.</td></tr>
+    <tr><td>Le widget ne s’ouvre pas</td><td>—</td><td>Vérifiez que <code>AiAssistant</code> est bien monté dans <code>layout.tsx</code> et que le chemin n’est pas <code>/admin</code>.</td></tr>
+    <tr><td>Réponse hors sujet</td><td>—</td><td>Le prompt système ou le contenu public contient une information ambiguë. Renforcez les règles dans <code>assistant-prompt.ts</code>.</td></tr>
+  </tbody>
+</table>
+
+<h2>8.8 Coût, confidentialité et limites</h2>
+<ul>
+  <li>Chaque question consomme des tokens chez le fournisseur. Le paramètre <code>max_tokens</code> limite la dépense, mais ne la supprime pas.</li>
+  <li>Aucune conversation n’est enregistrée en base. L’historique vit dans l’état React du widget et disparaît au rechargement.</li>
+  <li>Le prompt ne contient que des informations publiques. Il ne faut jamais y ajouter de données personnelles, de secrets ou de messages reçus.</li>
+  <li>Le modèle peut se tromper. Le widget affiche un disclaimer et propose d’écrire directement.</li>
+  <li>Les réponses sont générées à la volée : elles ne sont pas validées par un humain avant affichage.</li>
+</ul>
+<!-- ================= CHAPITRE 9 ================= -->
+<h1 class="chapter" id="ch9"><span class="num">Chapitre 09</span>Qualité, tests et sécurité</h1>
+
+<p class="lead">
+  Avant chaque déploiement, quatre commandes suffisent à éviter la majorité
+  des régressions : tests, lint, vérification TypeScript et build. Ce chapitre
+  explique ce que chacune vérifie et ce qu’elle ne vérifie pas.
+</p>
+
+<h2>9.1 Les commandes</h2>
+<table>
+  <thead><tr><th style="width:26%;">Commande</th><th>Ce qu’elle fait</th></tr></thead>
+  <tbody>
+    <tr><td><code>npm test</code></td><td>Lance Vitest une fois. Vérifie la parité FR/EN, l’authentification et les regex de validation.</td></tr>
+    <tr><td><code>npm run test:watch</code></td><td>Relance les tests à chaque modification.</td></tr>
+    <tr><td><code>npm run lint</code></td><td>ESLint avec les règles Next.js et TypeScript.</td></tr>
+    <tr><td><code>npx tsc --noEmit</code></td><td>Vérifie les types sans générer de fichiers. (Le build le fait aussi.)</td></tr>
+    <tr><td><code>npm run build</code></td><td>Compile le site, vérifie les types, génère les routes et les pages statiques.</td></tr>
+    <tr><td><code>npm run start</code></td><td>Démarre le build de production en local (après <code>npm run build</code>).</td></tr>
+  </tbody>
+</table>
+
+<h2>9.2 Les tests présents</h2>
+<table>
+  <thead><tr><th style="width:32%;">Fichier</th><th>Ce qu’il vérifie</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/lib/content.test.ts</code></td><td>La structure de <code>fr</code> et <code>en</code> est identique (mêmes clés, mêmes longueurs de tableaux) et aucun texte n’est vide. C’est le test le plus important pour éviter les oublis de traduction.</td></tr>
+    <tr><td><code>src/lib/auth.test.ts</code></td><td>Le mot de passe correct est accepté ; les mauvais formats sont refusés ; la détection de mot de passe faible fonctionne.</td></tr>
+    <tr><td><code>src/lib/validation.test.ts</code></td><td>Les regex e-mail et téléphone définies dans le test. Il n’importe pas de module <code>validation.ts</code> : c’est un test de référence, pas la validation utilisée en production.</td></tr>
+    <tr><td><code>src/components/language-provider.test.tsx</code></td><td>Le provider de langue et la bascule FR/EN.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="callout-label">Ce que les tests ne couvrent pas</span>
+  <p>
+    Il n’y a pas de test end-to-end du formulaire, de l’admin ou de
+    l’assistant. Ces parcours doivent être vérifiés manuellement après
+    déploiement (voir 11.9). Les tests ne remplacent pas un clic réel sur le
+    site.
+  </p>
+</div>
+
+<h2>9.3 Ce que vérifie le build</h2>
+<ul>
+  <li>Les imports et les alias <code>@/</code>.</li>
+  <li>Les types de <code>content.ts</code> : un champ manquant dans un projet, une certification ou un témoignage fait échouer la compilation.</li>
+  <li>Les composants client/serveur : un hook utilisé dans un composant serveur provoque une erreur.</li>
+  <li>Les routes : pages, API, sitemap, robots, manifest.</li>
+  <li>Les images locales référencées.</li>
+</ul>
+
+<h2>9.4 Vérifications manuelles avant mise en ligne</h2>
+<ul class="checklist">
+  <li>La page d’accueil se charge en français et en anglais.</li>
+  <li>Le thème clair/sombre fonctionne et persiste après rechargement.</li>
+  <li>Le menu mobile s’ouvre, se ferme avec Échap et verrouille le scroll.</li>
+  <li>Les liens d’ancrage du header et du footer arrivent sur les bonnes sections.</li>
+  <li>Les projets vedettes affichent leurs images et leurs liens.</li>
+  <li>Le carrousel répond aux flèches et se met en pause au survol.</li>
+  <li>Le formulaire envoie un message et affiche l’écran de succès.</li>
+  <li>Le message apparaît dans <code>/admin</code>, puis peut être supprimé.</li>
+  <li>Une visite apparaît dans l’onglet Audience (hors <code>/admin</code>).</li>
+  <li>L’assistant répond à une question simple.</li>
+  <li>Les PDF de certification s’ouvrent.</li>
+  <li>Le CV se télécharge.</li>
+  <li>Les pages <code>/projets</code>, <code>/contact</code>, <code>/competences</code> redirigent correctement.</li>
+  <li><code>/sitemap.xml</code> et <code>/robots.txt</code> sont accessibles.</li>
+</ul>
+
+<h2>9.5 Accessibilité et préférences</h2>
+<ul>
+  <li>Un lien « Aller au contenu » est présent au début du document.</li>
+  <li>Les animations respectent <code>prefers-reduced-motion</code> : compteurs, machine à écrire, galerie et révélations.</li>
+  <li>Le menu mobile gère Échap et le focus.</li>
+  <li>Les images ont des textes alternatifs ; les icônes décoratives sont masquées aux lecteurs d’écran.</li>
+  <li>Les contrastes du thème sombre sont définis dans <code>globals.css</code>.</li>
+  <li>Les formulaires ont des libellés associés et des messages d’erreur explicites.</li>
+</ul>
+
+<h2>9.6 Sécurité : la checklist</h2>
+<ul class="checklist">
+  <li><code>.env.local</code> n’est jamais commité.</li>
+  <li><code>ADMIN_PASSWORD</code> fait au moins 12 caractères et n’est pas un mot courant.</li>
+  <li>Le jeton Turso est stocké uniquement dans Vercel et <code>.env.local</code>.</li>
+  <li>La clé Groq/Gemini n’est jamais exposée côté client (pas de préfixe <code>NEXT_PUBLIC_</code>).</li>
+  <li>Les dépendances sont à jour : <code>npm audit --omit=dev</code>.</li>
+  <li>Les en-têtes de sécurité sont actifs en production.</li>
+  <li>L’admin est en <code>noindex</code> et n’est pas lié depuis le site.</li>
+  <li>Les messages reçus ne sont pas exportés dans un dépôt public.</li>
+  <li>Le CV et les attestations ne contiennent pas d’informations que vous ne voulez pas publier.</li>
+</ul>
+<div class="callout danger">
+  <span class="callout-label">Ne jamais faire</span>
+  <p>
+    Ne mettez jamais <code>ADMIN_PASSWORD</code>, <code>TURSO_DB_TOKEN</code>,
+    <code>GROQ_API_KEY</code> ou <code>GOOGLE_AI_API_KEY</code> dans un
+    fichier versionné, une capture d’écran, un ticket ou ce PDF. Si un secret
+    a fuité, révoquez-le et recréez-le immédiatement.
+  </p>
+</div>
+
+<!-- ================= CHAPITRE 10 ================= -->
+<h1 class="chapter" id="ch10"><span class="num">Chapitre 10</span>Développement local</h1>
+
+<h2>10.1 Prérequis</h2>
+<ul>
+  <li>Node.js 20 ou 22 (le projet utilise Next.js 16).</li>
+  <li>npm (fourni avec Node).</li>
+  <li>Git.</li>
+  <li>Un éditeur (VS Code, Cursor…).</li>
+</ul>
+
+<h2>10.2 Installation</h2>
+<pre>cd /chemin/vers/le/portfolio
+npm install</pre>
+<p>
+  Utilisez <code>npm ci</code> si vous voulez reproduire exactement les
+  versions du <code>package-lock.json</code> (CI, machine neuve).
+</p>
+
+<h2>10.3 Fichier d’environnement local</h2>
+<p>
+  Copiez le modèle et remplissez les valeurs :
+</p>
+<pre>cp .env.example .env.local</pre>
+<pre># Site
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# Admin
+ADMIN_PASSWORD=un-mot-de-passe-fort-de-12-caracteres-minimum
+
+# Base (laisser vide pour SQLite local)
+TURSO_DB_URL=
+TURSO_DB_TOKEN=
+
+# Assistant IA
+AI_PROVIDER=groq
+GROQ_API_KEY=
+GOOGLE_AI_API_KEY=</pre>
+<div class="callout warn">
+  <span class="callout-label">Valeurs factices</span>
+  <p>
+    Les valeurs ci-dessus sont des exemples. Ne recopiez pas un vrai mot de
+    passe ou une vraie clé dans un document, un chat ou un commit.
+  </p>
+</div>
+
+<h2>10.4 Initialiser la base locale</h2>
+<pre>npm run db:init</pre>
+<p>
+  Sans <code>TURSO_DB_URL</code>, cela crée <code>data/portfolio.db</code>.
+  Le dossier <code>data/</code> est ignoré par Git.
+</p>
+
+<h2>10.5 Lancer le serveur</h2>
+<pre>npm run dev</pre>
+<p>
+  Ouvrez <code>http://localhost:3000</code>. Pour tester sur un autre port :
+</p>
+<pre>npm run dev -- --port 3100</pre>
+
+<h2>10.6 Tester le build de production en local</h2>
+<pre>npm run build
+npm run start</pre>
+<p>
+  Le build de production est plus strict que le mode développement : c’est
+  celui qui doit passer avant un déploiement.
+</p>
+
+<h2>10.7 Docker (optionnel)</h2>
+<p>
+  Le dépôt contient un <code>Dockerfile</code> et un script
+  <code>run.sh</code> pour un déploiement auto-hébergé. Ce n’est pas la voie
+  utilisée par Vercel.
+</p>
+<pre>docker build -t zomahefaranaivo/portfolio .
+./run.sh latest</pre>
+<p>
+  Le script monte <code>./data</code> dans <code>/app/data</code> et charge
+  <code>.env.local</code>. Sans variables Turso, la base SQLite persiste dans
+  ce volume.
+</p>
+
+<h2>10.8 Problèmes locaux fréquents</h2>
+<table>
+  <thead><tr><th style="width:30%;">Symptôme</th><th>Solution</th></tr></thead>
+  <tbody>
+    <tr><td>Port 3000 déjà utilisé</td><td><code>npm run dev -- --port 3100</code> ou arrêtez l’autre processus.</td></tr>
+    <tr><td>Variables non prises en compte</td><td>Redémarrez <code>npm run dev</code> : les variables serveur ne sont pas toujours rechargées à chaud.</td></tr>
+    <tr><td>Base introuvable</td><td>Lancez <code>npm run db:init</code>. Vérifiez que <code>data/</code> est accessible en écriture.</td></tr>
+    <tr><td>Erreur de module</td><td>Supprimez <code>node_modules</code> et <code>.next</code>, puis <code>npm ci</code>.</td></tr>
+    <tr><td>Tests qui échouent après une modification de contenu</td><td>Vous avez probablement oublié une clé en français ou en anglais. Lisez le chemin indiqué par <code>content.test.ts</code>.</td></tr>
+    <tr><td>Image 404</td><td>Vérifiez le nom exact dans <code>public/</code> et la casse.</td></tr>
+    <tr><td>Assistant 503</td><td>Ajoutez une clé IA dans <code>.env.local</code> et redémarrez.</td></tr>
+  </tbody>
+</table>
+<!-- ================= CHAPITRE 11 ================= -->
+<h1 class="chapter" id="ch11"><span class="num">Chapitre 11</span>Déploiement Vercel + Turso</h1>
+
+<p class="lead">
+  Ce chapitre est la procédure complète, dans l’ordre, pour passer du dépôt
+  local à un site public avec base de données distante. Comptez 20 à 30
+  minutes la première fois. Ne sautez pas l’étape d’initialisation de la base :
+  c’est la cause n°1 des formulaires qui renvoient une erreur.
+</p>
+
+<h2>11.1 Ce que vous allez créer</h2>
+<div class="flow">
+  <div class="flow-node"><b>GitHub</b>Dépôt<br />du code</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Vercel</b>Build + hébergement<br />+ variables</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Turso</b>Base libSQL<br />messages + visites</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Groq / Google</b>Clé API<br />assistant</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Domaine</b>URL publique<br />+ SEO</div>
+</div>
+
+<h2>11.2 Prérequis</h2>
+<ul class="checklist">
+  <li>Un compte GitHub.</li>
+  <li>Un compte Vercel (gratuit suffit pour commencer).</li>
+  <li>Un compte Turso (gratuit suffit pour commencer).</li>
+  <li>Une clé API Groq ou Google AI Studio pour l’assistant.</li>
+  <li>Node.js 20+ et npm installés localement.</li>
+  <li>Le projet qui build en local.</li>
+  <li>Un nom de domaine, si vous ne voulez pas rester sur <code>*.vercel.app</code>.</li>
+</ul>
+
+<h2>11.3 Vérifications avant de déployer</h2>
+<p>
+  Ne déployez jamais un état qui ne passe pas localement. Exécutez, dans
+  l’ordre :
+</p>
+<pre>npm ci
+npm run lint
+npm test
+npm run build</pre>
+<p>
+  Le build doit afficher les routes générées, dont <code>/</code>,
+  <code>/admin</code>, <code>/api/*</code>, <code>/sitemap.xml</code>,
+  <code>/robots.txt</code> et <code>/manifest.webmanifest</code>. S’il échoue,
+  corrigez d’abord : Vercel échouera de la même manière.
+</p>
+
+<div class="callout tip">
+  <span class="callout-label">Test de production local</span>
+  <p>
+    Après <code>npm run build</code>, lancez <code>npm run start</code> et
+    testez le formulaire, l’admin et l’assistant sur
+    <code>http://localhost:3000</code>. C’est le meilleur moyen de détecter un
+    problème de variables avant de déployer.
+  </p>
+</div>
+
+<h2>11.4 Pousser le code sur GitHub</h2>
+<pre>git status
+git add .
+git commit -m "chore: préparation du déploiement"
+git remote -v
+git push origin main</pre>
+<p>
+  Si le dépôt n’existe pas encore, créez-le sur GitHub (privé ou public),
+  puis :
+</p>
+<pre>git remote add origin https://github.com/&lt;votre-compte&gt;/&lt;votre-depot&gt;.git
+git branch -M main
+git push -u origin main</pre>
+<div class="callout danger">
+  <span class="callout-label">Avant le premier push</span>
+  <p>
+    Vérifiez que <code>.env.local</code>, <code>data/</code> et les fichiers
+    <code>*.db</code> ne sont pas suivis. <code>git status</code> ne doit pas
+    les afficher. Si un secret a déjà été commité, considérez-le comme
+    compromis et changez-le.
+  </p>
+</div>
+
+<h2>11.5 Créer la base Turso</h2>
+<h3>Option A — Via le tableau de bord (recommandé pour débuter)</h3>
+<ol>
+  <li>Créez un compte sur <code>turso.tech</code>.</li>
+  <li>Dans le dashboard, créez une base de données, par exemple <code>portfolio-zomahefa</code>.</li>
+  <li>Choisissez une région proche de vos visiteurs (par exemple Francfort pour l’Europe/Afrique de l’Est, ou la région proposée la plus proche).</li>
+  <li>Copiez l’URL de connexion : elle commence par <code>libsql://</code>.</li>
+  <li>Créez un jeton d’accès (token) pour cette base. Copiez-le immédiatement : il n’est affiché qu’une fois.</li>
+</ol>
+
+<h3>Option B — Via la CLI Turso</h3>
+<pre># Installation (macOS / Linux)
+curl -sSfL https://get.tur.so/install.sh | bash
+
+# ou avec Homebrew
+brew install tursodatabase/tap/turso
+
+# Connexion
+turso auth signup
+# ou
+turso auth login
+
+# Création de la base (exemple de région : fra)
+turso db create portfolio-zomahefa --location fra
+
+# Récupérer l'URL libsql://
+turso db show portfolio-zomahefa --url
+
+# Créer un jeton
+turso db tokens create portfolio-zomahefa
+
+# Vérifier
+turso db list</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Deux valeurs à conserver</span>
+  <p>
+    <strong>URL</strong> : <code>libsql://portfolio-zomahefa-&lt;organisation&gt;.turso.io</code><br />
+    <strong>Token</strong> : une longue chaîne secrète.<br />
+    Ne confondez pas avec l’URL HTTPS du dashboard. Le client libSQL attend
+    le schéma <code>libsql://</code>.
+  </p>
+</div>
+
+<h2>11.6 Initialiser le schéma sur Turso</h2>
+<p>
+  Vous pouvez le faire depuis votre machine, avant même de déployer Vercel.
+  Cela vérifie que l’URL et le jeton fonctionnent.
+</p>
+<pre>export TURSO_DB_URL="libsql://portfolio-zomahefa-...turso.io"
+export TURSO_DB_TOKEN="le-jeton-secret"
+npm run db:init</pre>
+<p>Sur Windows PowerShell :</p>
+<pre>$env:TURSO_DB_URL="libsql://..."
+$env:TURSO_DB_TOKEN="..."
+npm run db:init</pre>
+<p>Résultat attendu :</p>
+<pre>✓ Base initialisée
+  cible        : Turso
+  messages     : 0
+  pages vues   : 0
+  tables       : messages, page_views</pre>
+<p>
+  Si vous obtenez une erreur d’authentification, le jeton est faux ou a été
+  révoqué. S’il manque des droits, recréez un jeton en lecture/écriture sur
+  cette base.
+</p>
+
+<h2>11.7 Importer le projet dans Vercel</h2>
+<ol>
+  <li>Connectez-vous à <code>vercel.com</code>.</li>
+  <li>Cliquez sur <strong>Add New → Project</strong>.</li>
+  <li>Importez le dépôt GitHub qui contient le portfolio.</li>
+  <li>Vérifiez les réglages :
+    <ul>
+      <li><strong>Framework Preset</strong> : Next.js (détecté automatiquement).</li>
+      <li><strong>Root Directory</strong> : <code>./</code> (ou le sous-dossier si monorepo).</li>
+      <li><strong>Build Command</strong> : <code>npm run build</code>.</li>
+      <li><strong>Install Command</strong> : <code>npm install</code> (ou <code>npm ci</code>).</li>
+      <li><strong>Output Directory</strong> : laisser vide (Next.js gère).</li>
+      <li><strong>Node.js Version</strong> : 20.x ou 22.x.</li>
+    </ul>
+  </li>
+  <li>Ouvrez <strong>Environment Variables</strong> et ajoutez les variables de la section suivante.</li>
+  <li>Cliquez sur <strong>Deploy</strong>.</li>
+</ol>
+
+<h2>11.8 Les variables d’environnement Vercel</h2>
+<table>
+  <thead><tr><th style="width:26%;">Variable</th><th style="width:18%;">Exemple</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>NEXT_PUBLIC_SITE_URL</code></td><td><code>https://zo-mahefa-it.vercel.app</code></td><td>URL publique, sans slash final. Sert au canonical, au sitemap, aux robots, à l’Open Graph et au JSON-LD.</td></tr>
+    <tr><td><code>ADMIN_PASSWORD</code></td><td><em>mot de passe fort</em></td><td>Accès à <code>/admin</code>. 12 caractères minimum, majuscules, chiffres, symboles.</td></tr>
+    <tr><td><code>TURSO_DB_URL</code></td><td><code>libsql://...</code></td><td>URL de la base Turso.</td></tr>
+    <tr><td><code>TURSO_DB_TOKEN</code></td><td><em>jeton secret</em></td><td>Jeton d’accès Turso.</td></tr>
+    <tr><td><code>GROQ_API_KEY</code></td><td><em>clé Groq</em></td><td>Assistant IA via Groq.</td></tr>
+    <tr><td><code>AI_PROVIDER</code></td><td><code>groq</code></td><td>Optionnel. Force <code>groq</code> ou <code>google</code>.</td></tr>
+    <tr><td><code>GOOGLE_AI_API_KEY</code></td><td><em>clé Google</em></td><td>Optionnel si vous utilisez Gemini.</td></tr>
+    <tr><td><code>GROQ_MODEL</code></td><td><code>openai/gpt-oss-120b</code></td><td>Optionnel. Surcharge le modèle Groq.</td></tr>
+    <tr><td><code>GOOGLE_AI_MODEL</code></td><td><code>gemini-2.5-flash</code></td><td>Optionnel. Surcharge le modèle Gemini.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout warn">
+  <span class="callout-label">Portée des variables</span>
+  <p>
+    Ajoutez au minimum les variables à l’environnement <strong>Production</strong>.
+    Si vous voulez que les Preview Deployments fonctionnent aussi, ajoutez-les
+    à <strong>Preview</strong> — mais utilisez alors une base Turso de test,
+    pas la base de production. Sinon, chaque preview écrira de vrais messages
+    et de vraies visites.
+  </p>
+</div>
+
+<div class="callout">
+  <span class="callout-label">Pourquoi <code>NEXT_PUBLIC_</code> ?</span>
+  <p>
+    Ce préfixe rend la variable lisible côté navigateur. Ici, ce n’est pas un
+    secret : c’est simplement l’URL publique du site. Ne mettez jamais une clé
+    API ou un mot de passe derrière un préfixe <code>NEXT_PUBLIC_</code>.
+  </p>
+</div>
+<h2>11.9 Déployer</h2>
+<ol>
+  <li>Cliquez sur <strong>Deploy</strong>. Vercel installe les dépendances, lance <code>npm run build</code>, puis publie.</li>
+  <li>Suivez les logs de build. Une erreur TypeScript ou un module manquant apparaît ici.</li>
+  <li>À la fin, Vercel fournit une URL du type <code>https://portfolio-xxxx.vercel.app</code>.</li>
+  <li>Ouvrez cette URL. Le site doit s’afficher même avant d’ajouter un domaine personnalisé.</li>
+  <li>Si <code>NEXT_PUBLIC_SITE_URL</code> pointe déjà vers le domaine final, les métadonnées seront correctes. Sinon, mettez-la à jour et redéployez.</li>
+</ol>
+
+<h3>Variante CLI Vercel (optionnelle)</h3>
+<pre>npm i -g vercel
+vercel login
+vercel
+vercel --prod</pre>
+<p>
+  La CLI guide la création du projet et permet d’ajouter des variables :
+</p>
+<pre>vercel env add ADMIN_PASSWORD production
+vercel env add TURSO_DB_URL production
+vercel env add TURSO_DB_TOKEN production
+vercel env add GROQ_API_KEY production
+vercel env add NEXT_PUBLIC_SITE_URL production</pre>
+<p>
+  Après un changement de variable, relancez <code>vercel --prod</code> ou
+  cliquez sur <strong>Redeploy</strong> dans le dashboard.
+</p>
+
+<h2>11.10 Vérifier le déploiement</h2>
+
+<h3>1. La page et les en-têtes</h3>
+<pre>curl -I https://votre-domaine.tld
+curl -I https://votre-domaine.tld/admin
+curl -s https://votre-domaine.tld/robots.txt
+curl -s https://votre-domaine.tld/sitemap.xml</pre>
+<ul>
+  <li>La page d’accueil répond 200.</li>
+  <li><code>/admin</code> répond 200 mais contient <code>noindex</code>.</li>
+  <li><code>robots.txt</code> exclut <code>/admin/</code> et <code>/api/</code>.</li>
+  <li><code>sitemap.xml</code> contient l’URL finale, pas <code>localhost</code>.</li>
+  <li>Les en-têtes <code>content-security-policy</code>, <code>strict-transport-security</code>, <code>x-frame-options</code> sont présents.</li>
+</ul>
+
+<h3>2. Le contenu</h3>
+<ul>
+  <li>Le hero affiche le bon nom, les bons rôles, les bonnes statistiques.</li>
+  <li>Les projets vedettes et l’archive sont complets.</li>
+  <li>Les images se chargent (pas de 404 dans la console).</li>
+  <li>Le CV et les PDF de certification s’ouvrent.</li>
+  <li>La bascule FR/EN fonctionne et persiste après rechargement.</li>
+</ul>
+
+<h3>3. Le formulaire et l’admin</h3>
+<ol>
+  <li>Envoyez un message de test avec une vraie adresse e-mail.</li>
+  <li>Vérifiez l’écran de succès.</li>
+  <li>Connectez-vous à <code>/admin</code> avec <code>ADMIN_PASSWORD</code>.</li>
+  <li>Le message doit apparaître dans l’onglet Messages.</li>
+  <li>Supprimez-le après vérification.</li>
+</ol>
+<div class="callout">
+  <span class="callout-label">Si le formulaire échoue</span>
+  <p>
+    Le formulaire affiche un lien <code>mailto:</code> de repli. Cela signifie
+    que l’API n’a pas pu écrire en base. Vérifiez <code>TURSO_DB_URL</code>,
+    <code>TURSO_DB_TOKEN</code>, puis les logs Vercel (Functions → Logs).
+    Lancez <code>npm run db:init</code> avec les mêmes valeurs pour isoler le
+    problème.
+  </p>
+</div>
+
+<h3>4. Les visites</h3>
+<ol>
+  <li>Ouvrez le site dans un navigateur normal (pas en navigation privée avec bloqueur).</li>
+  <li>Naviguez entre les ancres ou rechargez la page.</li>
+  <li>Dans <code>/admin</code> → Audience, vérifiez que le total augmente.</li>
+</ol>
+<p>
+  Les robots, <code>/admin</code> et les requêtes trop fréquentes ne sont pas
+  comptés. Si le compteur reste à zéro, vérifiez que <code>/api/visits</code>
+  répond 204 dans l’onglet Réseau et que la base est accessible.
+</p>
+
+<h3>5. L’assistant</h3>
+<pre>curl -s https://votre-domaine.tld/api/assistant \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"Quels sont tes projets ?"}]}'</pre>
+<p>
+  Attendu : <code>{"reply":"...","provider":"groq"}</code>. Si vous obtenez
+  <code>not-configured</code>, la clé n’est pas dans l’environnement
+  Production ou le déploiement n’a pas été refait après l’ajout.
+</p>
+
+<h3>6. Le partage social et le SEO</h3>
+<ul>
+  <li>Ouvrez <code>https://www.linkedin.com/post-inspector/</code> et testez l’URL.</li>
+  <li>Vérifiez que l’image <code>og-image.png</code> apparaît (1200×630).</li>
+  <li>Dans Google Search Console, ajoutez la propriété et soumettez le sitemap.</li>
+  <li>Testez <code>https://votre-domaine.tld/manifest.webmanifest</code>.</li>
+</ul>
+
+<h2>11.11 Ajouter un domaine personnalisé</h2>
+<ol>
+  <li>Dans Vercel : <strong>Project → Settings → Domains</strong>.</li>
+  <li>Ajoutez <code>votre-domaine.tld</code> et, si besoin, <code>www.votre-domaine.tld</code>.</li>
+  <li>Vercel affiche les enregistrements DNS à créer chez votre registrar :
+    <ul>
+      <li><code>A</code> vers l’IP Vercel pour le domaine racine, ou</li>
+      <li><code>CNAME</code> vers <code>cname.vercel-dns.com</code> pour un sous-domaine.</li>
+    </ul>
+  </li>
+  <li>Attendez la propagation DNS (quelques minutes à quelques heures).</li>
+  <li>Mettez <code>NEXT_PUBLIC_SITE_URL</code> à <code>https://votre-domaine.tld</code> (sans slash final).</li>
+  <li><strong>Redéployez</strong> : les métadonnées sont générées au build.</li>
+  <li>Vérifiez le canonical, le sitemap, le robots et le JSON-LD.</li>
+</ol>
+<div class="callout warn">
+  <span class="callout-label">Deux domaines, un seul canonical</span>
+  <p>
+    Si <code>zo-mahefa-it.vercel.app</code> et votre domaine personnalisé
+    répondent tous les deux, choisissez le domaine final comme
+    <code>NEXT_PUBLIC_SITE_URL</code> et redirigez l’autre vers celui-ci
+    (Vercel permet de définir un domaine principal). Sinon, les moteurs
+    voient deux URLs pour le même contenu.
+  </p>
+</div>
+
+<h2>11.12 Mettre à jour le site</h2>
+<p>
+  Une fois le projet connecté à GitHub, le flux est automatique :
+</p>
+<ol>
+  <li>Modifiez le contenu ou le code en local.</li>
+  <li>Lancez <code>npm test</code> et <code>npm run build</code>.</li>
+  <li>Commit et push sur la branche <code>main</code>.</li>
+  <li>Vercel détecte le push et lance un nouveau déploiement.</li>
+  <li>Vérifiez le déploiement dans l’onglet <strong>Deployments</strong>.</li>
+</ol>
+<pre>git add .
+git commit -m "content: mise à jour du projet X"
+git push origin main</pre>
+<p>
+  Pour les <strong>variables d’environnement</strong>, le flux est différent :
+  modifiez-les dans Vercel, puis cliquez sur <strong>Redeploy</strong>. Un
+  simple push ne suffit pas toujours à recharger une variable modifiée.
+</p>
+
+<h2>11.13 Revenir à une version précédente</h2>
+<ol>
+  <li>Vercel → <strong>Deployments</strong>.</li>
+  <li>Repérez le dernier déploiement qui fonctionnait.</li>
+  <li>Menu <strong>…</strong> → <strong>Promote to Production</strong> (ou <strong>Rollback</strong> selon l’interface).</li>
+  <li>Vérifiez le site.</li>
+  <li>Corrigez le code en local, puis poussez un nouveau commit.</li>
+</ol>
+<p>
+  Le rollback Vercel est immédiat mais ne corrige pas Git : la prochaine
+  publication reprendra le dernier commit. Pour un retour propre, faites
+  aussi un <code>git revert</code>.
+</p>
+
+<h2>11.14 Dépannage complet</h2>
+<table>
+  <thead><tr><th style="width:24%;">Symptôme</th><th style="width:24%;">Cause probable</th><th>Solution</th></tr></thead>
+  <tbody>
+    <tr><td>Le build échoue : <code>Module not found</code></td><td>Import incorrect, casse différente, dépendance absente.</td><td>Vérifiez le chemin exact, relancez <code>npm ci</code>, comparez avec le build local.</td></tr>
+    <tr><td>Le build échoue : <code>Type error</code></td><td>Champ manquant dans <code>content.ts</code> ou type incorrect.</td><td>Lisez le message : il indique la clé et le fichier. Corrigez le contenu, pas le type.</td></tr>
+    <tr><td>Le site affiche une ancienne version</td><td>Déploiement non déclenché, cache, mauvais projet Vercel.</td><td>Vérifiez le commit dans Deployments, forcez un redeploy, videz le cache du navigateur.</td></tr>
+    <tr><td>Formulaire : 503</td><td>Turso inaccessible, variables absentes, jeton invalide.</td><td>Vérifiez les variables Production, les logs Functions, puis <code>npm run db:init</code> avec les mêmes valeurs.</td></tr>
+    <tr><td>Admin : 503 « ADMIN_PASSWORD n’est pas configuré »</td><td>Variable absente de l’environnement Production.</td><td>Ajoutez-la dans Vercel, puis redéployez.</td></tr>
+    <tr><td>Admin : 401 après connexion</td><td>Cookie refusé, mot de passe changé, domaine différent, HTTP au lieu de HTTPS.</td><td>Utilisez HTTPS, videz les cookies du domaine, reconnectez-vous. Changer le mot de passe invalide les sessions.</td></tr>
+    <tr><td>Admin : « Trop de tentatives »</td><td>Rate limit 6/15 min atteint.</td><td>Attendez 15 minutes ou changez d’IP. Vérifiez que vous n’avez pas un script qui boucle.</td></tr>
+    <tr><td>Turso : <code>URL_SCHEME_NOT_SUPPORTED</code></td><td>URL <code>https://</code> au lieu de <code>libsql://</code>.</td><td>Copiez l’URL libSQL dans le dashboard Turso.</td></tr>
+    <tr><td>Turso : <code>AUTH_TOKEN</code> / 401</td><td>Jeton révoqué, mauvais jeton, jeton d’une autre base.</td><td>Créez un nouveau jeton pour cette base, mettez-le dans Vercel, redéployez.</td></tr>
+    <tr><td>Turso : base vide / tables absentes</td><td><code>db:init</code> jamais lancé et premier accès échoue.</td><td>Lancez <code>npm run db:init</code> avec les variables de production.</td></tr>
+    <tr><td>Assistant : 503 <code>not-configured</code></td><td>Aucune clé IA.</td><td>Ajoutez <code>GROQ_API_KEY</code> ou <code>GOOGLE_AI_API_KEY</code>, redéployez.</td></tr>
+    <tr><td>Assistant : 502 <code>provider-error</code></td><td>Clé invalide, quota, modèle inexistant.</td><td>Vérifiez les logs, le nom du modèle, le crédit du compte fournisseur.</td></tr>
+    <tr><td>Assistant : 429</td><td>25 requêtes / 10 min dépassées.</td><td>Attendez. En production, surveillez les abus.</td></tr>
+    <tr><td>Visites non comptées</td><td>Bloqueur, robot, <code>/admin</code>, rate limit, base indisponible.</td><td>Testez en navigation normale, vérifiez <code>/api/visits</code> (204), puis la base.</td></tr>
+    <tr><td>Images 404</td><td>Nom/casse différents, fichier absent de <code>public/</code>.</td><td>Vérifiez le chemin exact ; sur Vercel, tout est sensible à la casse.</td></tr>
+    <tr><td>Polices non chargées</td><td>Fichier absent ou CSP.</td><td>Vérifiez <code>public/fonts/</code> et l’en-tête <code>font-src 'self' data:</code>.</td></tr>
+    <tr><td>Open Graph vide sur LinkedIn</td><td>URL non absolue, image inaccessible, cache LinkedIn.</td><td>Vérifiez <code>og:image</code> dans le HTML, utilisez Post Inspector pour rafraîchir.</td></tr>
+    <tr><td>Canonical pointe vers l’ancien domaine</td><td><code>NEXT_PUBLIC_SITE_URL</code> non mise à jour ou pas de redéploiement.</td><td>Modifiez la variable, redéployez, vérifiez le HTML source.</td></tr>
+    <tr><td>Le formulaire accepte mais rien n’arrive</td><td>Écriture dans une autre base (preview vs production).</td><td>Vérifiez la portée des variables et l’URL Turso utilisée par le déploiement.</td></tr>
+    <tr><td>Domaine : <code>DNS_PROBE_FINISHED_NXDOMAIN</code></td><td>DNS pas propagé ou mal configuré.</td><td>Vérifiez les enregistrements A/CNAME chez le registrar, attendez la propagation.</td></tr>
+    <tr><td>Erreur de version Node</td><td>Version trop ancienne.</td><td>Réglez Node 20.x ou 22.x dans Vercel (Settings → General).</td></tr>
+  </tbody>
+</table>
+
+<h2>11.15 Sauvegardes, rotation et coûts</h2>
+<h3>Sauvegarde</h3>
+<pre>turso db shell portfolio-zomahefa ".dump" &gt; backup-portfolio-$(date +%F).sql</pre>
+<p>
+  Téléchargez aussi une copie depuis le dashboard Turso si l’option est
+  disponible. Conservez les sauvegardes hors du dépôt Git.
+</p>
+
+<h3>Rotation d’un secret</h3>
+<ol>
+  <li>Créez un nouveau jeton Turso (ou une nouvelle clé IA).</li>
+  <li>Mettez-le dans Vercel → Environment Variables.</li>
+  <li>Redéployez et testez.</li>
+  <li>Révoquez l’ancien jeton dans Turso (dashboard ou CLI).</li>
+</ol>
+<p>
+  Pour <code>ADMIN_PASSWORD</code>, changez la valeur dans Vercel et
+  redéployez. Toutes les sessions existantes seront invalidées.
+</p>
+
+<h3>Coûts et limites</h3>
+<ul>
+  <li>Vercel et Turso proposent des paliers gratuits ; les limites et tarifs évoluent. Consultez les pages actuelles avant de dimensionner.</li>
+  <li>L’assistant IA est le poste de coût variable principal : chaque question consomme des tokens.</li>
+  <li>Les fonctions serverless ont une durée d’exécution limitée ; les appels IA doivent rester rapides.</li>
+  <li>Surveillez le nombre de messages et de visites : la base peut grossir, mais reste très légère pour un portfolio.</li>
+</ul>
+
+<h2>11.16 Checklist de mise en production</h2>
+<ul class="checklist">
+  <li>Build local vert (<code>npm run build</code>).</li>
+  <li>Tests verts (<code>npm test</code>).</li>
+  <li>Dépôt GitHub à jour, sans secret.</li>
+  <li>Base Turso créée, URL et jeton récupérés.</li>
+  <li><code>npm run db:init</code> exécuté sur Turso.</li>
+  <li>Projet Vercel importé.</li>
+  <li>Toutes les variables Production ajoutées.</li>
+  <li>Déploiement réussi.</li>
+  <li>Page d’accueil, admin, formulaire, visites et assistant testés.</li>
+  <li>Domaine ajouté et <code>NEXT_PUBLIC_SITE_URL</code> mis à jour.</li>
+  <li>Redéploiement après changement d’URL.</li>
+  <li>Sitemap, robots, canonical et Open Graph vérifiés.</li>
+  <li>Message de test supprimé, visites de test nettoyées si besoin.</li>
+</ul>
+<!-- ================= CHAPITRE 12 ================= -->
+<h1 class="chapter" id="ch12"><span class="num">Chapitre 12</span>Publication LinkedIn</h1>
+
+<p class="lead">
+  Voici un texte prêt à copier. Il présente le portfolio sans exagérer, en
+  mettant en avant les trois projets, la double compétence produit/infrastructure/qualité
+  et la recherche de stage, d’alternance ou de mission. Remplacez simplement
+  le lien si votre domaine final est différent.
+</p>
+
+<h2>12.1 Version principale — à copier</h2>
+<div class="copybox">
+  <p>
+    Après plusieurs mois à construire, déployer et tester des applications,
+    je suis heureux de mettre enfin mon portfolio en ligne.
+  </p>
+  <p>
+    On y trouve trois projets détaillés, avec le contexte, mon rôle et le
+    résultat :
+  </p>
+  <p>
+    • <strong>Signaleo</strong> — signalement de pannes sur le terrain, suivi
+    des interventions et supervision en temps réel.<br />
+    • <strong>E-Fandrosoana</strong> — un ERP pour une quincaillerie :
+    stocks, ventes, clients, facturation et trésorerie.<br />
+    • <strong>Pipeline CI/CD &amp; observabilité</strong> — une chaîne de
+    livraison complète, de Docker à Prometheus/Grafana, avec déploiement
+    blue/green.
+  </p>
+  <p>
+    Le site présente aussi mon parcours, mes certifications, des témoignages
+    clients et un assistant IA qui répond aux questions sur mon profil.
+  </p>
+  <p>
+    Je suis à la recherche d’un <strong>stage</strong>, d’une
+    <strong>alternance</strong> ou d’une <strong>mission</strong> en
+    développement web/mobile, DevOps ou QA. Basé à Fianarantsoa, Madagascar,
+    je suis ouvert au télétravail.
+  </p>
+  <p>
+    👉 <strong>https://zo-mahefa-it.vercel.app/</strong>
+  </p>
+  <p>
+    Vos retours sont les bienvenus. Et si vous connaissez une équipe qui
+    cherche un profil polyvalent, produit + infrastructure + qualité, je
+    serais ravi d’échanger.
+  </p>
+</div>
+
+<h2>12.2 Version courte — si vous préférez un post bref</h2>
+<div class="copybox">
+  <p>
+    Mon portfolio est en ligne. Développement web/mobile, DevOps et QA :
+    trois projets détaillés (Signaleo, E-Fandrosoana, pipeline CI/CD),
+    mes certifications, des témoignages clients et un assistant IA pour
+    explorer mon profil.
+  </p>
+  <p>
+    Je cherche un stage, une alternance ou une mission — Fianarantsoa,
+    Madagascar, remote friendly.
+  </p>
+  <p>
+    👉 https://zo-mahefa-it.vercel.app/
+  </p>
+</div>
+
+<h2>12.3 Hashtags</h2>
+<p>
+  Ajoutez-les à la fin du post, sans en abuser (8 à 12 maximum) :
+</p>
+<p>
+  <span class="tag">#Portfolio</span>
+  <span class="tag">#DéveloppeurWeb</span>
+  <span class="tag">#DevOps</span>
+  <span class="tag">#QA</span>
+  <span class="tag">#NextJS</span>
+  <span class="tag">#SpringBoot</span>
+  <span class="tag">#Madagascar</span>
+  <span class="tag">#Fianarantsoa</span>
+  <span class="tag">#Alternance</span>
+  <span class="tag">#Stage</span>
+  <span class="tag">#Remote</span>
+</p>
+<pre>#Portfolio #DéveloppeurWeb #DevOps #QA #NextJS #SpringBoot #Madagascar #Fianarantsoa #Alternance #Stage #Remote</pre>
+
+<h2>12.4 Conseils de publication</h2>
+<ul>
+  <li><strong>Image</strong> : joignez une capture du site ou l’image <code>og-image.png</code>. Un post avec visuel attire davantage l’attention.</li>
+  <li><strong>Lien</strong> : LinkedIn réduit parfois la portée des posts contenant un lien. Vous pouvez publier le texte avec l’image, puis mettre le lien dans le premier commentaire. Dans ce cas, écrivez « Lien en commentaire » dans le post.</li>
+  <li><strong>Moment</strong> : un mardi, mercredi ou jeudi matin (heure de Madagascar) est un créneau classique pour les posts professionnels.</li>
+  <li><strong>Mention</strong> : ne taguez pas des recruteurs ou des entreprises sans leur accord.</li>
+  <li><strong>Vérité</strong> : ne rajoutez pas de chiffres ou de clients que le portfolio ne peut pas prouver.</li>
+  <li><strong>Réponses</strong> : prévoyez de répondre aux commentaires le jour même ; c’est ce qui transforme une publication en conversation.</li>
+  <li><strong>Réutilisation</strong> : le même texte peut servir de description sur GitHub, dans un CV ou dans un e-mail de candidature, en l’adaptant.</li>
+</ul>
+
+<div class="callout tip">
+  <span class="callout-label">Après publication</span>
+  <p>
+    Ajoutez le lien du portfolio dans votre profil LinkedIn (section
+    « Coordonnées » ou « Site web »), dans votre signature e-mail et sur
+    votre CV. Un portfolio sert surtout quand il est facile à retrouver.
+  </p>
+</div>
+
+<!-- ================= CHAPITRE 13 ================= -->
+<h1 class="chapter" id="ch13"><span class="num">Chapitre 13</span>Annexes</h1>
+
+<h2>13.1 Les dix erreurs à éviter</h2>
+<ol>
+  <li><strong>Modifier seulement le français.</strong> Le test de parité échouera, ou l’anglais affichera l’ancien texte.</li>
+  <li><strong>Chercher les projets en base.</strong> Ils sont dans <code>content.ts</code>.</li>
+  <li><strong>Inventer une valeur de <code>visual</code>.</strong> Le type n’accepte que trois valeurs ; ajoutez le rendu ou utilisez une galerie.</li>
+  <li><strong>Mettre une image externe sans <code>remotePatterns</code>.</strong> <code>next/image</code> la refusera.</li>
+  <li><strong>Utiliser un nom de fichier avec des espaces ou des majuscules.</strong> Vercel est sensible à la casse.</li>
+  <li><strong>Oublier de redéployer après un changement de variable.</strong> Les variables ne sont pas toujours rechargées par un simple push.</li>
+  <li><strong>Mettre l’URL avec un slash final.</strong> <code>siteUrl</code> le retire, mais autant écrire l’URL propre.</li>
+  <li><strong>Utiliser la base de production pour les previews.</strong> Les tests polluent les vrais messages et les vraies visites.</li>
+  <li><strong>Committer <code>.env.local</code>.</strong> Vérifiez <code>git status</code> avant chaque premier push.</li>
+  <li><strong>Croire qu’un test vert suffit.</strong> Le formulaire, l’admin et l’assistant doivent être testés à la main après déploiement.</li>
+</ol>
+
+<h2>13.2 Commandes utiles</h2>
+<table class="compact">
+  <thead><tr><th style="width:38%;">Commande</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>npm install</code> / <code>npm ci</code></td><td>Installer les dépendances.</td></tr>
+    <tr><td><code>npm run dev</code></td><td>Serveur de développement.</td></tr>
+    <tr><td><code>npm run dev -- --port 3100</code></td><td>Changer le port.</td></tr>
+    <tr><td><code>npm test</code></td><td>Tests unitaires.</td></tr>
+    <tr><td><code>npm run lint</code></td><td>ESLint.</td></tr>
+    <tr><td><code>npx tsc --noEmit</code></td><td>Vérification TypeScript.</td></tr>
+    <tr><td><code>npm run build</code></td><td>Build de production.</td></tr>
+    <tr><td><code>npm run start</code></td><td>Démarrer le build de production.</td></tr>
+    <tr><td><code>npm run db:init</code></td><td>Créer les tables et index.</td></tr>
+    <tr><td><code>turso db list</code></td><td>Lister les bases Turso.</td></tr>
+    <tr><td><code>turso db show &lt;db&gt; --url</code></td><td>Afficher l’URL libSQL.</td></tr>
+    <tr><td><code>turso db tokens create &lt;db&gt;</code></td><td>Créer un jeton.</td></tr>
+    <tr><td><code>turso db shell &lt;db&gt;</code></td><td>Ouvrir un shell SQL.</td></tr>
+    <tr><td><code>turso db shell &lt;db&gt; ".dump"</code></td><td>Exporter la base.</td></tr>
+    <tr><td><code>git status</code></td><td>Vérifier les fichiers avant commit.</td></tr>
+  </tbody>
+</table>
+
+<h2>13.3 Où modifier quoi — aide-mémoire</h2>
+<table class="compact">
+  <thead><tr><th style="width:38%;">Besoin</th><th>Fichier / clé</th></tr></thead>
+  <tbody>
+    <tr><td>Nom, e-mail, téléphone, réseaux, CV</td><td><code>content.ts</code> → <code>site</code></td></tr>
+    <tr><td>Titre du hero, intro, boutons, stats</td><td><code>content.ts</code> → <code>hero</code></td></tr>
+    <tr><td>Rôles animés</td><td><code>content.ts</code> → <code>roles</code></td></tr>
+    <tr><td>Titres des sections</td><td><code>content.ts</code> → <code>sections</code></td></tr>
+    <tr><td>Projets vedettes</td><td><code>content.ts</code> → <code>featuredProjects</code></td></tr>
+    <tr><td>Projets d’archive</td><td><code>content.ts</code> → <code>archive.projects</code></td></tr>
+    <tr><td>Pôles d’expertise</td><td><code>content.ts</code> → <code>practices</code></td></tr>
+    <tr><td>Stack par niveaux</td><td><code>content.ts</code> → <code>stack.levels</code></td></tr>
+    <tr><td>Bandeau de technologies</td><td><code>components/site/stack-marquee.tsx</code> → <code>const stack</code></td></tr>
+    <tr><td>Bloc QA</td><td><code>content.ts</code> → <code>qa</code></td></tr>
+    <tr><td>Méthode</td><td><code>content.ts</code> → <code>process</code></td></tr>
+    <tr><td>Pipeline</td><td><code>content.ts</code> → <code>pipeline</code></td></tr>
+    <tr><td>Parcours, formation, certifications</td><td><code>content.ts</code> → <code>about</code></td></tr>
+    <tr><td>Témoignages</td><td><code>content.ts</code> → <code>testimonials</code></td></tr>
+    <tr><td>Contact et formulaire</td><td><code>content.ts</code> → <code>contact</code></td></tr>
+    <tr><td>Footer</td><td><code>content.ts</code> → <code>footer</code></td></tr>
+    <tr><td>Micro-libellés</td><td><code>content.ts</code> → <code>ui</code></td></tr>
+    <tr><td>Textes de l’assistant</td><td><code>content.ts</code> → <code>ai</code></td></tr>
+    <tr><td>Règles de l’assistant</td><td><code>lib/assistant-prompt.ts</code></td></tr>
+    <tr><td>SEO global</td><td><code>app/layout.tsx</code></td></tr>
+    <tr><td>Sitemap / robots</td><td><code>app/sitemap.ts</code>, <code>app/robots.ts</code></td></tr>
+    <tr><td>En-têtes de sécurité</td><td><code>next.config.ts</code></td></tr>
+    <tr><td>Schéma de base</td><td><code>lib/db.ts</code>, <code>scripts/init-db.mjs</code></td></tr>
+    <tr><td>Authentification admin</td><td><code>lib/auth.ts</code></td></tr>
+    <tr><td>Interface admin</td><td><code>app/admin/page.tsx</code></td></tr>
+  </tbody>
+</table>
+
+<h2>13.4 Maintenance recommandée</h2>
+<table>
+  <thead><tr><th style="width:18%;">Fréquence</th><th>Action</th></tr></thead>
+  <tbody>
+    <tr><td>À chaque contenu modifié</td><td><code>npm test</code>, <code>npm run build</code>, vérification FR/EN, commit.</td></tr>
+    <tr><td>Chaque mois</td><td>Vérifier les messages reçus, supprimer les messages traités, consulter l’audience, tester le formulaire.</td></tr>
+    <tr><td>Chaque trimestre</td><td>Mettre à jour le CV, les projets, les certifications ; vérifier les liens GitHub/démo ; lancer <code>npm audit --omit=dev</code>.</td></tr>
+    <tr><td>Chaque semestre</td><td>Mettre à jour les dépendances avec prudence, revoir le SEO, rafraîchir l’image Open Graph, sauvegarder Turso.</td></tr>
+    <tr><td>En cas d’incident</td><td>Consulter les logs Vercel, vérifier Turso, tester <code>/api/messages</code> et <code>/api/visits</code>, faire un rollback si nécessaire.</td></tr>
+  </tbody>
+</table>
+
+<h2>13.5 Glossaire</h2>
+<table class="compact">
+  <thead><tr><th style="width:24%;">Terme</th><th>Définition</th></tr></thead>
+  <tbody>
+    <tr><td>App Router</td><td>Système de routage de Next.js basé sur le dossier <code>app/</code>.</td></tr>
+    <tr><td>SSR</td><td>Rendu côté serveur : le HTML est généré à la requête.</td></tr>
+    <tr><td>Hydratation</td><td>Processus par lequel React attache les interactions au HTML déjà rendu.</td></tr>
+    <tr><td>libSQL</td><td>Fork de SQLite utilisé par Turso, accessible en réseau.</td></tr>
+    <tr><td>Turso</td><td>Service de base de données libSQL hébergée.</td></tr>
+    <tr><td>HMAC</td><td>Signature cryptographique utilisée pour le cookie de session.</td></tr>
+    <tr><td>Rate limit</td><td>Limitation du nombre de requêtes sur une période.</td></tr>
+    <tr><td>Open Graph</td><td>Balises qui contrôlent l’aperçu d’un lien sur les réseaux sociaux.</td></tr>
+    <tr><td>JSON-LD</td><td>Données structurées pour les moteurs de recherche.</td></tr>
+    <tr><td>Preview Deployment</td><td>Déploiement Vercel d’une branche, avant fusion en production.</td></tr>
+  </tbody>
+</table>
+
+<h2>13.6 Fin du guide</h2>
+<p>
+  Ce document décrit l’état du projet à sa date de rédaction. Si une
+  procédure ou un fichier change, mettez à jour le guide en même temps que le
+  code : c’est ce qui évite de se retrouver, six mois plus tard, devant une
+  documentation qui ne correspond plus à la réalité.
+</p>
+<p>
+  Pour toute modification sensible — base de données, authentification,
+  variables d’environnement — faites une sauvegarde et testez d’abord sur une
+  base ou un déploiement de test.
+</p>
+
+<div class="footer-note">
+  <strong>Guide du portfolio — Zo Mahefa RANAIVO</strong><br />
+  Édition 2026 · v1.0 · Document généré pour la maintenance et le déploiement.<br />
+  Aucun secret n’est inclus dans ce PDF. Les valeurs sensibles restent dans
+  <code>.env.local</code> et dans les variables d’environnement Vercel.
+</div>
+
+</body>
+</html>

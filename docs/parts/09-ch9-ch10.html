@@ -1,0 +1,196 @@
+<!-- ================= CHAPITRE 9 ================= -->
+<h1 class="chapter" id="ch9"><span class="num">Chapitre 09</span>Qualité, tests et sécurité</h1>
+
+<p class="lead">
+  Avant chaque déploiement, quatre commandes suffisent à éviter la majorité
+  des régressions : tests, lint, vérification TypeScript et build. Ce chapitre
+  explique ce que chacune vérifie et ce qu’elle ne vérifie pas.
+</p>
+
+<h2>9.1 Les commandes</h2>
+<table>
+  <thead><tr><th style="width:26%;">Commande</th><th>Ce qu’elle fait</th></tr></thead>
+  <tbody>
+    <tr><td><code>npm test</code></td><td>Lance Vitest une fois. Vérifie la parité FR/EN, l’authentification et les regex de validation.</td></tr>
+    <tr><td><code>npm run test:watch</code></td><td>Relance les tests à chaque modification.</td></tr>
+    <tr><td><code>npm run lint</code></td><td>ESLint avec les règles Next.js et TypeScript.</td></tr>
+    <tr><td><code>npx tsc --noEmit</code></td><td>Vérifie les types sans générer de fichiers. (Le build le fait aussi.)</td></tr>
+    <tr><td><code>npm run build</code></td><td>Compile le site, vérifie les types, génère les routes et les pages statiques.</td></tr>
+    <tr><td><code>npm run start</code></td><td>Démarre le build de production en local (après <code>npm run build</code>).</td></tr>
+  </tbody>
+</table>
+
+<h2>9.2 Les tests présents</h2>
+<table>
+  <thead><tr><th style="width:32%;">Fichier</th><th>Ce qu’il vérifie</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/lib/content.test.ts</code></td><td>La structure de <code>fr</code> et <code>en</code> est identique (mêmes clés, mêmes longueurs de tableaux) et aucun texte n’est vide. C’est le test le plus important pour éviter les oublis de traduction.</td></tr>
+    <tr><td><code>src/lib/auth.test.ts</code></td><td>Le mot de passe correct est accepté ; les mauvais formats sont refusés ; la détection de mot de passe faible fonctionne.</td></tr>
+    <tr><td><code>src/lib/validation.test.ts</code></td><td>Les regex e-mail et téléphone définies dans le test. Il n’importe pas de module <code>validation.ts</code> : c’est un test de référence, pas la validation utilisée en production.</td></tr>
+    <tr><td><code>src/components/language-provider.test.tsx</code></td><td>Le provider de langue et la bascule FR/EN.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="callout-label">Ce que les tests ne couvrent pas</span>
+  <p>
+    Il n’y a pas de test end-to-end du formulaire, de l’admin ou de
+    l’assistant. Ces parcours doivent être vérifiés manuellement après
+    déploiement (voir 11.9). Les tests ne remplacent pas un clic réel sur le
+    site.
+  </p>
+</div>
+
+<h2>9.3 Ce que vérifie le build</h2>
+<ul>
+  <li>Les imports et les alias <code>@/</code>.</li>
+  <li>Les types de <code>content.ts</code> : un champ manquant dans un projet, une certification ou un témoignage fait échouer la compilation.</li>
+  <li>Les composants client/serveur : un hook utilisé dans un composant serveur provoque une erreur.</li>
+  <li>Les routes : pages, API, sitemap, robots, manifest.</li>
+  <li>Les images locales référencées.</li>
+</ul>
+
+<h2>9.4 Vérifications manuelles avant mise en ligne</h2>
+<ul class="checklist">
+  <li>La page d’accueil se charge en français et en anglais.</li>
+  <li>Le thème clair/sombre fonctionne et persiste après rechargement.</li>
+  <li>Le menu mobile s’ouvre, se ferme avec Échap et verrouille le scroll.</li>
+  <li>Les liens d’ancrage du header et du footer arrivent sur les bonnes sections.</li>
+  <li>Les projets vedettes affichent leurs images et leurs liens.</li>
+  <li>Le carrousel répond aux flèches et se met en pause au survol.</li>
+  <li>Le formulaire envoie un message et affiche l’écran de succès.</li>
+  <li>Le message apparaît dans <code>/admin</code>, puis peut être supprimé.</li>
+  <li>Une visite apparaît dans l’onglet Audience (hors <code>/admin</code>).</li>
+  <li>L’assistant répond à une question simple.</li>
+  <li>Les PDF de certification s’ouvrent.</li>
+  <li>Le CV se télécharge.</li>
+  <li>Les pages <code>/projets</code>, <code>/contact</code>, <code>/competences</code> redirigent correctement.</li>
+  <li><code>/sitemap.xml</code> et <code>/robots.txt</code> sont accessibles.</li>
+</ul>
+
+<h2>9.5 Accessibilité et préférences</h2>
+<ul>
+  <li>Un lien « Aller au contenu » est présent au début du document.</li>
+  <li>Les animations respectent <code>prefers-reduced-motion</code> : compteurs, machine à écrire, galerie et révélations.</li>
+  <li>Le menu mobile gère Échap et le focus.</li>
+  <li>Les images ont des textes alternatifs ; les icônes décoratives sont masquées aux lecteurs d’écran.</li>
+  <li>Les contrastes du thème sombre sont définis dans <code>globals.css</code>.</li>
+  <li>Les formulaires ont des libellés associés et des messages d’erreur explicites.</li>
+</ul>
+
+<h2>9.6 Sécurité : la checklist</h2>
+<ul class="checklist">
+  <li><code>.env.local</code> n’est jamais commité.</li>
+  <li><code>ADMIN_PASSWORD</code> fait au moins 12 caractères et n’est pas un mot courant.</li>
+  <li>Le jeton Turso est stocké uniquement dans Vercel et <code>.env.local</code>.</li>
+  <li>La clé Groq/Gemini n’est jamais exposée côté client (pas de préfixe <code>NEXT_PUBLIC_</code>).</li>
+  <li>Les dépendances sont à jour : <code>npm audit --omit=dev</code>.</li>
+  <li>Les en-têtes de sécurité sont actifs en production.</li>
+  <li>L’admin est en <code>noindex</code> et n’est pas lié depuis le site.</li>
+  <li>Les messages reçus ne sont pas exportés dans un dépôt public.</li>
+  <li>Le CV et les attestations ne contiennent pas d’informations que vous ne voulez pas publier.</li>
+</ul>
+<div class="callout danger">
+  <span class="callout-label">Ne jamais faire</span>
+  <p>
+    Ne mettez jamais <code>ADMIN_PASSWORD</code>, <code>TURSO_DB_TOKEN</code>,
+    <code>GROQ_API_KEY</code> ou <code>GOOGLE_AI_API_KEY</code> dans un
+    fichier versionné, une capture d’écran, un ticket ou ce PDF. Si un secret
+    a fuité, révoquez-le et recréez-le immédiatement.
+  </p>
+</div>
+
+<!-- ================= CHAPITRE 10 ================= -->
+<h1 class="chapter" id="ch10"><span class="num">Chapitre 10</span>Développement local</h1>
+
+<h2>10.1 Prérequis</h2>
+<ul>
+  <li>Node.js 20 ou 22 (le projet utilise Next.js 16).</li>
+  <li>npm (fourni avec Node).</li>
+  <li>Git.</li>
+  <li>Un éditeur (VS Code, Cursor…).</li>
+</ul>
+
+<h2>10.2 Installation</h2>
+<pre>cd /chemin/vers/le/portfolio
+npm install</pre>
+<p>
+  Utilisez <code>npm ci</code> si vous voulez reproduire exactement les
+  versions du <code>package-lock.json</code> (CI, machine neuve).
+</p>
+
+<h2>10.3 Fichier d’environnement local</h2>
+<p>
+  Copiez le modèle et remplissez les valeurs :
+</p>
+<pre>cp .env.example .env.local</pre>
+<pre># Site
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# Admin
+ADMIN_PASSWORD=un-mot-de-passe-fort-de-12-caracteres-minimum
+
+# Base (laisser vide pour SQLite local)
+TURSO_DB_URL=
+TURSO_DB_TOKEN=
+
+# Assistant IA
+AI_PROVIDER=groq
+GROQ_API_KEY=
+GOOGLE_AI_API_KEY=</pre>
+<div class="callout warn">
+  <span class="callout-label">Valeurs factices</span>
+  <p>
+    Les valeurs ci-dessus sont des exemples. Ne recopiez pas un vrai mot de
+    passe ou une vraie clé dans un document, un chat ou un commit.
+  </p>
+</div>
+
+<h2>10.4 Initialiser la base locale</h2>
+<pre>npm run db:init</pre>
+<p>
+  Sans <code>TURSO_DB_URL</code>, cela crée <code>data/portfolio.db</code>.
+  Le dossier <code>data/</code> est ignoré par Git.
+</p>
+
+<h2>10.5 Lancer le serveur</h2>
+<pre>npm run dev</pre>
+<p>
+  Ouvrez <code>http://localhost:3000</code>. Pour tester sur un autre port :
+</p>
+<pre>npm run dev -- --port 3100</pre>
+
+<h2>10.6 Tester le build de production en local</h2>
+<pre>npm run build
+npm run start</pre>
+<p>
+  Le build de production est plus strict que le mode développement : c’est
+  celui qui doit passer avant un déploiement.
+</p>
+
+<h2>10.7 Docker (optionnel)</h2>
+<p>
+  Le dépôt contient un <code>Dockerfile</code> et un script
+  <code>run.sh</code> pour un déploiement auto-hébergé. Ce n’est pas la voie
+  utilisée par Vercel.
+</p>
+<pre>docker build -t zomahefaranaivo/portfolio .
+./run.sh latest</pre>
+<p>
+  Le script monte <code>./data</code> dans <code>/app/data</code> et charge
+  <code>.env.local</code>. Sans variables Turso, la base SQLite persiste dans
+  ce volume.
+</p>
+
+<h2>10.8 Problèmes locaux fréquents</h2>
+<table>
+  <thead><tr><th style="width:30%;">Symptôme</th><th>Solution</th></tr></thead>
+  <tbody>
+    <tr><td>Port 3000 déjà utilisé</td><td><code>npm run dev -- --port 3100</code> ou arrêtez l’autre processus.</td></tr>
+    <tr><td>Variables non prises en compte</td><td>Redémarrez <code>npm run dev</code> : les variables serveur ne sont pas toujours rechargées à chaud.</td></tr>
+    <tr><td>Base introuvable</td><td>Lancez <code>npm run db:init</code>. Vérifiez que <code>data/</code> est accessible en écriture.</td></tr>
+    <tr><td>Erreur de module</td><td>Supprimez <code>node_modules</code> et <code>.next</code>, puis <code>npm ci</code>.</td></tr>
+    <tr><td>Tests qui échouent après une modification de contenu</td><td>Vous avez probablement oublié une clé en français ou en anglais. Lisez le chemin indiqué par <code>content.test.ts</code>.</td></tr>
+    <tr><td>Image 404</td><td>Vérifiez le nom exact dans <code>public/</code> et la casse.</td></tr>
+    <tr><td>Assistant 503</td><td>Ajoutez une clé IA dans <code>.env.local</code> et redémarrez.</td></tr>
+  </tbody>
+</table>

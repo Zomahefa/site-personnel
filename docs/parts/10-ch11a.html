@@ -1,0 +1,205 @@
+<!-- ================= CHAPITRE 11 ================= -->
+<h1 class="chapter" id="ch11"><span class="num">Chapitre 11</span>Déploiement Vercel + Turso</h1>
+
+<p class="lead">
+  Ce chapitre est la procédure complète, dans l’ordre, pour passer du dépôt
+  local à un site public avec base de données distante. Comptez 20 à 30
+  minutes la première fois. Ne sautez pas l’étape d’initialisation de la base :
+  c’est la cause n°1 des formulaires qui renvoient une erreur.
+</p>
+
+<h2>11.1 Ce que vous allez créer</h2>
+<div class="flow">
+  <div class="flow-node"><b>GitHub</b>Dépôt<br />du code</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Vercel</b>Build + hébergement<br />+ variables</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Turso</b>Base libSQL<br />messages + visites</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Groq / Google</b>Clé API<br />assistant</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Domaine</b>URL publique<br />+ SEO</div>
+</div>
+
+<h2>11.2 Prérequis</h2>
+<ul class="checklist">
+  <li>Un compte GitHub.</li>
+  <li>Un compte Vercel (gratuit suffit pour commencer).</li>
+  <li>Un compte Turso (gratuit suffit pour commencer).</li>
+  <li>Une clé API Groq ou Google AI Studio pour l’assistant.</li>
+  <li>Node.js 20+ et npm installés localement.</li>
+  <li>Le projet qui build en local.</li>
+  <li>Un nom de domaine, si vous ne voulez pas rester sur <code>*.vercel.app</code>.</li>
+</ul>
+
+<h2>11.3 Vérifications avant de déployer</h2>
+<p>
+  Ne déployez jamais un état qui ne passe pas localement. Exécutez, dans
+  l’ordre :
+</p>
+<pre>npm ci
+npm run lint
+npm test
+npm run build</pre>
+<p>
+  Le build doit afficher les routes générées, dont <code>/</code>,
+  <code>/admin</code>, <code>/api/*</code>, <code>/sitemap.xml</code>,
+  <code>/robots.txt</code> et <code>/manifest.webmanifest</code>. S’il échoue,
+  corrigez d’abord : Vercel échouera de la même manière.
+</p>
+
+<div class="callout tip">
+  <span class="callout-label">Test de production local</span>
+  <p>
+    Après <code>npm run build</code>, lancez <code>npm run start</code> et
+    testez le formulaire, l’admin et l’assistant sur
+    <code>http://localhost:3000</code>. C’est le meilleur moyen de détecter un
+    problème de variables avant de déployer.
+  </p>
+</div>
+
+<h2>11.4 Pousser le code sur GitHub</h2>
+<pre>git status
+git add .
+git commit -m "chore: préparation du déploiement"
+git remote -v
+git push origin main</pre>
+<p>
+  Si le dépôt n’existe pas encore, créez-le sur GitHub (privé ou public),
+  puis :
+</p>
+<pre>git remote add origin https://github.com/&lt;votre-compte&gt;/&lt;votre-depot&gt;.git
+git branch -M main
+git push -u origin main</pre>
+<div class="callout danger">
+  <span class="callout-label">Avant le premier push</span>
+  <p>
+    Vérifiez que <code>.env.local</code>, <code>data/</code> et les fichiers
+    <code>*.db</code> ne sont pas suivis. <code>git status</code> ne doit pas
+    les afficher. Si un secret a déjà été commité, considérez-le comme
+    compromis et changez-le.
+  </p>
+</div>
+
+<h2>11.5 Créer la base Turso</h2>
+<h3>Option A — Via le tableau de bord (recommandé pour débuter)</h3>
+<ol>
+  <li>Créez un compte sur <code>turso.tech</code>.</li>
+  <li>Dans le dashboard, créez une base de données, par exemple <code>portfolio-zomahefa</code>.</li>
+  <li>Choisissez une région proche de vos visiteurs (par exemple Francfort pour l’Europe/Afrique de l’Est, ou la région proposée la plus proche).</li>
+  <li>Copiez l’URL de connexion : elle commence par <code>libsql://</code>.</li>
+  <li>Créez un jeton d’accès (token) pour cette base. Copiez-le immédiatement : il n’est affiché qu’une fois.</li>
+</ol>
+
+<h3>Option B — Via la CLI Turso</h3>
+<pre># Installation (macOS / Linux)
+curl -sSfL https://get.tur.so/install.sh | bash
+
+# ou avec Homebrew
+brew install tursodatabase/tap/turso
+
+# Connexion
+turso auth signup
+# ou
+turso auth login
+
+# Création de la base (exemple de région : fra)
+turso db create portfolio-zomahefa --location fra
+
+# Récupérer l'URL libsql://
+turso db show portfolio-zomahefa --url
+
+# Créer un jeton
+turso db tokens create portfolio-zomahefa
+
+# Vérifier
+turso db list</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Deux valeurs à conserver</span>
+  <p>
+    <strong>URL</strong> : <code>libsql://portfolio-zomahefa-&lt;organisation&gt;.turso.io</code><br />
+    <strong>Token</strong> : une longue chaîne secrète.<br />
+    Ne confondez pas avec l’URL HTTPS du dashboard. Le client libSQL attend
+    le schéma <code>libsql://</code>.
+  </p>
+</div>
+
+<h2>11.6 Initialiser le schéma sur Turso</h2>
+<p>
+  Vous pouvez le faire depuis votre machine, avant même de déployer Vercel.
+  Cela vérifie que l’URL et le jeton fonctionnent.
+</p>
+<pre>export TURSO_DB_URL="libsql://portfolio-zomahefa-...turso.io"
+export TURSO_DB_TOKEN="le-jeton-secret"
+npm run db:init</pre>
+<p>Sur Windows PowerShell :</p>
+<pre>$env:TURSO_DB_URL="libsql://..."
+$env:TURSO_DB_TOKEN="..."
+npm run db:init</pre>
+<p>Résultat attendu :</p>
+<pre>✓ Base initialisée
+  cible        : Turso
+  messages     : 0
+  pages vues   : 0
+  tables       : messages, page_views</pre>
+<p>
+  Si vous obtenez une erreur d’authentification, le jeton est faux ou a été
+  révoqué. S’il manque des droits, recréez un jeton en lecture/écriture sur
+  cette base.
+</p>
+
+<h2>11.7 Importer le projet dans Vercel</h2>
+<ol>
+  <li>Connectez-vous à <code>vercel.com</code>.</li>
+  <li>Cliquez sur <strong>Add New → Project</strong>.</li>
+  <li>Importez le dépôt GitHub qui contient le portfolio.</li>
+  <li>Vérifiez les réglages :
+    <ul>
+      <li><strong>Framework Preset</strong> : Next.js (détecté automatiquement).</li>
+      <li><strong>Root Directory</strong> : <code>./</code> (ou le sous-dossier si monorepo).</li>
+      <li><strong>Build Command</strong> : <code>npm run build</code>.</li>
+      <li><strong>Install Command</strong> : <code>npm install</code> (ou <code>npm ci</code>).</li>
+      <li><strong>Output Directory</strong> : laisser vide (Next.js gère).</li>
+      <li><strong>Node.js Version</strong> : 20.x ou 22.x.</li>
+    </ul>
+  </li>
+  <li>Ouvrez <strong>Environment Variables</strong> et ajoutez les variables de la section suivante.</li>
+  <li>Cliquez sur <strong>Deploy</strong>.</li>
+</ol>
+
+<h2>11.8 Les variables d’environnement Vercel</h2>
+<table>
+  <thead><tr><th style="width:26%;">Variable</th><th style="width:18%;">Exemple</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>NEXT_PUBLIC_SITE_URL</code></td><td><code>https://zo-mahefa-it.vercel.app</code></td><td>URL publique, sans slash final. Sert au canonical, au sitemap, aux robots, à l’Open Graph et au JSON-LD.</td></tr>
+    <tr><td><code>ADMIN_PASSWORD</code></td><td><em>mot de passe fort</em></td><td>Accès à <code>/admin</code>. 12 caractères minimum, majuscules, chiffres, symboles.</td></tr>
+    <tr><td><code>TURSO_DB_URL</code></td><td><code>libsql://...</code></td><td>URL de la base Turso.</td></tr>
+    <tr><td><code>TURSO_DB_TOKEN</code></td><td><em>jeton secret</em></td><td>Jeton d’accès Turso.</td></tr>
+    <tr><td><code>GROQ_API_KEY</code></td><td><em>clé Groq</em></td><td>Assistant IA via Groq.</td></tr>
+    <tr><td><code>AI_PROVIDER</code></td><td><code>groq</code></td><td>Optionnel. Force <code>groq</code> ou <code>google</code>.</td></tr>
+    <tr><td><code>GOOGLE_AI_API_KEY</code></td><td><em>clé Google</em></td><td>Optionnel si vous utilisez Gemini.</td></tr>
+    <tr><td><code>GROQ_MODEL</code></td><td><code>openai/gpt-oss-120b</code></td><td>Optionnel. Surcharge le modèle Groq.</td></tr>
+    <tr><td><code>GOOGLE_AI_MODEL</code></td><td><code>gemini-2.5-flash</code></td><td>Optionnel. Surcharge le modèle Gemini.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout warn">
+  <span class="callout-label">Portée des variables</span>
+  <p>
+    Ajoutez au minimum les variables à l’environnement <strong>Production</strong>.
+    Si vous voulez que les Preview Deployments fonctionnent aussi, ajoutez-les
+    à <strong>Preview</strong> — mais utilisez alors une base Turso de test,
+    pas la base de production. Sinon, chaque preview écrira de vrais messages
+    et de vraies visites.
+  </p>
+</div>
+
+<div class="callout">
+  <span class="callout-label">Pourquoi <code>NEXT_PUBLIC_</code> ?</span>
+  <p>
+    Ce préfixe rend la variable lisible côté navigateur. Ici, ce n’est pas un
+    secret : c’est simplement l’URL publique du site. Ne mettez jamais une clé
+    API ou un mot de passe derrière un préfixe <code>NEXT_PUBLIC_</code>.
+  </p>
+</div>

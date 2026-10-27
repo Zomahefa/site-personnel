@@ -1,0 +1,226 @@
+<!-- ================= CHAPITRE 6 ================= -->
+<h1 class="chapter" id="ch6"><span class="num">Chapitre 06</span>Ajouter un projet</h1>
+
+<p class="lead">
+  Il existe deux niveaux de mise en avant : le <strong>projet vedette</strong>,
+  qui occupe une grande ligne avec étude de cas et visuel, et le
+  <strong>projet d’archive</strong>, qui tient sur une ligne compacte. Les deux
+  se modifient dans <code>content.ts</code>, jamais en base.
+</p>
+
+<h2>6.1 Ajouter un projet vedette — pas à pas</h2>
+
+<h3>Étape 1 — Préparer les images</h3>
+<p>
+  Déposez les captures dans <code>public/projects/</code>. Utilisez des noms
+  courts, en minuscules, sans espaces :
+</p>
+<pre>public/projects/
+├── mon-projet-tableau-de-bord.png
+├── mon-projet-liste.png
+└── mon-projet-detail.png</pre>
+<ul>
+  <li>Format conseillé : PNG ou WebP, largeur 1 200–1 600 px.</li>
+  <li>Évitez les captures avec des données personnelles réelles (noms, e-mails, numéros).</li>
+  <li>Si vous n’avez pas de capture, utilisez un <code>visual</code> existant : <code>incident</code>, <code>erp</code> ou <code>pipeline</code>.</li>
+</ul>
+
+<h3>Étape 2 — Ajouter l’objet en français</h3>
+<p>
+  Dans <code>const fr</code>, cherchez <code>featuredProjects: [</code>.
+  Ajoutez votre objet à l’endroit où vous voulez qu’il apparaisse. Pour le
+  mettre en premier, placez-le juste après le crochet ouvrant.
+</p>
+<pre>{
+  id: "mon-projet",
+  index: "04",
+  title: "Mon projet",
+  subtitle: "Gestion de stock · PME",
+  year: "2026",
+  category: "Web app / Fullstack",
+  summary: "Une application pour suivre les stocks et les ventes en temps réel.",
+  context: "Projet freelance réalisé pour une PME locale.",
+  problem: "Les stocks étaient suivis sur tableur, avec des ruptures et des doublons.",
+  role: "Cadrage, modélisation des données, API, interface et déploiement.",
+  outcome: "Un tableau de bord unique, des alertes de seuil et une mise en production reproductible.",
+  stack: ["Next.js", "TypeScript", "PostgreSQL", "Docker"],
+  visual: "erp",
+  gallery: [
+    {
+      src: "/projects/mon-projet-tableau-de-bord.png",
+      alt: "Tableau de bord du projet Mon projet avec les indicateurs de stock",
+      label: "Tableau de bord",
+    },
+    {
+      src: "/projects/mon-projet-liste.png",
+      alt: "Liste des produits et seuils d'alerte",
+      label: "Liste des produits",
+    },
+  ],
+  repo: "https://github.com/Zomahefa/mon-projet",
+  demo: "https://mon-projet.vercel.app/",
+  demoLabel: "Voir la démo",
+},</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Les champs obligatoires</span>
+  <p>
+    <code>id</code>, <code>index</code>, <code>title</code>,
+    <code>subtitle</code>, <code>year</code>, <code>category</code>,
+    <code>summary</code>, <code>context</code>, <code>problem</code>,
+    <code>role</code>, <code>outcome</code>, <code>stack</code> et
+    <code>visual</code> sont requis par le type <code>FeaturedProject</code>.
+    Un oubli fait échouer <code>npm run build</code> avec un message
+    TypeScript explicite.
+  </p>
+</div>
+
+<h3>Étape 3 — Ajouter le même objet en anglais</h3>
+<p>
+  Dans <code>const en</code>, cherchez à nouveau
+  <code>featuredProjects: [</code>. Ajoutez le même objet, avec les textes
+  traduits. Conservez strictement les mêmes <code>id</code>, <code>index</code>,
+  <code>year</code>, <code>stack</code>, chemins d’images, liens et
+  <code>visual</code>.
+</p>
+<pre>{
+  id: "mon-projet",
+  index: "04",
+  title: "My project",
+  subtitle: "Inventory management · SMB",
+  year: "2026",
+  category: "Web app / Fullstack",
+  summary: "An application to track stock and sales in real time.",
+  context: "Freelance project for a local SMB.",
+  problem: "Inventory was tracked in spreadsheets, causing stockouts and duplicates.",
+  role: "Scoping, data modeling, API, UI and deployment.",
+  outcome: "A single dashboard, threshold alerts and a reproducible production release.",
+  stack: ["Next.js", "TypeScript", "PostgreSQL", "Docker"],
+  visual: "erp",
+  gallery: [
+    {
+      src: "/projects/mon-projet-tableau-de-bord.png",
+      alt: "Mon project dashboard with inventory indicators",
+      label: "Dashboard",
+    },
+    {
+      src: "/projects/mon-projet-liste.png",
+      alt: "Product list and alert thresholds",
+      label: "Product list",
+    },
+  ],
+  repo: "https://github.com/Zomahefa/mon-projet",
+  demo: "https://mon-projet.vercel.app/",
+  demoLabel: "View demo",
+},</pre>
+
+<h3>Étape 4 — Ajuster les index et les compteurs</h3>
+<p>
+  Si vous insérez le projet au milieu, renumérotez les <code>index</code> des
+  projets suivants (<code>"01"</code>, <code>"02"</code>, <code>"03"</code>…)
+  dans les deux langues. Pensez aussi aux statistiques du hero
+  (<code>hero.stats</code>, « projets documentés ») et au <code>kicker</code>
+  de l’archive si le nombre de projets change.
+</p>
+
+<h3>Étape 5 — Vérifier</h3>
+<pre>npm test
+npm run build
+npm run dev</pre>
+<p>
+  Ouvrez <code>http://localhost:3000</code>, vérifiez le projet en français,
+  basculez en anglais, testez le carrousel au clavier (flèches gauche/droite),
+  vérifiez les liens de démo et de code. Sur mobile, vérifiez que les images
+  ne débordent pas.
+</p>
+
+<h2>6.2 Ajouter un projet d’archive</h2>
+<p>
+  C’est plus simple : une ligne, pas d’image, pas d’étude de cas. Dans
+  <code>archive.projects</code>, ajoutez :
+</p>
+<pre>{
+  title: "Mon projet d'archive",
+  category: "Desktop · JavaFX",
+  year: "2026",
+  stack: "JavaFX · SQLite",
+  href: "https://github.com/Zomahefa/mon-projet-archive",
+  label: "Code",
+},</pre>
+<ul>
+  <li><code>href</code> : si présent, la ligne est cliquable et affiche « Code ».</li>
+  <li><code>label</code> : affiché seulement si <code>href</code> est absent. Utilisez « Lab », « Labs » ou « Projet privé ».</li>
+  <li>Mettez à jour <code>archive.kicker</code> (« ARCHIVE / 07 ») et, si besoin, le texte <code>copy</code>.</li>
+</ul>
+
+<h2>6.3 Cas particuliers</h2>
+
+<h3>Projet sans dépôt public</h3>
+<p>
+  N’ajoutez pas <code>repo</code>. Ajoutez <code>privateCode: true</code> :
+  le lien « Étude de cas sur demande » apparaîtra et ouvrira un e-mail
+  prérempli avec le nom du projet.
+</p>
+<pre>privateCode: true,
+demo: "https://demo.example.com/",
+demoLabel: "Voir la démo",</pre>
+
+<h3>Projet sans capture d’écran</h3>
+<p>
+  Utilisez un <code>visual</code> existant. Les trois schémas sont définis dans
+  <code>src/components/site/project-visual.tsx</code> :
+</p>
+<table class="compact">
+  <thead><tr><th style="width:20%;">Valeur</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>incident</code></td><td>Signalement, supervision, incidents, workflow terrain.</td></tr>
+    <tr><td><code>erp</code></td><td>Tableaux de bord, gestion, stocks, ventes, trésorerie.</td></tr>
+    <tr><td><code>pipeline</code></td><td>CI/CD, tests, logs, alertes, infrastructure.</td></tr>
+  </tbody>
+</table>
+
+<h3>Créer un nouveau type de visuel</h3>
+<ol>
+  <li>Dans <code>content.ts</code>, ajoutez la valeur à l’union :
+    <pre>export type ProjectVisualKind = "incident" | "erp" | "pipeline" | "mobile";</pre>
+  </li>
+  <li>Dans <code>src/components/site/project-visual.tsx</code>, ajoutez le rendu correspondant (SVG, blocs, textes).</li>
+  <li>Utilisez la nouvelle valeur dans vos objets FR et EN.</li>
+</ol>
+<div class="callout tip">
+  <span class="callout-label">Alternative plus simple</span>
+  <p>
+    Si vous n’avez qu’une capture, utilisez <code>gallery</code> avec un seul
+    élément : le carrousel s’affiche en mode « aperçu », sans autoplay. C’est
+    souvent plus convaincant qu’un schéma générique.
+  </p>
+</div>
+
+<h3>Images externes</h3>
+<p>
+  <code>next.config.ts</code> autorise les images locales
+  (<code>localPatterns: [{ pathname: "/**" }]</code>) mais ne déclare aucun
+  <code>remotePatterns</code>. Une URL externe dans <code>gallery[].src</code>
+  sera refusée par <code>next/image</code>. Le plus sûr est de télécharger
+  l’image dans <code>public/projects/</code>. Sinon, ajoutez le domaine dans
+  <code>next.config.ts</code> :
+</p>
+<pre>images: {
+  // ...
+  remotePatterns: [
+    { protocol: "https", hostname: "images.example.com" },
+  ],
+},</pre>
+
+<h2>6.4 Checklist d’ajout de projet</h2>
+<ul class="checklist">
+  <li>Images déposées dans <code>public/projects/</code>, noms en minuscules.</li>
+  <li>Objet ajouté dans <code>featuredProjects</code> côté <code>fr</code>.</li>
+  <li>Objet identique ajouté côté <code>en</code> (mêmes id, index, stack, liens, images).</li>
+  <li>Index des autres projets renumérotés si nécessaire.</li>
+  <li>Statistiques du hero et <code>archive.kicker</code> à jour.</li>
+  <li><code>npm test</code> et <code>npm run build</code> passent.</li>
+  <li>Vérification visuelle desktop + mobile + FR/EN.</li>
+  <li>Liens de démo et de code testés.</li>
+  <li>Commit et push : déploiement Vercel automatique.</li>
+</ul>

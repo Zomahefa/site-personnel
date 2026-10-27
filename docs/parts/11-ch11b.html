@@ -1,0 +1,232 @@
+<h2>11.9 Déployer</h2>
+<ol>
+  <li>Cliquez sur <strong>Deploy</strong>. Vercel installe les dépendances, lance <code>npm run build</code>, puis publie.</li>
+  <li>Suivez les logs de build. Une erreur TypeScript ou un module manquant apparaît ici.</li>
+  <li>À la fin, Vercel fournit une URL du type <code>https://portfolio-xxxx.vercel.app</code>.</li>
+  <li>Ouvrez cette URL. Le site doit s’afficher même avant d’ajouter un domaine personnalisé.</li>
+  <li>Si <code>NEXT_PUBLIC_SITE_URL</code> pointe déjà vers le domaine final, les métadonnées seront correctes. Sinon, mettez-la à jour et redéployez.</li>
+</ol>
+
+<h3>Variante CLI Vercel (optionnelle)</h3>
+<pre>npm i -g vercel
+vercel login
+vercel
+vercel --prod</pre>
+<p>
+  La CLI guide la création du projet et permet d’ajouter des variables :
+</p>
+<pre>vercel env add ADMIN_PASSWORD production
+vercel env add TURSO_DB_URL production
+vercel env add TURSO_DB_TOKEN production
+vercel env add GROQ_API_KEY production
+vercel env add NEXT_PUBLIC_SITE_URL production</pre>
+<p>
+  Après un changement de variable, relancez <code>vercel --prod</code> ou
+  cliquez sur <strong>Redeploy</strong> dans le dashboard.
+</p>
+
+<h2>11.10 Vérifier le déploiement</h2>
+
+<h3>1. La page et les en-têtes</h3>
+<pre>curl -I https://votre-domaine.tld
+curl -I https://votre-domaine.tld/admin
+curl -s https://votre-domaine.tld/robots.txt
+curl -s https://votre-domaine.tld/sitemap.xml</pre>
+<ul>
+  <li>La page d’accueil répond 200.</li>
+  <li><code>/admin</code> répond 200 mais contient <code>noindex</code>.</li>
+  <li><code>robots.txt</code> exclut <code>/admin/</code> et <code>/api/</code>.</li>
+  <li><code>sitemap.xml</code> contient l’URL finale, pas <code>localhost</code>.</li>
+  <li>Les en-têtes <code>content-security-policy</code>, <code>strict-transport-security</code>, <code>x-frame-options</code> sont présents.</li>
+</ul>
+
+<h3>2. Le contenu</h3>
+<ul>
+  <li>Le hero affiche le bon nom, les bons rôles, les bonnes statistiques.</li>
+  <li>Les projets vedettes et l’archive sont complets.</li>
+  <li>Les images se chargent (pas de 404 dans la console).</li>
+  <li>Le CV et les PDF de certification s’ouvrent.</li>
+  <li>La bascule FR/EN fonctionne et persiste après rechargement.</li>
+</ul>
+
+<h3>3. Le formulaire et l’admin</h3>
+<ol>
+  <li>Envoyez un message de test avec une vraie adresse e-mail.</li>
+  <li>Vérifiez l’écran de succès.</li>
+  <li>Connectez-vous à <code>/admin</code> avec <code>ADMIN_PASSWORD</code>.</li>
+  <li>Le message doit apparaître dans l’onglet Messages.</li>
+  <li>Supprimez-le après vérification.</li>
+</ol>
+<div class="callout">
+  <span class="callout-label">Si le formulaire échoue</span>
+  <p>
+    Le formulaire affiche un lien <code>mailto:</code> de repli. Cela signifie
+    que l’API n’a pas pu écrire en base. Vérifiez <code>TURSO_DB_URL</code>,
+    <code>TURSO_DB_TOKEN</code>, puis les logs Vercel (Functions → Logs).
+    Lancez <code>npm run db:init</code> avec les mêmes valeurs pour isoler le
+    problème.
+  </p>
+</div>
+
+<h3>4. Les visites</h3>
+<ol>
+  <li>Ouvrez le site dans un navigateur normal (pas en navigation privée avec bloqueur).</li>
+  <li>Naviguez entre les ancres ou rechargez la page.</li>
+  <li>Dans <code>/admin</code> → Audience, vérifiez que le total augmente.</li>
+</ol>
+<p>
+  Les robots, <code>/admin</code> et les requêtes trop fréquentes ne sont pas
+  comptés. Si le compteur reste à zéro, vérifiez que <code>/api/visits</code>
+  répond 204 dans l’onglet Réseau et que la base est accessible.
+</p>
+
+<h3>5. L’assistant</h3>
+<pre>curl -s https://votre-domaine.tld/api/assistant \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"Quels sont tes projets ?"}]}'</pre>
+<p>
+  Attendu : <code>{"reply":"...","provider":"groq"}</code>. Si vous obtenez
+  <code>not-configured</code>, la clé n’est pas dans l’environnement
+  Production ou le déploiement n’a pas été refait après l’ajout.
+</p>
+
+<h3>6. Le partage social et le SEO</h3>
+<ul>
+  <li>Ouvrez <code>https://www.linkedin.com/post-inspector/</code> et testez l’URL.</li>
+  <li>Vérifiez que l’image <code>og-image.png</code> apparaît (1200×630).</li>
+  <li>Dans Google Search Console, ajoutez la propriété et soumettez le sitemap.</li>
+  <li>Testez <code>https://votre-domaine.tld/manifest.webmanifest</code>.</li>
+</ul>
+
+<h2>11.11 Ajouter un domaine personnalisé</h2>
+<ol>
+  <li>Dans Vercel : <strong>Project → Settings → Domains</strong>.</li>
+  <li>Ajoutez <code>votre-domaine.tld</code> et, si besoin, <code>www.votre-domaine.tld</code>.</li>
+  <li>Vercel affiche les enregistrements DNS à créer chez votre registrar :
+    <ul>
+      <li><code>A</code> vers l’IP Vercel pour le domaine racine, ou</li>
+      <li><code>CNAME</code> vers <code>cname.vercel-dns.com</code> pour un sous-domaine.</li>
+    </ul>
+  </li>
+  <li>Attendez la propagation DNS (quelques minutes à quelques heures).</li>
+  <li>Mettez <code>NEXT_PUBLIC_SITE_URL</code> à <code>https://votre-domaine.tld</code> (sans slash final).</li>
+  <li><strong>Redéployez</strong> : les métadonnées sont générées au build.</li>
+  <li>Vérifiez le canonical, le sitemap, le robots et le JSON-LD.</li>
+</ol>
+<div class="callout warn">
+  <span class="callout-label">Deux domaines, un seul canonical</span>
+  <p>
+    Si <code>zo-mahefa-it.vercel.app</code> et votre domaine personnalisé
+    répondent tous les deux, choisissez le domaine final comme
+    <code>NEXT_PUBLIC_SITE_URL</code> et redirigez l’autre vers celui-ci
+    (Vercel permet de définir un domaine principal). Sinon, les moteurs
+    voient deux URLs pour le même contenu.
+  </p>
+</div>
+
+<h2>11.12 Mettre à jour le site</h2>
+<p>
+  Une fois le projet connecté à GitHub, le flux est automatique :
+</p>
+<ol>
+  <li>Modifiez le contenu ou le code en local.</li>
+  <li>Lancez <code>npm test</code> et <code>npm run build</code>.</li>
+  <li>Commit et push sur la branche <code>main</code>.</li>
+  <li>Vercel détecte le push et lance un nouveau déploiement.</li>
+  <li>Vérifiez le déploiement dans l’onglet <strong>Deployments</strong>.</li>
+</ol>
+<pre>git add .
+git commit -m "content: mise à jour du projet X"
+git push origin main</pre>
+<p>
+  Pour les <strong>variables d’environnement</strong>, le flux est différent :
+  modifiez-les dans Vercel, puis cliquez sur <strong>Redeploy</strong>. Un
+  simple push ne suffit pas toujours à recharger une variable modifiée.
+</p>
+
+<h2>11.13 Revenir à une version précédente</h2>
+<ol>
+  <li>Vercel → <strong>Deployments</strong>.</li>
+  <li>Repérez le dernier déploiement qui fonctionnait.</li>
+  <li>Menu <strong>…</strong> → <strong>Promote to Production</strong> (ou <strong>Rollback</strong> selon l’interface).</li>
+  <li>Vérifiez le site.</li>
+  <li>Corrigez le code en local, puis poussez un nouveau commit.</li>
+</ol>
+<p>
+  Le rollback Vercel est immédiat mais ne corrige pas Git : la prochaine
+  publication reprendra le dernier commit. Pour un retour propre, faites
+  aussi un <code>git revert</code>.
+</p>
+
+<h2>11.14 Dépannage complet</h2>
+<table>
+  <thead><tr><th style="width:24%;">Symptôme</th><th style="width:24%;">Cause probable</th><th>Solution</th></tr></thead>
+  <tbody>
+    <tr><td>Le build échoue : <code>Module not found</code></td><td>Import incorrect, casse différente, dépendance absente.</td><td>Vérifiez le chemin exact, relancez <code>npm ci</code>, comparez avec le build local.</td></tr>
+    <tr><td>Le build échoue : <code>Type error</code></td><td>Champ manquant dans <code>content.ts</code> ou type incorrect.</td><td>Lisez le message : il indique la clé et le fichier. Corrigez le contenu, pas le type.</td></tr>
+    <tr><td>Le site affiche une ancienne version</td><td>Déploiement non déclenché, cache, mauvais projet Vercel.</td><td>Vérifiez le commit dans Deployments, forcez un redeploy, videz le cache du navigateur.</td></tr>
+    <tr><td>Formulaire : 503</td><td>Turso inaccessible, variables absentes, jeton invalide.</td><td>Vérifiez les variables Production, les logs Functions, puis <code>npm run db:init</code> avec les mêmes valeurs.</td></tr>
+    <tr><td>Admin : 503 « ADMIN_PASSWORD n’est pas configuré »</td><td>Variable absente de l’environnement Production.</td><td>Ajoutez-la dans Vercel, puis redéployez.</td></tr>
+    <tr><td>Admin : 401 après connexion</td><td>Cookie refusé, mot de passe changé, domaine différent, HTTP au lieu de HTTPS.</td><td>Utilisez HTTPS, videz les cookies du domaine, reconnectez-vous. Changer le mot de passe invalide les sessions.</td></tr>
+    <tr><td>Admin : « Trop de tentatives »</td><td>Rate limit 6/15 min atteint.</td><td>Attendez 15 minutes ou changez d’IP. Vérifiez que vous n’avez pas un script qui boucle.</td></tr>
+    <tr><td>Turso : <code>URL_SCHEME_NOT_SUPPORTED</code></td><td>URL <code>https://</code> au lieu de <code>libsql://</code>.</td><td>Copiez l’URL libSQL dans le dashboard Turso.</td></tr>
+    <tr><td>Turso : <code>AUTH_TOKEN</code> / 401</td><td>Jeton révoqué, mauvais jeton, jeton d’une autre base.</td><td>Créez un nouveau jeton pour cette base, mettez-le dans Vercel, redéployez.</td></tr>
+    <tr><td>Turso : base vide / tables absentes</td><td><code>db:init</code> jamais lancé et premier accès échoue.</td><td>Lancez <code>npm run db:init</code> avec les variables de production.</td></tr>
+    <tr><td>Assistant : 503 <code>not-configured</code></td><td>Aucune clé IA.</td><td>Ajoutez <code>GROQ_API_KEY</code> ou <code>GOOGLE_AI_API_KEY</code>, redéployez.</td></tr>
+    <tr><td>Assistant : 502 <code>provider-error</code></td><td>Clé invalide, quota, modèle inexistant.</td><td>Vérifiez les logs, le nom du modèle, le crédit du compte fournisseur.</td></tr>
+    <tr><td>Assistant : 429</td><td>25 requêtes / 10 min dépassées.</td><td>Attendez. En production, surveillez les abus.</td></tr>
+    <tr><td>Visites non comptées</td><td>Bloqueur, robot, <code>/admin</code>, rate limit, base indisponible.</td><td>Testez en navigation normale, vérifiez <code>/api/visits</code> (204), puis la base.</td></tr>
+    <tr><td>Images 404</td><td>Nom/casse différents, fichier absent de <code>public/</code>.</td><td>Vérifiez le chemin exact ; sur Vercel, tout est sensible à la casse.</td></tr>
+    <tr><td>Polices non chargées</td><td>Fichier absent ou CSP.</td><td>Vérifiez <code>public/fonts/</code> et l’en-tête <code>font-src 'self' data:</code>.</td></tr>
+    <tr><td>Open Graph vide sur LinkedIn</td><td>URL non absolue, image inaccessible, cache LinkedIn.</td><td>Vérifiez <code>og:image</code> dans le HTML, utilisez Post Inspector pour rafraîchir.</td></tr>
+    <tr><td>Canonical pointe vers l’ancien domaine</td><td><code>NEXT_PUBLIC_SITE_URL</code> non mise à jour ou pas de redéploiement.</td><td>Modifiez la variable, redéployez, vérifiez le HTML source.</td></tr>
+    <tr><td>Le formulaire accepte mais rien n’arrive</td><td>Écriture dans une autre base (preview vs production).</td><td>Vérifiez la portée des variables et l’URL Turso utilisée par le déploiement.</td></tr>
+    <tr><td>Domaine : <code>DNS_PROBE_FINISHED_NXDOMAIN</code></td><td>DNS pas propagé ou mal configuré.</td><td>Vérifiez les enregistrements A/CNAME chez le registrar, attendez la propagation.</td></tr>
+    <tr><td>Erreur de version Node</td><td>Version trop ancienne.</td><td>Réglez Node 20.x ou 22.x dans Vercel (Settings → General).</td></tr>
+  </tbody>
+</table>
+
+<h2>11.15 Sauvegardes, rotation et coûts</h2>
+<h3>Sauvegarde</h3>
+<pre>turso db shell portfolio-zomahefa ".dump" &gt; backup-portfolio-$(date +%F).sql</pre>
+<p>
+  Téléchargez aussi une copie depuis le dashboard Turso si l’option est
+  disponible. Conservez les sauvegardes hors du dépôt Git.
+</p>
+
+<h3>Rotation d’un secret</h3>
+<ol>
+  <li>Créez un nouveau jeton Turso (ou une nouvelle clé IA).</li>
+  <li>Mettez-le dans Vercel → Environment Variables.</li>
+  <li>Redéployez et testez.</li>
+  <li>Révoquez l’ancien jeton dans Turso (dashboard ou CLI).</li>
+</ol>
+<p>
+  Pour <code>ADMIN_PASSWORD</code>, changez la valeur dans Vercel et
+  redéployez. Toutes les sessions existantes seront invalidées.
+</p>
+
+<h3>Coûts et limites</h3>
+<ul>
+  <li>Vercel et Turso proposent des paliers gratuits ; les limites et tarifs évoluent. Consultez les pages actuelles avant de dimensionner.</li>
+  <li>L’assistant IA est le poste de coût variable principal : chaque question consomme des tokens.</li>
+  <li>Les fonctions serverless ont une durée d’exécution limitée ; les appels IA doivent rester rapides.</li>
+  <li>Surveillez le nombre de messages et de visites : la base peut grossir, mais reste très légère pour un portfolio.</li>
+</ul>
+
+<h2>11.16 Checklist de mise en production</h2>
+<ul class="checklist">
+  <li>Build local vert (<code>npm run build</code>).</li>
+  <li>Tests verts (<code>npm test</code>).</li>
+  <li>Dépôt GitHub à jour, sans secret.</li>
+  <li>Base Turso créée, URL et jeton récupérés.</li>
+  <li><code>npm run db:init</code> exécuté sur Turso.</li>
+  <li>Projet Vercel importé.</li>
+  <li>Toutes les variables Production ajoutées.</li>
+  <li>Déploiement réussi.</li>
+  <li>Page d’accueil, admin, formulaire, visites et assistant testés.</li>
+  <li>Domaine ajouté et <code>NEXT_PUBLIC_SITE_URL</code> mis à jour.</li>
+  <li>Redéploiement après changement d’URL.</li>
+  <li>Sitemap, robots, canonical et Open Graph vérifiés.</li>
+  <li>Message de test supprimé, visites de test nettoyées si besoin.</li>
+</ul>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guide du portfolio — Zo Mahefa RANAIVO</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 17mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    background: #ffffff;
+    color: #171812;
+    font-family: "DejaVu Sans", "Segoe UI", Arial, sans-serif;
+    font-size: 9.8pt;
+    line-height: 1.55;
+  }
+  p { margin: 0 0 8px; }
+  ul, ol { margin: 4px 0 10px 18px; padding: 0; }
+  li { margin: 3px 0; }
+  strong { color: #10110d; }
+  a { color: #1b5e4a; text-decoration: none; }
+  code, .mono, kbd {
+    font-family: "DejaVu Sans Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 0.88em;
+  }
+  code { background: #f1efe7; border: 1px solid #e2ded1; border-radius: 3px; padding: 1px 4px; }
+  pre {
+    margin: 8px 0 12px;
+    padding: 10px 12px;
+    background: #14150f;
+    color: #ece8dc;
+    border-radius: 5px;
+    font-family: "DejaVu Sans Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 8.1pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+    page-break-inside: avoid;
+  }
+  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: inherit; }
+  .tree { font-size: 7.8pt; line-height: 1.42; }
+  h1, h2, h3, h4 { color: #10110d; page-break-after: avoid; }
+  h1.chapter {
+    font-size: 26pt;
+    line-height: 1.06;
+    letter-spacing: -0.6pt;
+    margin: 0 0 6mm;
+    padding-top: 2mm;
+    border-top: 2.4pt solid #1b5e4a;
+    page-break-before: always;
+  }
+  h1.chapter .num {
+    display: block;
+    color: #1b5e4a;
+    font-size: 9.5pt;
+    letter-spacing: 2.2pt;
+    text-transform: uppercase;
+    margin-bottom: 4mm;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 14pt;
+    line-height: 1.2;
+    margin: 8mm 0 3mm;
+    padding-left: 3mm;
+    border-left: 3pt solid #1b5e4a;
+  }
+  h3 { font-size: 11pt; margin: 5mm 0 2mm; }
+  h4 { font-size: 9.8pt; margin: 4mm 0 1.5mm; }
+  .lead { font-size: 11pt; line-height: 1.55; color: #3d4037; margin-bottom: 6mm; }
+  .muted { color: #64675c; }
+  .small { font-size: 8.4pt; }
+  .tag {
+    display: inline-block;
+    font-size: 7.6pt;
+    letter-spacing: 0.8pt;
+    text-transform: uppercase;
+    border: 1px solid #c9c4b5;
+    padding: 2px 7px;
+    margin: 0 4px 4px 0;
+    border-radius: 20px;
+    color: #4d5046;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0 12px;
+    font-size: 8.6pt;
+    line-height: 1.4;
+  }
+  th {
+    background: #ece9df;
+    text-align: left;
+    font-weight: 700;
+    color: #10110d;
+    border: 1px solid #d3cdc0;
+    padding: 5px 6px;
+    vertical-align: top;
+  }
+  td {
+    border: 1px solid #d9d4c6;
+    padding: 5px 6px;
+    vertical-align: top;
+  }
+  tr { page-break-inside: avoid; }
+  .compact td, .compact th { padding: 3px 5px; font-size: 8.2pt; }
+  .callout {
+    border: 1px solid #d6d1c2;
+    border-left: 3.5pt solid #1b5e4a;
+    background: #f7f5ee;
+    padding: 9px 12px;
+    margin: 8px 0 12px;
+    page-break-inside: avoid;
+  }
+  .callout.warn { border-left-color: #a35a12; background: #fdf6ea; }
+  .callout.danger { border-left-color: #a12b20; background: #fdf0ee; }
+  .callout.tip { border-left-color: #2e5f8a; background: #f0f5fa; }
+  .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+  .callout-label {
+    display: block;
+    font-size: 7.6pt;
+    letter-spacing: 1.3pt;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 3px;
+    color: #1b5e4a;
+  }
+  .callout.warn .callout-label { color: #8a4b12; }
+  .callout.danger .callout-label { color: #8d2018; }
+  .callout.tip .callout-label { color: #2e5f8a; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+  .card {
+    border: 1px solid #d9d4c6;
+    background: #fbfaf5;
+    padding: 4mm;
+    page-break-inside: avoid;
+  }
+  .card h4 { margin-top: 0; }
+  .kpi { font-size: 18pt; line-height: 1; color: #1b5e4a; font-weight: 700; margin-bottom: 2mm; }
+  .cols { column-count: 2; column-gap: 8mm; }
+  .cols p, .cols li { break-inside: avoid; }
+  .toc { margin-top: 4mm; }
+  .toc a { color: #171812; }
+  .toc-row {
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    padding: 2.1mm 0;
+    border-bottom: 1px dotted #c9c4b5;
+    font-size: 9.6pt;
+  }
+  .toc-row .n { width: 9mm; color: #1b5e4a; font-weight: 700; font-size: 8.6pt; }
+  .toc-row .t { flex: 1; }
+  .toc-row .d { color: #6f6c62; font-size: 8.2pt; text-align: right; }
+  .chapter-intro {
+    display: block;
+    border-bottom: 1px solid #d9d4c6;
+    padding-bottom: 4mm;
+    margin-bottom: 6mm;
+  }
+  .chapter-intro strong { color: #1b5e4a; }
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 2mm;
+    margin: 5mm 0 7mm;
+    font-size: 7.8pt;
+  }
+  .flow-node {
+    flex: 1;
+    border: 1px solid #cfc9ba;
+    background: #fbfaf5;
+    padding: 3mm 2.5mm;
+    text-align: center;
+    border-radius: 3px;
+  }
+  .flow-node b { display: block; font-size: 8.6pt; margin-bottom: 1mm; }
+  .flow-arrow { align-self: center; color: #1b5e4a; font-size: 13pt; font-weight: 700; }
+  .cover {
+    min-height: 250mm;
+    background: #12130e;
+    color: #f3f0e8;
+    padding: 20mm 17mm 15mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+  }
+  .cover .brandline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 8pt;
+    letter-spacing: 1.6pt;
+    text-transform: uppercase;
+    color: #b9b5a6;
+  }
+  .cover .mark {
+    font-family: "DejaVu Serif", Georgia, serif;
+    font-size: 25pt;
+    line-height: 1;
+    color: #f3f0e8;
+    letter-spacing: -1pt;
+  }
+  .cover .mark span { color: #7fbfa4; }
+  .cover h1 {
+    font-family: "DejaVu Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 42pt;
+    line-height: 0.98;
+    letter-spacing: -1.4pt;
+    margin: 14mm 0 6mm;
+    color: #f6f2e8;
+  }
+  .cover h1 em { color: #9fd0b9; font-style: italic; }
+  .cover .sub {
+    font-size: 12.5pt;
+    line-height: 1.45;
+    color: #c9c5b7;
+    max-width: 130mm;
+  }
+  .cover .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm 8mm;
+    border-top: 1px solid #3a3c31;
+    padding-top: 5mm;
+    font-size: 8.4pt;
+    color: #b9b5a6;
+  }
+  .cover .meta b { display: block; color: #f3f0e8; font-size: 9.6pt; margin-top: 1mm; }
+  .cover .pill {
+    display: inline-block;
+    border: 1px solid #4a4c40;
+    color: #b9d8c8;
+    font-size: 7.6pt;
+    letter-spacing: 1.5pt;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 5mm;
+  }
+  .cover .foot {
+    font-size: 8pt;
+    color: #8d8f82;
+    line-height: 1.5;
+  }
+  .page-break { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  .checklist { list-style: none; margin-left: 0; }
+  .checklist li { padding-left: 6mm; position: relative; }
+  .checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    color: #1b5e4a;
+    font-family: "DejaVu Sans", sans-serif;
+  }
+  .kbd {
+    display: inline-block;
+    border: 1px solid #c9c4b5;
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    background: #fbfaf5;
+    padding: 0 4px;
+    font-size: 8pt;
+  }
+  .path {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 8.4pt;
+    background: #f1efe7;
+    border: 1px solid #e2ded1;
+    padding: 1px 4px;
+    border-radius: 3px;
+    word-break: break-all;
+  }
+  .toc-note { font-size: 8.4pt; color: #6f6c62; margin-top: 5mm; }
+  .quote {
+    font-family: "DejaVu Serif", Georgia, serif;
+    font-size: 13pt;
+    line-height: 1.4;
+    color: #23251d;
+    border-top: 1px solid #d9d4c6;
+    border-bottom: 1px solid #d9d4c6;
+    padding: 6mm 0;
+    margin: 7mm 0;
+  }
+  .copybox {
+    border: 1px solid #cfc9ba;
+    background: #fbfaf5;
+    padding: 6mm;
+    margin: 4mm 0 8mm;
+    page-break-inside: avoid;
+  }
+  .copybox p { font-size: 9.4pt; line-height: 1.6; }
+  .footer-note {
+    margin-top: 10mm;
+    border-top: 1px solid #d9d4c6;
+    padding-top: 3mm;
+    font-size: 8pt;
+    color: #6f6c62;
+  }
+  @media print {
+    .avoid-print-break { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= COUVERTURE ================= -->
+<section class="cover">
+  <div>
+    <div class="brandline">
+      <div class="mark">ZM<span>.</span></div>
+      <div>Documentation technique<br />Édition 2026 · v1.0</div>
+    </div>
+
+    <div style="margin-top: 30mm;">
+      <span class="pill">Guide de maintenance &amp; de déploiement</span>
+      <h1>Le portfolio,<br />expliqué <em>de A à Z.</em></h1>
+      <p class="sub">
+        Architecture, rôle de chaque fichier, mise à jour des contenus,
+        ajout de projets, administration, assistant IA et déploiement
+        complet sur <strong style="color:#f3f0e8;">Vercel + Turso</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <div class="meta">
+      <div>Projet<b>Portfolio — Zo Mahefa RANAIVO</b></div>
+      <div>Site public<b>zo-mahefa-it.vercel.app</b></div>
+      <div>Stack<b>Next.js 16 · React 19 · Tailwind v4 · libSQL</b></div>
+      <div>Usage<b>Maintenance, évolution, déploiement</b></div>
+    </div>
+    <p class="foot" style="margin-top:6mm;">
+      Document interne. Aucun mot de passe, jeton Turso ou clé API réel n’est
+      reproduit dans ce PDF : les secrets restent dans <code>.env.local</code>
+      et dans les variables d’environnement Vercel.
+    </p>
+  </div>
+</section>
+
+<!-- ================= MODE D'EMPLOI + SOMMAIRE ================= -->
+<section>
+  <p class="tag">Mode d’emploi</p>
+  <h1 style="font-family:'DejaVu Serif',Georgia,serif; font-size:30pt; font-weight:400; line-height:1.05; margin:2mm 0 5mm; letter-spacing:-0.8pt;">
+    Ce guide est fait pour être ouvert<br />au moment où vous en avez besoin.
+  </h1>
+  <p class="lead">
+    Vous n’avez pas besoin de lire 40 pages avant de modifier une phrase.
+    Le tableau ci-dessous vous envoie directement au bon fichier et à la bonne
+    recette. Les chapitres 1 à 4 expliquent le fonctionnement général ;
+    les chapitres 5 à 8 sont des recettes de modification ; le chapitre 11
+    est la procédure de déploiement pas à pas.
+  </p>
+
+  <table class="compact">
+    <thead>
+      <tr><th style="width:38%;">Ce que vous voulez faire</th><th style="width:34%;">Fichier à ouvrir</th><th>Chapitre</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Changer nom, e-mail, téléphone, LinkedIn, GitHub, CV</td><td><code>src/lib/content.ts</code> → <code>site</code></td><td>5.1</td></tr>
+      <tr><td>Changer les textes du hero, les statistiques</td><td><code>content.ts</code> → <code>hero</code> (FR et EN)</td><td>5.2</td></tr>
+      <tr><td>Changer les titres de sections</td><td><code>content.ts</code> → <code>sections</code></td><td>5.3</td></tr>
+      <tr><td>Modifier un projet vedette</td><td><code>content.ts</code> → <code>featuredProjects</code></td><td>5.4 / 6</td></tr>
+      <tr><td>Ajouter un projet vedette</td><td><code>content.ts</code> + <code>public/projects/</code></td><td>6.1</td></tr>
+      <tr><td>Ajouter un projet d’archive</td><td><code>content.ts</code> → <code>archive.projects</code></td><td>6.2</td></tr>
+      <tr><td>Modifier stack, QA, méthode, pipeline</td><td><code>content.ts</code> → <code>stack</code>, <code>qa</code>, <code>process</code>, <code>pipeline</code></td><td>5.6 / 5.7</td></tr>
+      <tr><td>Modifier parcours, formation, certifications</td><td><code>content.ts</code> → <code>about</code></td><td>5.8</td></tr>
+      <tr><td>Modifier les témoignages</td><td><code>content.ts</code> → <code>testimonials</code></td><td>5.9</td></tr>
+      <tr><td>Modifier le formulaire de contact</td><td><code>content.ts</code> → <code>contact</code></td><td>5.10</td></tr>
+      <tr><td>Modifier le bandeau de technologies qui défile</td><td><code>src/components/site/stack-marquee.tsx</code></td><td>5.6</td></tr>
+      <tr><td>Modifier les métadonnées SEO / Open Graph</td><td><code>src/app/layout.tsx</code>, <code>public/og-image.png</code></td><td>5.14</td></tr>
+      <tr><td>Changer le CV ou la photo</td><td><code>public/</code> + <code>site.cv</code></td><td>5.13</td></tr>
+      <tr><td>Changer le texte de l’assistant IA</td><td><code>content.ts</code> → <code>ai</code>, <code>src/lib/assistant-prompt.ts</code></td><td>8.4</td></tr>
+      <tr><td>Déployer sur Vercel + Turso</td><td>Procédure complète</td><td>11</td></tr>
+      <tr><td>Publier sur LinkedIn</td><td>Texte prêt à copier</td><td>12</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <span class="callout-label">Règle d’or</span>
+    <p>
+      Tout le contenu éditorial vit dans <code>src/lib/content.ts</code>, en deux
+      exemplaires : <code>fr</code> et <code>en</code>. Si vous modifiez une
+      phrase d’un côté, modifiez la même clé de l’autre côté. Le test
+      <code>src/lib/content.test.ts</code> vérifie que les deux langues ont
+      exactement la même structure et aucun texte vide.
+    </p>
+  </div>
+
+  <h2 style="margin-top:7mm;">Sommaire</h2>
+  <div class="toc">
+    <a href="#ch1"><div class="toc-row"><span class="n">01</span><span class="t">Comprendre le portfolio</span><span class="d">Architecture &amp; principes</span></div></a>
+    <a href="#ch2"><div class="toc-row"><span class="n">02</span><span class="t">Arborescence commentée</span><span class="d">Où vit chaque chose</span></div></a>
+    <a href="#ch3"><div class="toc-row"><span class="n">03</span><span class="t">Chaque fichier, son rôle</span><span class="d">Référence complète</span></div></a>
+    <a href="#ch4"><div class="toc-row"><span class="n">04</span><span class="t">Flux de fonctionnement</span><span class="d">Rendu, i18n, formulaires, IA</span></div></a>
+    <a href="#ch5"><div class="toc-row"><span class="n">05</span><span class="t">Modifier les contenus</span><span class="d">Recettes concrètes</span></div></a>
+    <a href="#ch6"><div class="toc-row"><span class="n">06</span><span class="t">Ajouter un projet</span><span class="d">Vedette &amp; archive</span></div></a>
+    <a href="#ch7"><div class="toc-row"><span class="n">07</span><span class="t">Admin, base de données, sécurité</span><span class="d">Messages &amp; audience</span></div></a>
+    <a href="#ch8"><div class="toc-row"><span class="n">08</span><span class="t">Assistant IA</span><span class="d">Groq / Gemini</span></div></a>
+    <a href="#ch9"><div class="toc-row"><span class="n">09</span><span class="t">Qualité, tests &amp; sécurité</span><span class="d">Vérifier avant de livrer</span></div></a>
+    <a href="#ch10"><div class="toc-row"><span class="n">10</span><span class="t">Développement local</span><span class="d">Installation &amp; commandes</span></div></a>
+    <a href="#ch11"><div class="toc-row"><span class="n">11</span><span class="t">Déploiement Vercel + Turso</span><span class="d">Guide pas à pas</span></div></a>
+    <a href="#ch12"><div class="toc-row"><span class="n">12</span><span class="t">Publication LinkedIn</span><span class="d">Texte prêt à copier</span></div></a>
+    <a href="#ch13"><div class="toc-row"><span class="n">13</span><span class="t">Annexes</span><span class="d">Checklists &amp; commandes</span></div></a>
+  </div>
+
+  <p class="toc-note">
+    Conventions : les chemins sont relatifs à la racine du projet. Les blocs
+    sur fond sombre sont des commandes ou des extraits de code. Les encadrés
+    orange signalent un piège ; les encadrés bleus, une astuce.
+  </p>
+</section>

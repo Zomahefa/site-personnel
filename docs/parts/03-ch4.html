@@ -1,0 +1,160 @@
+<!-- ================= CHAPITRE 4 ================= -->
+<h1 class="chapter" id="ch4"><span class="num">Chapitre 04</span>Flux de fonctionnement</h1>
+
+<p class="lead">
+  Comprendre un flux évite de modifier le mauvais fichier. Voici les sept
+  parcours qui font vivre le portfolio, de l’affichage d’une page à la
+  réponse de l’assistant.
+</p>
+
+<h2>4.1 Affichage d’une page</h2>
+<div class="flow">
+  <div class="flow-node"><b>1. Requête</b><code>GET /</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>2. Layout</b><code>layout.tsx</code><br />SEO + providers</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>3. Page</b><code>page.tsx</code><br />ordre des sections</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>4. Composants</b><code>useI18n()</code><br /><code>c.hero</code>, <code>c.projects</code>…</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>5. HTML</b>Hydratation<br />interactions</div>
+</div>
+<p>
+  Le serveur rend le HTML avec le contenu français par défaut. Au chargement,
+  <code>LanguageProvider</code> lit <code>zm_locale</code> dans
+  <code>localStorage</code> : si le visiteur avait choisi l’anglais, React
+  remplace les textes sans rechargement. Le HTML initial reste en français,
+  ce qui est cohérent avec <code>lang="fr"</code> et le référencement.
+</p>
+
+<h2>4.2 Le changement de langue</h2>
+<ol>
+  <li>Le visiteur clique sur <code>LanguageToggle</code>.</li>
+  <li><code>toggleLocale()</code> bascule <code>fr</code> ↔ <code>en</code> dans le contexte.</li>
+  <li><code>useMemo</code> recalcule <code>c = getContent(locale)</code>.</li>
+  <li>Tous les composants abonnés à <code>useI18n()</code> se re-rendent avec les nouveaux textes.</li>
+  <li>Un effet met à jour <code>document.documentElement.lang</code> et écrit <code>zm_locale</code>.</li>
+</ol>
+<div class="callout warn">
+  <span class="callout-label">Conséquence pour le SEO</span>
+  <p>
+    Le site n’a pas deux URLs (<code>/fr</code> et <code>/en</code>) ni de
+    balises <code>hreflang</code>. Le contenu anglais est une bascule
+    cliente. Les moteurs indexent donc principalement la version française.
+    C’est un choix assumé : une seule page, un seul canonical, pas de contenu
+    dupliqué. Si vous voulez un vrai SEO bilingue plus tard, il faudra créer
+    des routes <code>/en</code> et des métadonnées dédiées — ce n’est pas le
+    fonctionnement actuel.
+  </p>
+</div>
+
+<h2>4.3 Le thème clair/sombre</h2>
+<ol>
+  <li>Un script inline dans <code>layout.tsx</code> lit <code>theme</code> dans <code>localStorage</code> avant le rendu et ajoute la classe <code>light</code> ou <code>dark</code> sur <code>&lt;html&gt;</code>.</li>
+  <li><code>ThemeProvider</code> (next-themes) prend le relais : thème clair par défaut, pas de suivi du système.</li>
+  <li><code>ThemeToggle</code> change la classe et persiste le choix.</li>
+  <li><code>globals.css</code> définit les variables de couleurs pour <code>:root</code> et <code>.dark</code>.</li>
+</ol>
+
+<h2>4.4 Le formulaire de contact</h2>
+<div class="flow">
+  <div class="flow-node"><b>Saisie</b>Nom, e-mail,<br />téléphone, type</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Validation client</b>Champs requis<br />regex e-mail<br />consentement</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>POST</b><code>/api/messages</code><br />rate limit 5/10 min</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Base</b><code>messages</code><br />Turso / SQLite</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Admin</b><code>/admin</code><br />lecture + suppression</div>
+</div>
+<ul>
+  <li>Le champ <code>website</code> est un <strong>honeypot</strong> : s’il est rempli, le formulaire simule un succès sans envoyer.</li>
+  <li>Le consentement est obligatoire côté client.</li>
+  <li>Le type de besoin est choisi dans <code>contact.types</code> et préfixé au message.</li>
+  <li>En cas d’échec réseau ou base, le formulaire affiche un lien <code>mailto:</code> prérempli : le message n’est pas perdu silencieusement.</li>
+</ul>
+
+<h2>4.5 Le suivi d’audience</h2>
+<ol>
+  <li><code>VisitTracker</code> s’exécute à chaque changement de <code>pathname</code>.</li>
+  <li>Il ignore <code>/admin</code>.</li>
+  <li>Il fabrique ou récupère un identifiant visiteur dans <code>localStorage</code> (<code>zm_visitor_id</code>).</li>
+  <li>Il envoie <code>{ path, referrer, visitorId }</code> à <code>/api/visits</code> avec <code>keepalive</code>.</li>
+  <li>La route ignore les robots, déduit l’appareil et le pays, puis insère dans <code>page_views</code>.</li>
+  <li><code>/admin</code> appelle <code>GET /api/visits</code> pour obtenir les agrégats.</li>
+</ol>
+<div class="callout tip">
+  <span class="callout-label">Vie privée</span>
+  <p>
+    Aucun cookie publicitaire n’est posé. L’identifiant visiteur est un UUID
+    stocké localement, utilisé uniquement pour compter les visiteurs uniques.
+    Les robots sont filtrés et l’admin n’est pas mesuré. Si vous ajoutez un
+    bandeau de consentement, faites-le avant le tracking.
+  </p>
+</div>
+
+<h2>4.6 L’administration</h2>
+<div class="flow">
+  <div class="flow-node"><b>Connexion</b>Mot de passe<br />POST login</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Vérification</b>Comparaison<br />temps constant</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Cookie</b><code>zm_admin_session</code><br />HMAC · 8 h</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Chargement</b>GET messages<br />GET visites</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Actions</b>Rechercher<br />Supprimer · Déconnexion</div>
+</div>
+<p>
+  Le cookie est <code>HttpOnly</code>, <code>SameSite=Strict</code>, et
+  <code>Secure</code> en production. Il contient une date d’expiration et une
+  signature HMAC-SHA256 calculée avec <code>ADMIN_PASSWORD</code> comme
+  secret. Changer le mot de passe invalide donc toutes les sessions en cours.
+  Le serveur accepte aussi, pour compatibilité, l’ancien en-tête
+  <code>Authorization: Bearer &lt;mot_de_passe&gt;</code>.
+</p>
+<p>
+  L’écran admin ne stocke pas de jeton dans <code>localStorage</code> : il
+  s’appuie uniquement sur le cookie. Au premier chargement, il appelle
+  <code>/api/admin/session</code>. Si la réponse est 401, l’écran de
+  connexion reste affiché. Si une requête ultérieure renvoie 401, la session
+  est considérée expirée.
+</p>
+
+<h2>4.7 L’assistant IA</h2>
+<div class="flow">
+  <div class="flow-node"><b>Question</b>Widget<br />jusqu’à 8 messages</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Route</b><code>/api/assistant</code><br />rate limit 25/10 min</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Prompt</b><code>assistant-prompt.ts</code><br />contenu public</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Fournisseur</b>Groq<br />ou Gemini</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Réponse</b>JSON<br /><code>{ reply }</code></div>
+</div>
+<p>
+  Le modèle ne reçoit que des informations publiques : nom, rôles,
+  localisation, disponibilité, projets, expertise, QA, expériences, formation,
+  certifications, témoignages et stack. Il ne voit ni les messages, ni les
+  visites, ni les variables d’environnement, ni le mot de passe admin.
+</p>
+
+<h2>4.8 Le SEO et le partage social</h2>
+<ol>
+  <li><code>siteUrl</code> est calculé depuis <code>NEXT_PUBLIC_SITE_URL</code> (sans slash final) ou vaut le domaine par défaut.</li>
+  <li><code>layout.tsx</code> utilise cette URL pour <code>metadataBase</code>, le canonical, l’Open Graph, Twitter et le JSON-LD.</li>
+  <li><code>sitemap.ts</code> et <code>robots.ts</code> utilisent la même valeur.</li>
+  <li><code>public/og-image.png</code> (1200×630) est l’image de partage.</li>
+  <li>Les pages <code>/projets</code>, <code>/contact</code>, <code>/competences</code> sont en <code>noindex</code> et redirigent vers les ancres.</li>
+</ol>
+<div class="callout warn">
+  <span class="callout-label">Si vous changez de domaine</span>
+  <p>
+    Modifiez <code>NEXT_PUBLIC_SITE_URL</code> dans Vercel, puis
+    <strong>redéployez</strong>. Les métadonnées sont générées au build :
+    sans redéploiement, le canonical, le sitemap et le JSON-LD continueront
+    de pointer vers l’ancien domaine.
+  </p>
+</div>

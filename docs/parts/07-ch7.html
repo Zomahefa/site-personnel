@@ -1,0 +1,224 @@
+<!-- ================= CHAPITRE 7 ================= -->
+<h1 class="chapter" id="ch7"><span class="num">Chapitre 07</span>Admin, base de données et sécurité</h1>
+
+<p class="lead">
+  Le portfolio n’a pas de CMS. La base de données sert uniquement à recevoir
+  les messages du formulaire et à compter les visites. L’administration est
+  une page privée qui lit ces deux tables. Ce chapitre explique le schéma,
+  les règles d’accès et les opérations courantes.
+</p>
+
+<h2>7.1 Les deux tables</h2>
+<h3><code>messages</code></h3>
+<table>
+  <thead><tr><th style="width:20%;">Colonne</th><th style="width:16%;">Type</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>UUID généré par <code>crypto.randomUUID()</code>.</td></tr>
+    <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>Nom du visiteur (max 120 caractères côté API).</td></tr>
+    <tr><td><code>email</code></td><td>TEXT NOT NULL</td><td>E-mail validé par regex (max 180).</td></tr>
+    <tr><td><code>phone</code></td><td>TEXT NOT NULL</td><td>Téléphone optionnel (max 30), chaîne vide si absent.</td></tr>
+    <tr><td><code>message</code></td><td>TEXT NOT NULL</td><td>Message (max 5 000), avec le type de besoin préfixé si fourni.</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT NOT NULL</td><td>Date ISO 8601, tri décroissant dans l’admin.</td></tr>
+  </tbody>
+</table>
+
+<h3><code>page_views</code></h3>
+<table>
+  <thead><tr><th style="width:20%;">Colonne</th><th style="width:16%;">Type</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>UUID de la vue.</td></tr>
+    <tr><td><code>path</code></td><td>TEXT NOT NULL</td><td>Chemin visité, commence par <code>/</code>, max 200.</td></tr>
+    <tr><td><code>referrer</code></td><td>TEXT DEFAULT ''</td><td>Page d’origine, max 300.</td></tr>
+    <tr><td><code>country</code></td><td>TEXT DEFAULT ''</td><td>Code pays à deux lettres fourni par Vercel/Cloudflare.</td></tr>
+    <tr><td><code>device</code></td><td>TEXT DEFAULT ''</td><td><code>Desktop</code>, <code>Mobile</code> ou <code>Tablet</code>.</td></tr>
+    <tr><td><code>visitor_id</code></td><td>TEXT DEFAULT ''</td><td>UUID local du navigateur, pour les visiteurs uniques.</td></tr>
+    <tr><td><code>created_at</code></td><td>TEXT NOT NULL</td><td>Date ISO 8601.</td></tr>
+  </tbody>
+</table>
+
+<p>Trois index sont créés :</p>
+<pre>idx_messages_created_at      ON messages(created_at)
+idx_page_views_created_at    ON page_views(created_at)
+idx_page_views_visitor       ON page_views(visitor_id)</pre>
+
+<h2>7.2 Turso ou SQLite local ?</h2>
+<p>
+  <code>src/lib/db.ts</code> choisit automatiquement :
+</p>
+<pre>const isTurso = !!process.env.TURSO_DB_URL;
+
+// Si TURSO_DB_URL est défini :
+createClient({ url: TURSO_DB_URL, authToken: TURSO_DB_TOKEN })
+
+// Sinon :
+createClient({ url: "file:data/portfolio.db" })</pre>
+<ul>
+  <li><strong>En local</strong>, sans variables Turso : un fichier <code>data/portfolio.db</code> est créé. Il est ignoré par Git.</li>
+  <li><strong>En production</strong>, avec <code>TURSO_DB_URL</code> et <code>TURSO_DB_TOKEN</code> : la base distante est utilisée.</li>
+  <li>Les tables sont créées automatiquement au premier accès grâce à <code>ensureSchema()</code>, mais il est recommandé de lancer <code>npm run db:init</code> pour vérifier les droits et initialiser explicitement.</li>
+</ul>
+
+<div class="callout warn">
+  <span class="callout-label">Ne pas mélanger les environnements</span>
+  <p>
+    Si vous lancez <code>npm run dev</code> avec les variables Turso de
+    production dans <code>.env.local</code>, vous écrirez dans la vraie base
+    pendant vos tests. Utilisez soit le SQLite local, soit une base Turso
+    dédiée au développement.
+  </p>
+</div>
+
+<h2>7.3 Initialiser la base</h2>
+<pre>npm run db:init</pre>
+<p>Le script <code>scripts/init-db.mjs</code> :</p>
+<ol>
+  <li>Charge <code>.env.local</code> via <code>@next/env</code>.</li>
+  <li>Choisit Turso si <code>TURSO_DB_URL</code> existe, sinon <code>data/portfolio.db</code>.</li>
+  <li>Exécute les <code>CREATE TABLE IF NOT EXISTS</code> et les index.</li>
+  <li>Affiche la cible, le nombre de messages, le nombre de vues et les tables.</li>
+</ol>
+<pre>✓ Base initialisée
+  cible        : Turso
+  messages     : 0
+  pages vues   : 0
+  tables       : messages, page_views</pre>
+<p>
+  Le script est idempotent : vous pouvez le relancer sans perdre les données.
+</p>
+
+<h2>7.4 L’administration</h2>
+<p>
+  URL : <code>/admin</code>. La page est en <code>noindex, nofollow</code> et
+  n’est pas listée dans le sitemap. Elle n’est pas liée depuis le site public.
+</p>
+
+<h3>Connexion</h3>
+<ol>
+  <li>Le formulaire envoie le mot de passe à <code>/api/admin/login</code>.</li>
+  <li>La route limite à 6 tentatives par 15 minutes et par IP.</li>
+  <li>Si <code>ADMIN_PASSWORD</code> n’est pas configuré : réponse 503 explicite.</li>
+  <li>La comparaison se fait en temps constant (XOR caractère par caractère).</li>
+  <li>En cas de succès, un cookie <code>zm_admin_session</code> est posé : <code>HttpOnly</code>, <code>SameSite=Strict</code>, <code>Secure</code> en production, durée 8 heures.</li>
+  <li>Le jeton est <code>expiration.signature</code>, signature HMAC-SHA256 avec <code>ADMIN_PASSWORD</code>.</li>
+</ol>
+
+<h3>Onglet Messages</h3>
+<ul>
+  <li>Liste les messages du plus récent au plus ancien.</li>
+  <li>Recherche locale sur le nom, l’e-mail et le message.</li>
+  <li>Affiche les coordonnées, le type de besoin et la date formatée en heure de Fianarantsoa.</li>
+  <li>Suppression unitaire avec confirmation.</li>
+</ul>
+
+<h3>Onglet Audience</h3>
+<table class="compact">
+  <thead><tr><th style="width:32%;">Indicateur</th><th>Définition</th></tr></thead>
+  <tbody>
+    <tr><td>Vues totales</td><td><code>COUNT(*)</code> sur <code>page_views</code>.</td></tr>
+    <tr><td>7 derniers jours</td><td>Vues dont <code>created_at</code> est dans les 7 derniers jours.</td></tr>
+    <tr><td>Aujourd’hui</td><td>Vues dont la date correspond à la date courante.</td></tr>
+    <tr><td>Visiteurs uniques</td><td><code>COUNT(DISTINCT visitor_id)</code>, hors identifiants vides.</td></tr>
+    <tr><td>Activité 14 jours</td><td>Nombre de vues par jour, pour le graphique.</td></tr>
+    <tr><td>Top pages</td><td>5 chemins les plus visités.</td></tr>
+    <tr><td>Top pays</td><td>5 pays les plus fréquents (si disponible).</td></tr>
+    <tr><td>Top appareils</td><td>5 types d’appareils.</td></tr>
+    <tr><td>Visites récentes</td><td>25 dernières vues avec chemin, référent, pays, appareil, date.</td></tr>
+  </tbody>
+</table>
+
+<h2>7.5 Authentification et sécurité</h2>
+<h3>Le mot de passe admin</h3>
+<ul>
+  <li>Variable <code>ADMIN_PASSWORD</code>, jamais dans Git.</li>
+  <li>Minimum recommandé : 12 caractères, majuscules, minuscules, chiffres et symboles.</li>
+  <li><code>isWeakPassword()</code> avertit dans les logs si le mot de passe est faible, mais ne bloque pas le démarrage.</li>
+  <li>Changer le mot de passe invalide toutes les sessions existantes (la signature change).</li>
+</ul>
+
+<h3>Les limites de débit</h3>
+<table>
+  <thead><tr><th style="width:30%;">Route</th><th style="width:20%;">Limite</th><th>Fenêtre</th></tr></thead>
+  <tbody>
+    <tr><td><code>/api/admin/login</code></td><td>6 tentatives</td><td>15 minutes / IP</td></tr>
+    <tr><td><code>/api/messages</code> (POST)</td><td>5 messages</td><td>10 minutes / IP</td></tr>
+    <tr><td><code>/api/visits</code> (POST)</td><td>60 vues</td><td>10 minutes / IP</td></tr>
+    <tr><td><code>/api/assistant</code> (POST)</td><td>25 questions</td><td>10 minutes / IP</td></tr>
+  </tbody>
+</table>
+<div class="callout">
+  <span class="callout-label">Limite en mémoire</span>
+  <p>
+    Ces compteurs vivent dans une <code>Map</code> en mémoire, par instance
+    serverless. Ils ne sont pas partagés entre toutes les instances Vercel et
+    se réinitialisent à froid. C’est une protection simple contre les abus
+    basiques, pas un pare-feu. Pour une protection forte, utilisez un service
+    de rate limiting distribué (Upstash, Redis, Vercel Firewall…).
+  </p>
+</div>
+
+<h3>En-têtes de sécurité</h3>
+<p>
+  Définis dans <code>next.config.ts</code> et appliqués en production :
+</p>
+<table class="compact">
+  <thead><tr><th style="width:34%;">En-tête</th><th>Valeur / effet</th></tr></thead>
+  <tbody>
+    <tr><td><code>Content-Security-Policy</code></td><td><code>default-src 'self'</code>, scripts et styles inline autorisés, images <code>self data: blob:</code>, <code>object-src 'none'</code>, <code>frame-ancestors 'none'</code>.</td></tr>
+    <tr><td><code>X-Content-Type-Options</code></td><td><code>nosniff</code>.</td></tr>
+    <tr><td><code>X-Frame-Options</code></td><td><code>DENY</code> (pas d’iframe).</td></tr>
+    <tr><td><code>Referrer-Policy</code></td><td><code>strict-origin-when-cross-origin</code>.</td></tr>
+    <tr><td><code>Permissions-Policy</code></td><td>Caméra, micro, géolocalisation et paiement désactivés.</td></tr>
+    <tr><td><code>Strict-Transport-Security</code></td><td>HSTS 2 ans, sous-domaines, preload.</td></tr>
+    <tr><td><code>Cross-Origin-Opener-Policy</code></td><td><code>same-origin</code>.</td></tr>
+  </tbody>
+</table>
+<p class="small muted">
+  En développement, la CSP est retirée pour ne pas gêner le rechargement à
+  chaud de Next.js. Les autres en-têtes restent.
+</p>
+
+<h2>7.6 Opérations courantes</h2>
+<h3>Supprimer les messages de test</h3>
+<p>
+  Le plus simple : connectez-vous à <code>/admin</code> et supprimez-les un par
+  un. Pour repartir de zéro sur la base locale :
+</p>
+<pre>rm -f data/portfolio.db
+npm run db:init</pre>
+<div class="callout danger">
+  <span class="callout-label">Ne faites pas cela en production</span>
+  <p>
+    Ne supprimez jamais <code>data/portfolio.db</code> sur un serveur en
+    production : cela effacerait les messages et les visites. Sur Turso, une
+    suppression est explicite et doit être réfléchie.
+  </p>
+</div>
+
+<h3>Nettoyer les visites de test sur Turso</h3>
+<pre>turso db shell portfolio-zomahefa "DELETE FROM page_views;"</pre>
+<p class="small muted">
+  À utiliser uniquement juste après la mise en ligne, pour repartir d’un
+  compteur propre. Les messages se suppriment depuis l’admin.
+</p>
+
+<h3>Sauvegarder la base</h3>
+<pre>turso db shell portfolio-zomahefa ".dump" &gt; backup-portfolio.sql</pre>
+<p>
+  Conservez ce fichier hors du dépôt Git. Pour restaurer, utilisez
+  <code>turso db shell</code> avec le fichier SQL, ou recréez une base et
+  rejouez les insertions.
+</p>
+
+<h3>Vérifier le contenu d’une table</h3>
+<pre>turso db shell portfolio-zomahefa "SELECT COUNT(*) FROM messages;"
+turso db shell portfolio-zomahefa "SELECT COUNT(*) FROM page_views;"
+turso db shell portfolio-zomahefa "SELECT name FROM sqlite_master WHERE type='table';"</pre>
+
+<h2>7.7 Vie privée et données</h2>
+<ul>
+  <li>Les messages contiennent des données personnelles (nom, e-mail, téléphone). Ne les exportez pas dans un dépôt public.</li>
+  <li>L’admin n’est pas indexé, mais il est accessible à toute personne qui connaît l’URL et le mot de passe.</li>
+  <li>Les visites ne stockent pas l’IP en base : elle sert uniquement au rate limiting en mémoire.</li>
+  <li>Le pays et l’appareil sont des données agrégées, pas des identifiants individuels.</li>
+  <li>Prévoyez une politique de conservation : supprimez les messages traités après un délai raisonnable.</li>
+</ul>

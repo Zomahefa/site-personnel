@@ -1,0 +1,327 @@
+<!-- ================= CHAPITRE 5 ================= -->
+<h1 class="chapter" id="ch5"><span class="num">Chapitre 05</span>Modifier les contenus</h1>
+
+<p class="lead">
+  Toutes les recettes de ce chapitre suivent le même principe : ouvrir
+  <code>src/lib/content.ts</code>, repérer la clé, modifier la version
+  française <strong>et</strong> la version anglaise, puis lancer les tests.
+  Aucune base de données, aucun CMS, aucune interface d’administration pour
+  le contenu éditorial.
+</p>
+
+<div class="callout">
+  <span class="callout-label">Procédure standard</span>
+  <ol style="margin-bottom:0;">
+    <li>Ouvrir <code>src/lib/content.ts</code>.</li>
+    <li>Chercher la clé (ex. <code>featuredProjects:</code>).</li>
+    <li>Modifier le bloc dans <code>const fr</code>, puis le même bloc dans <code>const en</code>.</li>
+    <li>Lancer <code>npm test</code> : il vérifie la parité des structures et l’absence de texte vide.</li>
+    <li>Lancer <code>npm run build</code> pour vérifier TypeScript et la compilation.</li>
+    <li>Commit + push : Vercel redéploie automatiquement.</li>
+  </ol>
+</div>
+
+<h2>5.1 Identité, coordonnées et liens</h2>
+<p>
+  Ces informations sont <strong>neutres</strong> : elles ne sont pas traduites.
+  Elles vivent dans l’objet <code>site</code>, tout en haut de
+  <code>content.ts</code>.
+</p>
+<pre>export const site = {
+  name: "Zo Mahefa RANAIVO",
+  shortName: "Zo Mahefa",
+  initials: "ZM",
+  email: "zomahefaranaivo@gmail.com",
+  phone: "+261 38 54 422 52",
+  phoneHref: "tel:+261385442252",
+  location: "Fianarantsoa, Madagascar",
+  coordinates: "21°27′S 47°05′E",
+  timezone: "Indian/Antananarivo",
+  github: "https://github.com/Zomahefa",
+  linkedin: "https://www.linkedin.com/in/zo-mahefa-ranaivo-338026346/",
+  cv: "/cv-zomahefa-ranaivo-2026-10.pdf",
+  responseTime: "Réponse sous 48 h ouvrées",
+} as const;</pre>
+<table class="compact">
+  <thead><tr><th style="width:24%;">Champ</th><th>Où il apparaît</th></tr></thead>
+  <tbody>
+    <tr><td><code>name</code>, <code>shortName</code>, <code>initials</code></td><td>Header, hero, footer, métadonnées, JSON-LD.</td></tr>
+    <tr><td><code>email</code></td><td>Contact, footer, prompt IA, liens <code>mailto:</code>.</td></tr>
+    <tr><td><code>phone</code>, <code>phoneHref</code></td><td>Contact, footer, témoignages (téléphone séparé), JSON-LD.</td></tr>
+    <tr><td><code>location</code>, <code>coordinates</code>, <code>timezone</code></td><td>Hero, contact, footer, horloge locale, JSON-LD.</td></tr>
+    <tr><td><code>github</code>, <code>linkedin</code></td><td>Contact, footer, projets, JSON-LD <code>sameAs</code>.</td></tr>
+    <tr><td><code>cv</code></td><td>Bouton CV du hero, contact et footer.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="callout-label">Cohérence du téléphone</span>
+  <p>
+    <code>phone</code> est la version affichée ; <code>phoneHref</code> est la
+    version <code>tel:</code> sans espaces. Si vous changez l’un, changez
+    l’autre. Le JSON-LD de <code>layout.tsx</code> contient aussi le numéro en
+    dur (<code>+261385442252</code>) : pensez à le mettre à jour.
+  </p>
+</div>
+
+<h2>5.2 Le hero et les statistiques</h2>
+<p>
+  Le bloc <code>hero</code> existe en français et en anglais. Les champs
+  importants :
+</p>
+<pre>hero: {
+  eyebrowLeft: "PORTFOLIO / ÉDITION 2026",
+  eyebrowCenter: "FIANARANTSOA, MADAGASCAR · UTC+3",
+  eyebrowRight: "DISPONIBLE POUR COLLABORER",
+  kicker: "Ingénieur logiciel",
+  title: {
+    sr: "Zo Mahefa RANAIVO — Développeur web & mobile, ...",
+    line1: "Du premier",
+    line2Em: "commit",
+    line2After: " au",
+    line3Em: "dernier",
+    line3After: " test.",
+  },
+  roleLabel: "RÔLE_",
+  intro: "Je conçois des applications web et mobiles, ...",
+  primaryCta: "Voir mes preuves",
+  secondaryCta: "Parler d'un projet",
+  cvCta: "CV PDF",
+  stats: [
+    { value: 9, pad: 2, label: "projets documentés" },
+    { value: 3, pad: 2, label: "pôles d'expertise" },
+    { value: 8, pad: 2, label: "dépôts publics" },
+    { value: 48, prefix: "&lt;", suffix: "h", label: "délai de réponse" },
+  ],
+}</pre>
+<ul>
+  <li><code>title.line2Em</code> et <code>line3Em</code> sont les mots mis en italique. <code>line2After</code> et <code>line3After</code> sont le texte qui suit.</li>
+  <li><code>title.sr</code> est le titre complet pour les lecteurs d’écran et le SEO. Il doit rester descriptif.</li>
+  <li><code>stats[].value</code> est le nombre cible. <code>pad: 2</code> affiche <code>09</code> au lieu de <code>9</code>.</li>
+  <li><code>prefix</code> et <code>suffix</code> sont optionnels : <code>&lt;</code> + <code>48</code> + <code>h</code> donne <code>&lt;48h</code>.</li>
+  <li><code>roles</code> (au niveau racine de <code>SiteContent</code>) alimente l’animation des rôles sous le titre.</li>
+</ul>
+<div class="callout">
+  <span class="callout-label">Règle de crédibilité</span>
+  <p>
+    Ne mettez dans les statistiques que des chiffres que vous pouvez
+    défendre : nombre de projets réellement documentés, nombre de dépôts
+    publics, nombre de pôles. Évitez les pourcentages inventés.
+  </p>
+</div>
+
+<h2>5.3 Les titres et intros de sections</h2>
+<p>
+  Le bloc <code>sections</code> contient six objets :
+  <code>projects</code>, <code>expertise</code>, <code>method</code>,
+  <code>about</code>, <code>testimonials</code>, <code>contact</code>.
+  Chacun a <code>index</code>, <code>label</code>, <code>title</code> et
+  <code>intro</code>.
+</p>
+<pre>sections: {
+  projects: {
+    index: "01",
+    label: "Travaux sélectionnés",
+    title: "Des preuves, pas des promesses.",
+    intro: "Trois projets, trois problèmes réels. ...",
+  },
+  // ...
+}</pre>
+<p>
+  Les index <code>01</code> à <code>06</code> sont affichés dans les titres.
+  Si vous ajoutez une section, mettez à jour les index, le menu
+  <code>nav</code> et l’ordre dans <code>src/app/page.tsx</code>.
+</p>
+
+<h2>5.4 Modifier un projet vedette</h2>
+<p>
+  Les projets vedettes sont dans <code>featuredProjects</code>. Chaque objet
+  contient les champs suivants :
+</p>
+<table class="compact">
+  <thead><tr><th style="width:20%;">Champ</th><th style="width:10%;">Requis</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>Oui</td><td>Identifiant unique, en kebab-case. Sert de clé React.</td></tr>
+    <tr><td><code>index</code></td><td>Oui</td><td>Numéro affiché (01, 02, 03…).</td></tr>
+    <tr><td><code>title</code>, <code>subtitle</code></td><td>Oui</td><td>Nom du projet et accroche courte.</td></tr>
+    <tr><td><code>year</code>, <code>category</code></td><td>Oui</td><td>Année et catégorie affichées dans les métadonnées.</td></tr>
+    <tr><td><code>summary</code></td><td>Oui</td><td>Résumé en une phrase.</td></tr>
+    <tr><td><code>context</code></td><td>Oui</td><td>Cadre du projet (licence, freelance, stage…).</td></tr>
+    <tr><td><code>problem</code>, <code>role</code>, <code>outcome</code></td><td>Oui</td><td>Les trois blocs de l’étude de cas.</td></tr>
+    <tr><td><code>stack</code></td><td>Oui</td><td>Tableau de technologies affichées en tags.</td></tr>
+    <tr><td><code>visual</code></td><td>Oui</td><td><code>incident</code>, <code>erp</code> ou <code>pipeline</code>.</td></tr>
+    <tr><td><code>gallery</code></td><td>Non</td><td>Captures d’écran. Si présent, remplace le schéma SVG par un carrousel.</td></tr>
+    <tr><td><code>repo</code>, <code>demo</code>, <code>demoLabel</code></td><td>Non</td><td>Liens vers le code et la démo.</td></tr>
+    <tr><td><code>privateCode</code></td><td>Non</td><td>Si <code>true</code>, affiche « Étude de cas sur demande » avec un lien mailto.</td></tr>
+  </tbody>
+</table>
+
+<h3>Exemple réel : Signaleo</h3>
+<pre>{
+  id: "signaleo",
+  index: "01",
+  title: "Signaleo",
+  subtitle: "Signalement de pannes · terrain &amp; supervision",
+  year: "2025",
+  category: "Web app / DevOps",
+  summary: "Un outil unique pour signaler une panne, la localiser et suivre sa résolution en temps réel.",
+  context: "Projet de licence L3, conduit du cadrage jusqu'à la mise en production et à la supervision.",
+  problem: "Les interventions étaient suivies sans vue d'ensemble : statuts dispersés, faible traçabilité...",
+  role: "Conception du parcours de signalement, tableau de bord d'administration, suivi des statuts...",
+  outcome: "Une application déployée et observée, avec un flux de livraison reproductible...",
+  stack: ["React", "Django", "MySQL", "Docker", "GitHub Actions", "Nginx", "Prometheus", "Grafana"],
+  visual: "incident",
+  gallery: [
+    {
+      src: "/projects/signaleo-signalement.png",
+      alt: "Capture de l'écran de signalement d'une panne sur Signaleo",
+      label: "Signalement d'une panne",
+    },
+  ],
+  repo: "https://github.com/Zomahefa/gestion-de-panne-devops",
+  demo: "https://signaleo.onrender.com/",
+  demoLabel: "Consulter la démo",
+}</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Le champ <code>visual</code> est typé</span>
+  <p>
+    <code>ProjectVisualKind</code> n’accepte que <code>"incident"</code>,
+    <code>"erp"</code> ou <code>"pipeline"</code>. Si vous inventez une valeur
+    comme <code>"mobile"</code>, TypeScript refusera le build. Pour un nouveau
+    type, il faut modifier le type dans <code>content.ts</code> <em>et</em>
+    ajouter le rendu correspondant dans
+    <code>src/components/site/project-visual.tsx</code>. Le plus simple reste
+    de fournir une <code>gallery</code> : le carrousel remplace le schéma.
+  </p>
+</div>
+
+<h2>5.5 Modifier l’archive</h2>
+<p>
+  L’archive est le bloc <code>archive</code>. Chaque entrée est volontairement
+  courte :
+</p>
+<pre>archive: {
+  kicker: "ARCHIVE / 06",
+  title: "Autres projets &amp; labs",
+  copy: "Le reste du terrain : desktop, réseau, systèmes et projets académiques...",
+  footerNote: "ZÉRO LIEN MORT — LES PROJETS PRIVÉS SONT SIGNALÉS",
+  allRepos: "Tous mes dépôts publics",
+  projects: [
+    {
+      title: "Gestion de station essence",
+      category: "Desktop · JavaFX",
+      year: "2024",
+      stack: "JavaFX · PostgreSQL",
+      href: "https://github.com/Zomahefa/Gestion-de-station-essence",
+      label: "Code",
+    },
+    {
+      title: "Administration Linux &amp; Windows Server",
+      category: "Systèmes · ENI",
+      year: "2023 — 2024",
+      stack: "Active Directory · Bash · iptables",
+      label: "Lab",
+    },
+  ],
+}</pre>
+<ul>
+  <li>Si <code>href</code> est présent, la ligne est un lien et affiche « Code ».</li>
+  <li>Si <code>href</code> est absent, la ligne est statique et affiche <code>label</code> (« Lab », « Labs »…).</li>
+  <li><code>kicker</code> contient le nombre affiché ; pensez à l’ajuster si vous ajoutez des lignes.</li>
+</ul>
+
+<h2>5.6 Expertise, stack et QA</h2>
+<h3><code>practices</code> — les trois pôles</h3>
+<pre>practices: [
+  {
+    index: "A",
+    title: "Web &amp; mobile",
+    intro: "Des interfaces claires et des API solides...",
+    deliverables: [
+      "Applications métier et tableaux de bord",
+      "API REST sécurisées et modélisation des données",
+      "Interfaces React/Next.js responsive et accessibles",
+      "Applications Flutter/Kotlin selon le besoin",
+    ],
+    code: "UI / API / DATA",
+  },
+  // B = DevOps, C = QA
+]</pre>
+
+<h3><code>stack</code> — les niveaux réels</h3>
+<pre>stack: {
+  kicker: "CORE STACK / NIVEAUX RÉELS",
+  title: "Ce que je peux défendre en entretien.",
+  intro: "Pas de pourcentage inventé...",
+  footnote: "UNE TECHNOLOGIE N'EST PAS UNE COMPÉTENCE...",
+  levels: [
+    { level: "Maîtrisé en production", note: "...", items: ["Java", "Spring Boot", "..."] },
+    { level: "Opérationnel", note: "...", items: ["Kubernetes", "..."] },
+    { level: "Notions", note: "...", items: ["AWS", "..."] },
+  ],
+}</pre>
+
+<h3><code>qa</code> — le bloc qualité</h3>
+<pre>qa: {
+  kicker: "QA / MANUAL &amp; AUTOMATION",
+  title: "La qualité, du scénario au pipeline.",
+  intro: "...",
+  categories: [
+    { title: "Gestion &amp; recette", note: "...", tools: ["Jira", "Xray", "Zephyr", "TestRail"] },
+    { title: "Tests d'API", note: "...", tools: ["Postman", "Bruno", "Insomnia", "cURL"] },
+    // ...
+  ],
+  mindset: ["QA manuel &amp; SDET", "Esprit critique", "..."],
+  footnote: "UN BUG TROUVÉ AVANT LA PRODUCTION COÛTE MOINS CHER...",
+}</pre>
+
+<div class="callout warning">
+  <span class="callout-label">Deux listes de technologies différentes</span>
+  <p>
+    Le bandeau défilant du haut de page est codé en dur dans
+    <code>src/components/site/stack-marquee.tsx</code> (constante
+    <code>stack</code>), et il n’est pas traduit. La liste détaillée par
+    niveaux est dans <code>content.ts</code> → <code>stack.levels</code>.
+    Si vous ajoutez une technologie importante, mettez-la dans les deux
+    endroits pour rester cohérent.
+  </p>
+</div>
+
+<h2>5.7 Méthode et chaîne de livraison</h2>
+<h3><code>process</code></h3>
+<pre>process: {
+  steps: [
+    { number: "01", title: "Cadrer", text: "...", deliverable: "Mini-cahier des charges" },
+    { number: "02", title: "Construire", text: "...", deliverable: "Incréments testés" },
+    { number: "03", title: "Livrer", text: "...", deliverable: "Déploiement reproductible" },
+    { number: "04", title: "Veiller", text: "...", deliverable: "Runbook &amp; documentation" },
+  ],
+  engagements: ["Premier échange de 30 min", "Devis sous 5 jours ouvrés", "Code et documentation remis", "Réponse sous 48 h ouvrées"],
+  engagementsKicker: "ENGAGEMENTS / SIMPLES",
+  engagementsTitle: "Des règles lisibles avant même de commencer.",
+  cta: "Cadrer un besoin",
+}</pre>
+
+<h3><code>pipeline</code></h3>
+<pre>pipeline: {
+  label: "Chaîne de livraison",
+  title: "Du commit au monitoring.",
+  intro: "...",
+  principleLabel: "Principe :",
+  principle: "un déploiement doit pouvoir être rejoué, observé et annulé...",
+  deliverablesLabel: "LIVRABLES / RUNBOOK",
+  deliverables: "Pipeline, procédure de rollback et documentation de supervision...",
+  cta: "Cadrer un projet",
+  footerLeft: "FLUX REJOUABLE · TESTS · LOGS · MÉTRIQUES",
+  footerRight: "DOCKER / GH ACTIONS / PROMETHEUS / VERCEL",
+  steps: [
+    { number: "01", title: "Commit", label: "Git push", text: "..." },
+    // 02 Test, 03 Build, 04 Ship, 05 Observe
+  ],
+}</pre>
+<p>
+  La section pipeline n’a pas d’entrée dans le menu principal : elle vit entre
+  « Méthode » et « Parcours », avec l’ancre <code>#livraison</code>. Si vous
+  voulez l’ajouter au menu, ajoutez une entrée dans <code>nav</code> avec
+  <code>id: "livraison"</code>.
+</p>

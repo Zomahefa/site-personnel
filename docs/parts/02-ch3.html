@@ -1,0 +1,216 @@
+<!-- ================= CHAPITRE 3 ================= -->
+<h1 class="chapter" id="ch3"><span class="num">Chapitre 03</span>Chaque fichier, son rôle</h1>
+
+<p class="lead">
+  Ce chapitre est la référence à garder ouverte. Pour chaque fichier, il
+  indique <strong>ce qu’il fait</strong> et <strong>quand le modifier</strong>.
+  Les fichiers critiques — <code>content.ts</code>, <code>layout.tsx</code>,
+  <code>db.ts</code>, <code>auth.ts</code> — ont une fiche plus détaillée.
+</p>
+
+<h2>3.1 Racine du projet et configuration</h2>
+<table>
+  <thead><tr><th style="width:23%;">Fichier</th><th style="width:42%;">Rôle</th><th>Quand le modifier</th></tr></thead>
+  <tbody>
+    <tr><td><code>package.json</code></td><td>Nom, scripts (<code>dev</code>, <code>build</code>, <code>start</code>, <code>lint</code>, <code>test</code>, <code>db:init</code>), dépendances et versions.</td><td>Ajouter une librairie, un script, changer une version.</td></tr>
+    <tr><td><code>package-lock.json</code></td><td>Verrou exact des dépendances installées.</td><td>Jamais à la main : généré par <code>npm install</code>.</td></tr>
+    <tr><td><code>next.config.ts</code></td><td>En-têtes de sécurité (CSP, HSTS, X-Frame-Options…), optimisation des images, compression.</td><td>Ajouter un domaine d’image ou ajuster une politique de sécurité.</td></tr>
+    <tr><td><code>tsconfig.json</code></td><td>TypeScript strict, alias <code>@/</code> vers <code>src/</code>.</td><td>Rarement. Pour ajouter un alias ou changer la cible.</td></tr>
+    <tr><td><code>postcss.config.mjs</code></td><td>Branche Tailwind v4 sur PostCSS.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>eslint.config.mjs</code></td><td>Règles ESLint Next.js (core-web-vitals + TypeScript).</td><td>Ajouter une règle ou ignorer un dossier.</td></tr>
+    <tr><td><code>vitest.config.ts</code></td><td>Environnement de test <code>jsdom</code>, alias <code>@</code>, setup.</td><td>Ajouter un setup ou changer l’environnement.</td></tr>
+    <tr><td><code>.env.example</code></td><td>Modèle documenté des variables d’environnement, versionné.</td><td>À chaque nouvelle variable. Ne jamais y mettre de valeur réelle.</td></tr>
+    <tr><td><code>.env.local</code></td><td>Vos secrets locaux (admin, Turso, IA).</td><td>En local uniquement. Ignoré par Git.</td></tr>
+    <tr><td><code>.gitignore</code></td><td>Exclut <code>.env*</code> (sauf <code>.env.example</code>), <code>/data</code>, <code>.next</code>, <code>node_modules</code>…</td><td>Ajouter un dossier généré ou secret.</td></tr>
+    <tr><td><code>README.md</code></td><td>Résumé du projet, stack, commandes, variables, admin, IA, sécurité.</td><td>Changer une procédure ou une variable.</td></tr>
+    <tr><td><code>Dockerfile</code></td><td>Image Node 20 Alpine, build Next.js, démarrage <code>npm run start</code>.</td><td>Déploiement Docker auto-hébergé (optionnel).</td></tr>
+    <tr><td><code>run.sh</code></td><td>Script de lancement Docker local avec <code>.env.local</code> et volume <code>data/</code>.</td><td>Déploiement Docker local (optionnel).</td></tr>
+    <tr><td><code>.dockerignore</code></td><td>Exclut les fichiers inutiles de l’image Docker.</td><td>Ajouter un gros dossier à exclure.</td></tr>
+    <tr><td><code>components.json</code></td><td>Configuration shadcn/ui (alias, style).</td><td>Ajout de composants shadcn.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.2 Le cœur : <code>src/lib/content.ts</code></h2>
+<p>
+  C’est le fichier le plus important du projet. Il contient :
+</p>
+<ul>
+  <li><code>siteUrl</code> : l’URL publique, lue depuis <code>NEXT_PUBLIC_SITE_URL</code> avec un domaine par défaut.</li>
+  <li><code>site</code> : les informations neutres, identiques en français et en anglais (nom, e-mail, téléphone, réseaux, CV, coordonnées, fuseau).</li>
+  <li>Les <strong>types</strong> de toutes les structures : <code>FeaturedProject</code>, <code>ArchiveProject</code>, <code>Practice</code>, <code>StackLevel</code>, <code>QaCategory</code>, <code>Experience</code>, <code>Certification</code>, <code>Testimonial</code>, <code>SiteContent</code>…</li>
+  <li><code>const fr: SiteContent</code> : tout le contenu français.</li>
+  <li><code>const en: SiteContent</code> : tout le contenu anglais, avec la même structure.</li>
+  <li><code>contentByLocale</code>, <code>defaultContent</code>, <code>getContent(locale)</code> et <code>mailtoForProject(title)</code>.</li>
+</ul>
+
+<p>Ordre réel du fichier, de haut en bas :</p>
+<pre>siteUrl
+site
+types (lignes ~24 à ~403)
+const fr: SiteContent = { ... }      # contenu français
+const en: SiteContent = { ... }      # contenu anglais
+export const contentByLocale = { fr, en }
+export const defaultContent = fr
+export function getContent(locale)
+export function mailtoForProject(title)</pre>
+
+<div class="callout warn">
+  <span class="callout-label">Ne pas se fier aux numéros de ligne</span>
+  <p>
+    Le fichier fait plus de 2 000 lignes et bouge à chaque ajout. Utilisez
+    les ancres textuelles : <code>const fr: SiteContent</code>,
+    <code>const en: SiteContent</code>, <code>featuredProjects:</code>,
+    <code>archive:</code>, <code>about:</code>, <code>testimonials:</code>.
+  </p>
+</div>
+
+<h3>Les blocs de <code>SiteContent</code></h3>
+<table class="compact">
+  <thead><tr><th style="width:18%;">Bloc</th><th>Sections du site concernées</th></tr></thead>
+  <tbody>
+    <tr><td><code>availability</code>, <code>workModes</code>, <code>location</code>, <code>roles</code></td><td>Disponibilité affichée dans le header, le hero, le contact et le prompt IA.</td></tr>
+    <tr><td><code>nav</code></td><td>Menu du header et du footer. Les <code>id</code> doivent correspondre aux <code>id</code> des sections.</td></tr>
+    <tr><td><code>hero</code></td><td>Section d’ouverture : titres, intro, boutons, statistiques, portrait, notes.</td></tr>
+    <tr><td><code>sections</code></td><td>Titres et intros des six sections (projets, expertise, méthode, parcours, témoignages, contact).</td></tr>
+    <tr><td><code>featuredProjects</code></td><td>Les projets détaillés (Signaleo, E-Fandrosoana…).</td></tr>
+    <tr><td><code>archive</code></td><td>Les autres projets, en lignes compactes.</td></tr>
+    <tr><td><code>practices</code></td><td>Les trois pôles : web/mobile, DevOps, QA.</td></tr>
+    <tr><td><code>stack</code></td><td>Les niveaux de maîtrise réels.</td></tr>
+    <tr><td><code>qa</code></td><td>Le bloc qualité : catégories, outils, mindset, citation.</td></tr>
+    <tr><td><code>process</code></td><td>La méthode en quatre étapes + engagements.</td></tr>
+    <tr><td><code>pipeline</code></td><td>La chaîne commit → test → build → ship → observe.</td></tr>
+    <tr><td><code>about</code></td><td>Parcours, expériences, formation, certifications, savoir-être, langues.</td></tr>
+    <tr><td><code>testimonials</code></td><td>Les témoignages clients et leur note.</td></tr>
+    <tr><td><code>contact</code></td><td>Coordonnées, parcours recruteur/client, libellés du formulaire, types de besoin.</td></tr>
+    <tr><td><code>footer</code></td><td>Accroche, libellés, CV, retour en haut, mentions.</td></tr>
+    <tr><td><code>ui</code></td><td>Tous les micro-libellés : boutons, galerie, accessibilité, thème, langue, menu.</td></tr>
+    <tr><td><code>ai</code></td><td>Textes du widget assistant : titre, accueil, suggestions, erreurs, disclaimer.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.3 Les fichiers de <code>src/app/</code></h2>
+<table>
+  <thead><tr><th style="width:24%;">Fichier</th><th style="width:44%;">Rôle</th><th>Quand le modifier</th></tr></thead>
+  <tbody>
+    <tr><td><code>layout.tsx</code></td><td>Enveloppe globale : balises <code>&lt;html&gt;</code> et <code>&lt;body&gt;</code>, métadonnées SEO, JSON-LD, préchargement des polices, providers thème/langue, header, footer, tracker, assistant, toaster.</td><td>Changer le titre SEO, la description, les mots-clés, l’Open Graph, le JSON-LD, les polices préchargées.</td></tr>
+    <tr><td><code>page.tsx</code></td><td>Compose la page d’accueil dans l’ordre : Hero, StackMarquee, SelectedWork, Capabilities, Process, Pipeline, About, Testimonials, ContactSection.</td><td>Réordonner ou retirer une section.</td></tr>
+    <tr><td><code>globals.css</code></td><td>Design system complet : variables de couleurs, typographies, layout, styles de chaque section, animations, responsive, thème sombre.</td><td>Changer l’apparence, les espacements, les couleurs, une animation. Prudence : 5 000+ lignes.</td></tr>
+    <tr><td><code>icon.svg</code></td><td>Favicon moderne servi sur <code>/icon.svg</code>.</td><td>Changer le logo de l’onglet.</td></tr>
+    <tr><td><code>manifest.ts</code></td><td>Manifest PWA : nom, description, couleurs, icônes, langue.</td><td>Changer le nom de l’application ou les icônes.</td></tr>
+    <tr><td><code>robots.ts</code></td><td>Génère <code>/robots.txt</code> : autorise le site, exclut <code>/admin/</code> et <code>/api/</code>, indique le sitemap.</td><td>Changer les règles d’indexation.</td></tr>
+    <tr><td><code>sitemap.ts</code></td><td>Génère <code>/sitemap.xml</code> avec l’URL racine et une fréquence mensuelle.</td><td>Ajouter une vraie page indexable (rare).</td></tr>
+    <tr><td><code>admin/layout.tsx</code></td><td>Métadonnées <code>noindex, nofollow, nocache</code> pour l’administration.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>admin/page.tsx</code></td><td>Interface client complète : écran de connexion, chargement des messages et des stats, onglets Messages/Audience, recherche, suppression, déconnexion.</td><td>Changer l’interface d’administration.</td></tr>
+    <tr><td><code>api/admin/login/route.ts</code></td><td>Vérifie le mot de passe, limite à 6 tentatives par 15 minutes et par IP, pose le cookie HMAC 8 h.</td><td>Changer la durée de session ou la politique de limitation.</td></tr>
+    <tr><td><code>api/admin/logout/route.ts</code></td><td>Efface le cookie de session.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>api/admin/session/route.ts</code></td><td>Répond <code>authenticated: true</code> si le cookie est valide, 401 sinon.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>api/messages/route.ts</code></td><td>POST public : validation (nom, e-mail, téléphone, message ≥ 10 caractères), honeypot côté client, rate limit 5/10 min, insertion. GET admin : liste.</td><td>Changer les règles de validation ou les limites.</td></tr>
+    <tr><td><code>api/messages/[id]/route.ts</code></td><td>DELETE admin : supprime un message par identifiant.</td><td>Quasi jamais.</td></tr>
+    <tr><td><code>api/visits/route.ts</code></td><td>POST public : ignore robots et <code>/admin</code>, déduit appareil et pays, enregistre. GET admin : statistiques agrégées.</td><td>Changer les métriques suivies ou ignorer d’autres chemins.</td></tr>
+    <tr><td><code>api/assistant/route.ts</code></td><td>Proxy serveur vers Groq ou Gemini : validation des messages, 8 derniers messages, 1 200 caractères max, rate limit 25/10 min, repli propre.</td><td>Changer de modèle, de fournisseur, de limite ou de paramètres.</td></tr>
+    <tr><td><code>competences/page.tsx</code>, <code>contact/page.tsx</code>, <code>projets/page.tsx</code></td><td>Anciennes URLs conservées : redirection 307 vers l’ancre correspondante, <code>noindex</code>, canonical vers l’ancre.</td><td>Ne pas y remettre de contenu : elles existent pour éviter les liens morts.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.4 Les routes API en détail</h2>
+<h3><code>/api/messages</code> — recevoir un message</h3>
+<ol>
+  <li>Lecture de l’IP via <code>x-forwarded-for</code> (premier segment) ou <code>unknown</code>.</li>
+  <li>Limitation : 5 requêtes par 10 minutes et par IP (en mémoire de l’instance).</li>
+  <li>Nettoyage : <code>trim</code> puis coupe à 120 (nom), 180 (e-mail), 30 (téléphone), 5 000 (message), 80 (type de projet).</li>
+  <li>Validation : nom requis, e-mail regex, téléphone regex si fourni, message ≥ 10 caractères.</li>
+  <li>Si un <code>projectType</code> est fourni, il est préfixé au message : <code>Type de besoin : …</code>.</li>
+  <li>Insertion en base, réponse 201 avec le message créé.</li>
+  <li>En cas d’erreur base : réponse 503 avec <code>fallback: "email"</code>, et le formulaire propose un lien <code>mailto:</code> prérempli.</li>
+</ol>
+
+<h3><code>/api/visits</code> — mesurer l’audience</h3>
+<ol>
+  <li>Limitation : 60 requêtes par 10 minutes et par IP ; au-delà, réponse 204 silencieuse.</li>
+  <li>Filtrage des robots : <code>bot</code>, <code>crawler</code>, <code>spider</code>, <code>headless</code>, <code>lighthouse</code>.</li>
+  <li>Chemin nettoyé (200 caractères), doit commencer par <code>/</code> et ne pas commencer par <code>/admin</code>.</li>
+  <li>Référent (300 caractères), identifiant visiteur (80 caractères, <code>anonymous</code> par défaut).</li>
+  <li>Pays lu dans <code>x-vercel-ip-country</code> ou <code>cf-ipcountry</code>.</li>
+  <li>Appareil déduit du <code>user-agent</code> : Tablet, Mobile, Desktop.</li>
+  <li>Insertion puis réponse 204, sans corps.</li>
+</ol>
+
+<h3><code>/api/assistant</code> — répondre aux questions</h3>
+<ol>
+  <li>Rate limit : 25 requêtes par 10 minutes et par IP.</li>
+  <li>Résolution du fournisseur : <code>AI_PROVIDER</code> explicite si la clé existe, sinon Groq, sinon Google, sinon 503.</li>
+  <li>Nettoyage : garde les 8 derniers messages, tronque chaque contenu à 1 200 caractères, ignore les rôles invalides.</li>
+  <li>Construction du prompt système via <code>buildAssistantSystemPrompt()</code>.</li>
+  <li>Appel du fournisseur, réponse JSON <code>{ reply, provider }</code>, en-tête <code>no-store</code>.</li>
+</ol>
+
+<h2>3.5 Les composants de la page publique</h2>
+<table>
+  <thead><tr><th style="width:24%;">Composant</th><th style="width:46%;">Responsabilité</th><th>Détail utile</th></tr></thead>
+  <tbody>
+    <tr><td><code>header.tsx</code></td><td>Barre de navigation fixe, logo, liens d’ancrage, barre de progression de lecture, section active, menu mobile, thème, langue, heure locale.</td><td>Les liens viennent de <code>c.nav</code> ; les <code>id</code> doivent exister dans les sections.</td></tr>
+    <tr><td><code>hero.tsx</code></td><td>Ouverture : nom, rôles animés, titre, intro, boutons, statistiques, portrait, notes.</td><td>Les statistiques utilisent <code>CountUp</code> avec <code>value</code>, <code>pad</code>, <code>prefix</code>, <code>suffix</code>.</td></tr>
+    <tr><td><code>stack-marquee.tsx</code></td><td>Bandeau défilant des technologies.</td><td><strong>Liste locale codée en dur</strong>, séparée de <code>content.ts</code>.</td></tr>
+    <tr><td><code>selected-work.tsx</code></td><td>Projets vedettes (étude de cas, stack, liens) puis archive.</td><td>Si <code>gallery</code> existe → carrousel ; sinon → <code>ProjectVisual</code>.</td></tr>
+    <tr><td><code>project-gallery.tsx</code></td><td>Carrousel de captures avec autoplay 5 s, pause au survol, flèches, clavier, points, compteur.</td><td>Désactive l’autoplay si <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td><code>project-visual.tsx</code></td><td>Schéma SVG stylisé pour les projets sans captures : <code>incident</code>, <code>erp</code>, <code>pipeline</code>.</td><td>Un nouveau type visuel doit être ajouté ici.</td></tr>
+    <tr><td><code>capabilities.tsx</code></td><td>Trois pôles d’expertise, stack par niveaux, bloc QA complet.</td><td>Lit <code>practices</code>, <code>stack</code>, <code>qa</code>.</td></tr>
+    <tr><td><code>process.tsx</code></td><td>Méthode en quatre étapes et engagements.</td><td>Lit <code>process.steps</code> et <code>process.engagements</code>.</td></tr>
+    <tr><td><code>pipeline.tsx</code></td><td>Chaîne de livraison illustrée, section sombre.</td><td>Lit <code>pipeline.steps</code>.</td></tr>
+    <tr><td><code>about.tsx</code></td><td>Parcours, expériences, formation, certifications, savoir-être.</td><td>Les certifications ouvrent un PDF dans un nouvel onglet.</td></tr>
+    <tr><td><code>testimonials.tsx</code></td><td>Cartes de témoignages avec nom, entreprise, contexte, téléphone.</td><td>La clé React est <code>testimonial.name</code> : éviter les doublons.</td></tr>
+    <tr><td><code>contact-section.tsx</code></td><td>Coordonnées, copie d’e-mail, parcours recruteur/client, réseaux, CV, formulaire.</td><td>Deux liens <code>mailto:</code> avec sujets préremplis.</td></tr>
+    <tr><td><code>contact-form.tsx</code></td><td>Formulaire contrôlé, validation, honeypot, consentement, envoi API, succès, erreur, repli mailto.</td><td>Le champ <code>website</code> est un honeypot invisible.</td></tr>
+    <tr><td><code>footer.tsx</code></td><td>Identité, coordonnées GPS, heure locale, navigation, contact, réseaux, retour en haut.</td><td>Lit <code>footer</code> et <code>nav</code>.</td></tr>
+    <tr><td><code>ai-assistant.tsx</code></td><td>Bouton flottant, panneau de discussion, suggestions, historique local, envoi, erreur, reset.</td><td>Masqué sur <code>/admin</code>.</td></tr>
+    <tr><td><code>visit-tracker.tsx</code></td><td>Envoie une vue à chaque changement de chemin, sauf <code>/admin</code>.</td><td>Identifiant visiteur dans <code>localStorage</code> (<code>zm_visitor_id</code>).</td></tr>
+    <tr><td><code>copy-email.tsx</code></td><td>Copie l’e-mail dans le presse-papiers avec retour visuel.</td><td>Utilise <code>navigator.clipboard</code>.</td></tr>
+    <tr><td><code>language-toggle.tsx</code></td><td>Bascule FR ↔ EN.</td><td>Met à jour <code>document.documentElement.lang</code>.</td></tr>
+    <tr><td><code>theme-toggle.tsx</code></td><td>Bascule clair ↔ sombre.</td><td>Persistance via next-themes.</td></tr>
+    <tr><td><code>local-clock.tsx</code></td><td>Affiche l’heure de Fianarantsoa (UTC+3).</td><td>Mise à jour toutes les 30 s.</td></tr>
+    <tr><td><code>count-up.tsx</code></td><td>Compteur animé au premier passage dans le viewport.</td><td>Respecte <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td><code>typewriter.tsx</code></td><td>Rôles qui s’écrivent et s’effacent, et titre de pipeline.</td><td>Respecte <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td><code>reveal.tsx</code></td><td>Animation d’apparition au scroll via Framer Motion.</td><td>Utilisé dans toutes les sections.</td></tr>
+    <tr><td><code>section-heading.tsx</code></td><td>Titre de section réutilisable : index, label, titre, intro, filet.</td><td>Garantit la cohérence visuelle.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.6 Les fichiers de <code>src/lib/</code></h2>
+<table>
+  <thead><tr><th style="width:22%;">Fichier</th><th style="width:48%;">Rôle</th><th>Quand le modifier</th></tr></thead>
+  <tbody>
+    <tr><td><code>content.ts</code></td><td>Source unique du contenu FR/EN, types et helpers.</td><td>À chaque changement éditorial.</td></tr>
+    <tr><td><code>assistant-prompt.ts</code></td><td>Construit le prompt système de l’assistant à partir du contenu public : profil, projets, expertise, QA, expériences, formation, certifications, témoignages, stack.</td><td>Changer le ton, les règles ou les informations données au modèle.</td></tr>
+    <tr><td><code>db.ts</code></td><td>Client libSQL, schéma <code>messages</code> et <code>page_views</code>, création paresseuse des tables, requêtes CRUD et statistiques.</td><td>Ajouter une table, une métrique ou changer une requête.</td></tr>
+    <tr><td><code>messages.ts</code></td><td>Couche métier entre les routes et la base : mapping <code>created_at</code> → <code>createdAt</code>, ajout, suppression.</td><td>Changer la forme d’un message.</td></tr>
+    <tr><td><code>auth.ts</code></td><td>Vérification du mot de passe en temps constant, signature HMAC du cookie, lecture du cookie, rate limit, détection de mot de passe faible.</td><td>Changer la durée de session, la politique de mot de passe ou le nom du cookie.</td></tr>
+    <tr><td><code>content.test.ts</code></td><td>Vérifie que FR et EN ont la même structure et aucun texte vide.</td><td>Ne pas modifier pour faire passer un test : corriger le contenu.</td></tr>
+    <tr><td><code>auth.test.ts</code></td><td>Vérifie le mot de passe correct/incorrect et la détection de faiblesse.</td><td>Ajouter des cas de test.</td></tr>
+    <tr><td><code>validation.test.ts</code></td><td>Teste des regex e-mail/téléphone définies dans le test lui-même. Il n’existe pas de <code>validation.ts</code>.</td><td>À savoir : la validation réelle est dans les routes API et le formulaire.</td></tr>
+  </tbody>
+</table>
+
+<h2>3.7 Les autres fichiers</h2>
+<table>
+  <thead><tr><th style="width:26%;">Fichier</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/types/index.ts</code></td><td><code>Message</code> est utilisé par l’admin. <code>Project</code>, <code>Skill</code> et <code>Experience</code> sont des types historiques non utilisés par la page d’accueil.</td></tr>
+    <tr><td><code>src/components/icons.tsx</code></td><td>Icônes SVG GitHub et LinkedIn, réutilisées dans le contact et les projets.</td></tr>
+    <tr><td><code>src/components/language-provider.tsx</code></td><td>Contexte de langue : <code>locale</code>, <code>setLocale</code>, <code>toggleLocale</code>, <code>c</code> (contenu courant). Persiste <code>zm_locale</code> et met à jour <code>lang</code>.</td></tr>
+    <tr><td><code>src/components/theme-provider.tsx</code></td><td>Enveloppe next-themes : thème clair par défaut, pas de thème système, classe <code>dark</code>.</td></tr>
+    <tr><td><code>src/components/ui/sonner.tsx</code></td><td>Toaster de notifications, monté dans le layout.</td></tr>
+    <tr><td><code>src/test/setup.ts</code></td><td>Charge <code>@testing-library/jest-dom</code> pour les assertions DOM.</td></tr>
+    <tr><td><code>scripts/init-db.mjs</code></td><td>Crée les tables et index sur Turso (si <code>TURSO_DB_URL</code>) ou en SQLite local, puis affiche un compte rendu.</td></tr>
+    <tr><td><code>public/profile-en.pdf</code></td><td>Ancien CV anglais, plus référencé par le site. Peut être conservé comme archive ou supprimé.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <span class="callout-label">Le seul fichier à retenir</span>
+  <p>
+    Pour 90 % des mises à jour de contenu, vous n’ouvrirez que
+    <code>src/lib/content.ts</code>. Pour les images et le CV, vous déposerez
+    un fichier dans <code>public/</code>. Pour le SEO global, vous ouvrirez
+    <code>src/app/layout.tsx</code>. Le reste sert surtout au fonctionnement.
+  </p>
+</div>

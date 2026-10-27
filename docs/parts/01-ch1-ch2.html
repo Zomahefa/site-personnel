@@ -1,0 +1,258 @@
+<!-- ================= CHAPITRE 1 ================= -->
+<h1 class="chapter" id="ch1"><span class="num">Chapitre 01</span>Comprendre le portfolio</h1>
+
+<p class="lead">
+  Le portfolio est une application <strong>Next.js</strong> qui sert une page
+  unique, bilingue français/anglais, enrichie de quelques fonctions serveur :
+  formulaire de contact, suivi d’audience, administration privée et assistant
+  IA. Le contenu éditorial est <strong>statique</strong> ; seuls les messages
+  et les visites passent par une base de données.
+</p>
+
+<h2>1.1 Ce que fait réellement le site</h2>
+<p>
+  La page d’accueil raconte un parcours professionnel en six sections :
+  projets, expertise, méthode, parcours, témoignages et contact. Autour de
+  cette page, quatre capacités techniques tournent :
+</p>
+<ul>
+  <li><strong>Un sélecteur de langue FR/EN</strong> qui change instantanément tous les textes sans recharger la page.</li>
+  <li><strong>Un formulaire de contact</strong> qui écrit dans la table <code>messages</code>, avec repli vers l’e-mail si la base est indisponible.</li>
+  <li><strong>Un compteur de visites</strong> qui écrit dans la table <code>page_views</code>, consultable dans <code>/admin</code>.</li>
+  <li><strong>Un assistant IA</strong> qui répond aux questions sur le parcours à partir d’un prompt construit avec le contenu public du portfolio.</li>
+</ul>
+
+<div class="callout">
+  <span class="callout-label">À retenir</span>
+  <p>
+    Les projets, expériences, certifications et témoignages ne sont
+    <strong>pas</strong> stockés en base. Ils sont écrits dans
+    <code>src/lib/content.ts</code>, compilés avec le site et affichés
+    immédiatement. La base ne contient que deux choses : les messages reçus
+    et les visites.
+  </p>
+</div>
+
+<h2>1.2 La stack technique</h2>
+<table>
+  <thead><tr><th style="width:24%;">Technologie</th><th style="width:20%;">Version</th><th>Rôle dans le projet</th></tr></thead>
+  <tbody>
+    <tr><td>Next.js (App Router)</td><td>16.4.x</td><td>Framework principal : pages, routes API, rendu serveur, métadonnées SEO, redirections.</td></tr>
+    <tr><td>React</td><td>19.2.x</td><td>Interface et composants interactifs (hero, galerie, formulaire, admin, assistant).</td></tr>
+    <tr><td>TypeScript</td><td>5.x</td><td>Typage strict du contenu, des réponses API et des composants.</td></tr>
+    <tr><td>Tailwind CSS</td><td>v4</td><td>Utilitaires de style, surtout dans l’administration et les composants <code>ui/</code>.</td></tr>
+    <tr><td>CSS global</td><td>—</td><td><code>src/app/globals.css</code> contient le design system, les sections, les animations et le responsive.</td></tr>
+    <tr><td>Framer Motion</td><td>12.x</td><td>Animations d’apparition, respect de <code>prefers-reduced-motion</code>.</td></tr>
+    <tr><td>next-themes</td><td>0.4.x</td><td>Thème clair/sombre, classe <code>dark</code> sur <code>&lt;html&gt;</code>.</td></tr>
+    <tr><td>libSQL / Turso</td><td>0.17.x</td><td>Base de données des messages et des visites ; SQLite local en développement.</td></tr>
+    <tr><td>Groq / Google Gemini</td><td>API</td><td>Fournisseur du modèle derrière l’assistant IA.</td></tr>
+    <tr><td>Vitest</td><td>4.x</td><td>Tests unitaires du contenu, de l’authentification et des règles de validation.</td></tr>
+    <tr><td>Vercel</td><td>—</td><td>Hébergement, build, variables d’environnement, domaine.</td></tr>
+  </tbody>
+</table>
+
+<h2>1.3 Statique ou dynamique ?</h2>
+<table>
+  <thead><tr><th style="width:34%;">Élément</th><th style="width:18%;">Nature</th><th>Où il vit</th></tr></thead>
+  <tbody>
+    <tr><td>Textes, projets, expériences, témoignages</td><td>Statique</td><td><code>src/lib/content.ts</code>, compilé dans le bundle.</td></tr>
+    <tr><td>Images, CV, attestations</td><td>Statique</td><td><code>public/</code>. Servis par Next.js/Vercel.</td></tr>
+    <tr><td>Langue, thème</td><td>Client</td><td><code>localStorage</code> : clés <code>zm_locale</code> et <code>theme</code>.</td></tr>
+    <tr><td>Messages du formulaire</td><td>Dynamique</td><td>Table <code>messages</code> (Turso en production, SQLite local sinon).</td></tr>
+    <tr><td>Visites</td><td>Dynamique</td><td>Table <code>page_views</code>.</td></tr>
+    <tr><td>Réponses de l’assistant</td><td>Dynamique</td><td>Route <code>/api/assistant</code> → Groq ou Gemini. Aucun stockage.</td></tr>
+    <tr><td>Session admin</td><td>Cookie</td><td>Cookie <code>zm_admin_session</code>, signé HMAC, 8 heures.</td></tr>
+  </tbody>
+</table>
+
+<h2>1.4 Vue d’ensemble de l’architecture</h2>
+<div class="flow">
+  <div class="flow-node"><b>Navigateur</b>Visiteur<br />FR / EN</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Next.js sur Vercel</b>Page unique<br />SSR + hydratation</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Routes API</b><code>/api/messages</code><br /><code>/api/visits</code><br /><code>/api/assistant</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node"><b>Services</b>Turso (libSQL)<br />Groq / Gemini</div>
+</div>
+
+<p>
+  Le rendu initial de la page est produit par le serveur Next.js. Les
+  composants interactifs (header, hero, galeries, formulaire, assistant)
+  sont ensuite hydratés côté client. La page reste donc lisible et
+  indexable même si JavaScript est lent à charger ; les animations et les
+  interactions arrivent après.
+</p>
+
+<h3>Les quatre chemins réseau à connaître</h3>
+<table class="compact">
+  <thead><tr><th style="width:22%;">Route</th><th style="width:12%;">Méthode</th><th style="width:18%;">Accès</th><th>Ce qu’elle fait</th></tr></thead>
+  <tbody>
+    <tr><td><code>/api/messages</code></td><td>POST</td><td>Public (rate limit)</td><td>Enregistre un message du formulaire. Validation, honeypot côté client, repli e-mail.</td></tr>
+    <tr><td><code>/api/messages</code></td><td>GET</td><td>Admin</td><td>Liste tous les messages, du plus récent au plus ancien.</td></tr>
+    <tr><td><code>/api/messages/[id]</code></td><td>DELETE</td><td>Admin</td><td>Supprime un message par son identifiant.</td></tr>
+    <tr><td><code>/api/visits</code></td><td>POST</td><td>Public (rate limit)</td><td>Enregistre une vue de page. Ignore les robots et <code>/admin</code>.</td></tr>
+    <tr><td><code>/api/visits</code></td><td>GET</td><td>Admin</td><td>Renvoie les statistiques agrégées d’audience.</td></tr>
+    <tr><td><code>/api/assistant</code></td><td>POST</td><td>Public (rate limit)</td><td>Transmet les messages au fournisseur IA et renvoie la réponse.</td></tr>
+    <tr><td><code>/api/admin/login</code></td><td>POST</td><td>Public</td><td>Vérifie le mot de passe et pose le cookie de session.</td></tr>
+    <tr><td><code>/api/admin/logout</code></td><td>POST</td><td>Public</td><td>Efface le cookie de session.</td></tr>
+    <tr><td><code>/api/admin/session</code></td><td>GET</td><td>Cookie</td><td>Indique si la session courante est valide.</td></tr>
+  </tbody>
+</table>
+
+<h2>1.5 Les trois vérités à retenir</h2>
+<div class="grid3">
+  <div class="card">
+    <div class="kpi">01</div>
+    <h4>Le contenu est centralisé</h4>
+    <p class="small">Une seule source : <code>content.ts</code>. Pas de base de données pour les projets, pas de CMS. C’est volontaire : simplicité, rapidité, versionnement Git.</p>
+  </div>
+  <div class="card">
+    <div class="kpi">02</div>
+    <h4>La base est minimale</h4>
+    <p class="small">Deux tables : <code>messages</code> et <code>page_views</code>. Si Turso tombe, le site continue d’afficher le contenu ; le formulaire propose l’e-mail.</p>
+  </div>
+  <div class="card">
+    <div class="kpi">03</div>
+    <h4>Les secrets restent dehors</h4>
+    <p class="small">Mot de passe admin, jeton Turso et clé IA vivent dans <code>.env.local</code> et dans Vercel. Jamais dans Git, jamais dans ce PDF.</p>
+  </div>
+</div>
+
+<div class="callout warn">
+  <span class="callout-label">Piège classique</span>
+  <p>
+    Ne cherchez pas les projets dans la base de données ni dans un fichier
+    JSON : ils sont dans <code>src/lib/content.ts</code>. Et ne modifiez pas
+    <code>src/types/index.ts</code> en croyant changer les projets :
+    ce fichier ne sert qu’au type <code>Message</code> de l’administration ;
+    les types <code>Project</code>, <code>Skill</code> et
+    <code>Experience</code> qu’il contient sont d’anciens types non utilisés
+    par la page d’accueil.
+  </p>
+</div>
+
+<!-- ================= CHAPITRE 2 ================= -->
+<h1 class="chapter" id="ch2"><span class="num">Chapitre 02</span>Arborescence commentée</h1>
+
+<p class="lead">
+  Voici l’arborescence réelle du dépôt, sans <code>node_modules</code>, sans
+  <code>.next</code> et sans les fichiers générés. Chaque ligne importante est
+  commentée pour que vous sachiez où chercher avant d’ouvrir un fichier.
+</p>
+
+<pre class="tree">portfolio/
+├── <b>src/</b>
+│   ├── <b>app/</b>                        # Routes, pages et API (App Router)
+│   │   ├── layout.tsx                  # SEO global, providers, header/footer, IA, tracker
+│   │   ├── page.tsx                    # Page d'accueil : ordre des sections
+│   │   ├── globals.css                 # Design system + styles de toutes les sections
+│   │   ├── icon.svg                    # Favicon servi sur /icon.svg
+│   │   ├── manifest.ts                 # Manifest PWA
+│   │   ├── robots.ts                   # /robots.txt
+│   │   ├── sitemap.ts                  # /sitemap.xml
+│   │   ├── admin/
+│   │   │   ├── layout.tsx              # Métadonnées noindex de l'admin
+│   │   │   └── page.tsx                # UI admin : connexion, messages, audience
+│   │   ├── api/
+│   │   │   ├── admin/login/route.ts    # Connexion par mot de passe
+│   │   │   ├── admin/logout/route.ts   # Déconnexion
+│   │   │   ├── admin/session/route.ts  # Vérification de session
+│   │   │   ├── assistant/route.ts      # Proxy Groq / Gemini
+│   │   │   ├── messages/route.ts       # GET (admin) + POST (public)
+│   │   │   ├── messages/[id]/route.ts  # DELETE (admin)
+│   │   │   └── visits/route.ts         # POST public + GET stats admin
+│   │   ├── competences/page.tsx        # Redirection 307 vers /#expertise
+│   │   ├── contact/page.tsx            # Redirection 307 vers /#contact
+│   │   └── projets/page.tsx            # Redirection 307 vers /#projets
+│   ├── <b>components/</b>
+│   │   ├── icons.tsx                   # Icônes GitHub / LinkedIn
+│   │   ├── language-provider.tsx       # Contexte FR/EN + persistance
+│   │   ├── theme-provider.tsx          # Thème clair/sombre (next-themes)
+│   │   ├── site/                       # Composants de la page publique
+│   │   │   ├── header.tsx              # Navigation, progression, menu mobile
+│   │   │   ├── hero.tsx                # Première section + compteurs
+│   │   │   ├── stack-marquee.tsx       # Bandeau technologies (liste locale)
+│   │   │   ├── selected-work.tsx       # Projets vedettes + archive
+│   │   │   ├── project-gallery.tsx     # Carrousel de captures
+│   │   │   ├── project-visual.tsx      # Schémas SVG si pas de captures
+│   │   │   ├── capabilities.tsx        # Expertise, stack, QA
+│   │   │   ├── process.tsx             # Méthode en 4 étapes
+│   │   │   ├── pipeline.tsx            # Chaîne de livraison
+│   │   │   ├── about.tsx               # Parcours, formation, certifications
+│   │   │   ├── testimonials.tsx        # Témoignages clients
+│   │   │   ├── contact-section.tsx     # Coordonnées, parcours recruteur/client
+│   │   │   ├── contact-form.tsx        # Formulaire + validation + repli mailto
+│   │   │   ├── footer.tsx              # Pied de page
+│   │   │   ├── ai-assistant.tsx        # Widget flottant de l'assistant
+│   │   │   ├── visit-tracker.tsx       # Envoi d'une vue à /api/visits
+│   │   │   ├── copy-email.tsx          # Bouton copier l'e-mail
+│   │   │   ├── language-toggle.tsx     # Bouton FR/EN
+│   │   │   ├── theme-toggle.tsx        # Bouton clair/sombre
+│   │   │   ├── local-clock.tsx         # Heure locale de Fianarantsoa
+│   │   │   ├── count-up.tsx            # Compteur animé
+│   │   │   ├── typewriter.tsx          # Rôles animés
+│   │   │   ├── reveal.tsx              # Apparition au scroll
+│   │   │   └── section-heading.tsx     # Titre de section réutilisable
+│   │   └── ui/sonner.tsx               # Toaster (notifications)
+│   ├── <b>lib/</b>
+│   │   ├── content.ts                  # ★ TOUT le contenu FR/EN + types
+│   │   ├── assistant-prompt.ts         # Prompt système de l'assistant
+│   │   ├── db.ts                       # Schéma + requêtes libSQL
+│   │   ├── messages.ts                 # Mapping messages ↔ base
+│   │   ├── auth.ts                     # Mot de passe, HMAC, cookie, rate limit
+│   │   ├── content.test.ts             # Parité FR/EN + textes non vides
+│   │   ├── auth.test.ts                # Mot de passe et robustesse
+│   │   └── validation.test.ts          # Regex e-mail/téléphone (inline)
+│   ├── <b>types/</b>/index.ts          # Type Message + anciens types non utilisés
+│   └── <b>test/</b>/setup.ts           # Configuration Vitest / jest-dom
+├── <b>public/</b>
+│   ├── cv-zomahefa-ranaivo-2026-10.pdf # CV téléchargé par le bouton CV
+│   ├── photo-cv.png                    # Portrait du hero
+│   ├── og-image.png                    # Image de partage 1200×630
+│   ├── apple-icon.png                  # Icône Apple
+│   ├── certificatSpringBoot.pdf        # Attestation Spring Boot
+│   ├── certifcatSping-boot2.jpeg       # Vignette de l'attestation
+│   ├── uml-certification-zo.pdf        # Attestation UML
+│   ├── uml-certification.jpeg          # Vignette de l'attestation
+│   ├── google81dfecfc5d73987c.html     # Vérification Google Search Console
+│   ├── profile-en.pdf                  # Ancien CV EN, non référencé
+│   ├── fonts/                          # Polices locales (Geist, Instrument Serif)
+│   └── projects/                       # Captures des projets
+├── <b>scripts/</b>/init-db.mjs          # npm run db:init (Turso ou SQLite)
+├── <b>docs/</b>                          # Ce guide (HTML source + PDF)
+├── .env.example                        # Modèle de variables, versionné
+├── .env.local                          # Secrets locaux, NON versionné
+├── next.config.ts                      # En-têtes de sécurité, images
+├── package.json                        # Scripts et dépendances
+├── tsconfig.json                       # Alias @/ → src/
+├── vitest.config.ts                    # Configuration des tests
+├── Dockerfile / run.sh                 # Déploiement Docker optionnel
+├── README.md                           # Résumé du projet
+└── .gitignore                          # Exclut .env*, /data, .next, etc.</pre>
+
+<h2>2.1 Les dossiers en une phrase</h2>
+<table>
+  <thead><tr><th style="width:20%;">Dossier</th><th>Responsabilité</th></tr></thead>
+  <tbody>
+    <tr><td><code>src/app/</code></td><td>Le routage Next.js : une page d’accueil, trois redirections, l’admin et les routes API.</td></tr>
+    <tr><td><code>src/components/site/</code></td><td>Les composants visuels de la page publique. Chacun reçoit ses textes du contexte de langue.</td></tr>
+    <tr><td><code>src/components/</code></td><td>Les providers transverses (langue, thème) et les icônes.</td></tr>
+    <tr><td><code>src/lib/</code></td><td>La logique : contenu, base de données, authentification, prompt IA. C’est ici que vivent les règles métier.</td></tr>
+    <tr><td><code>src/types/</code></td><td>Le type <code>Message</code> utilisé par l’admin. Les autres types sont historiques.</td></tr>
+    <tr><td><code>public/</code></td><td>Les fichiers servis tels quels : CV, images, polices, attestations.</td></tr>
+    <tr><td><code>scripts/</code></td><td>Les scripts d’exploitation, ici l’initialisation de la base.</td></tr>
+    <tr><td><code>docs/</code></td><td>La documentation du projet et ce PDF.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout tip">
+  <span class="callout-label">Astuce de navigation</span>
+  <p>
+    Dans votre éditeur, utilisez la recherche globale sur les clés du contenu :
+    <code>featuredProjects</code>, <code>testimonials</code>,
+    <code>certifications</code>, <code>stats:</code>. Vous arriverez
+    directement à la bonne zone de <code>content.ts</code>, sans dépendre
+    des numéros de ligne qui changent à chaque modification.
+  </p>
+</div>
