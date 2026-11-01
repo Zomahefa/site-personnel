@@ -17,7 +17,7 @@ export const site = {
   timezone: "Indian/Antananarivo",
   github: "https://github.com/Zomahefa",
   linkedin: "https://www.linkedin.com/in/zo-mahefa-ranaivo-338026346/",
-  cv: "/cv-zomahefa-ranaivo-2026-10.pdf",
+  cv: "/cv-zomahefa-ranaivo-2026-latest.pdf",
   responseTime: "Réponse sous 48 h ouvrées",
 } as const;
 
@@ -531,9 +531,39 @@ const fr: SiteContent = {
       visual: "incident",
       gallery: [
         {
-          src: "/projects/signaleo-signalement.png",
-          alt: "Capture de l'écran de signalement d'une panne sur Signaleo",
+          src: "/projects/Signaleo-1.png",
+          alt: "Formulaire de signalement d'une panne avec localisation et photo",
           label: "Signalement d'une panne",
+        },
+        {
+          src: "/projects/Signaleo-2.png",
+          alt: "Suivi des pannes en temps réel avec statuts et photos",
+          label: "Suivi en temps réel",
+        },
+        {
+          src: "/projects/Signaleo-3.png",
+          alt: "Écran de connexion à l'espace administrateur",
+          label: "Connexion admin",
+        },
+        {
+          src: "/projects/Signaleo-4.png",
+          alt: "Tableau de bord administrateur avec indicateurs et liste des signalements",
+          label: "Tableau de bord admin",
+        },
+        {
+          src: "/projects/Signaleo-5.png",
+          alt: "Écran de connexion à l'espace technicien",
+          label: "Connexion technicien",
+        },
+        {
+          src: "/projects/Signaleo-6.png",
+          alt: "Espace technicien avec filtres par statut et liste des interventions",
+          label: "Espace technicien",
+        },
+        {
+          src: "/projects/Signaleo-7.png",
+          alt: "Détail d'une intervention avec photo, changement de statut et carte",
+          label: "Détail et carte",
         },
       ],
       repo: "https://github.com/Zomahefa/gestion-de-panne-devops",
@@ -544,7 +574,7 @@ const fr: SiteContent = {
       id: "e-fandrosoana",
       index: "02",
       title: "E-Fandrosoana",
-      subtitle: "ERP quincaillerie · Boutique de l'Évolution",
+      subtitle: "Logiciel ERP tout-en-un pour les magasins",
       year: "2024 — 2025",
       category: "Produit / Fullstack",
       summary:
@@ -1369,9 +1399,39 @@ const en: SiteContent = {
       visual: "incident",
       gallery: [
         {
-          src: "/projects/signaleo-signalement.png",
-          alt: "Screenshot of the incident reporting screen in Signaleo",
-          label: "Reporting an incident",
+          src: "/projects/Signaleo-1.png",
+          alt: "Incident reporting form with location and photo upload",
+          label: "Report an incident",
+        },
+        {
+          src: "/projects/Signaleo-2.png",
+          alt: "Real-time incident tracking with statuses and photos",
+          label: "Real-time tracking",
+        },
+        {
+          src: "/projects/Signaleo-3.png",
+          alt: "Administrator login screen",
+          label: "Admin login",
+        },
+        {
+          src: "/projects/Signaleo-4.png",
+          alt: "Administrator dashboard with KPIs and incident list",
+          label: "Admin dashboard",
+        },
+        {
+          src: "/projects/Signaleo-5.png",
+          alt: "Technician login screen",
+          label: "Technician login",
+        },
+        {
+          src: "/projects/Signaleo-6.png",
+          alt: "Technician workspace with status filters and intervention cards",
+          label: "Technician workspace",
+        },
+        {
+          src: "/projects/Signaleo-7.png",
+          alt: "Intervention detail with photo, status change and map",
+          label: "Detail and map",
         },
       ],
       repo: "https://github.com/Zomahefa/gestion-de-panne-devops",
@@ -1382,7 +1442,7 @@ const en: SiteContent = {
       id: "e-fandrosoana",
       index: "02",
       title: "E-Fandrosoana",
-      subtitle: "Hardware store ERP · Boutique de l'Évolution",
+      subtitle: "All-in-one ERP software for stores",
       year: "2024 — 2025",
       category: "Product / Fullstack",
       summary:
