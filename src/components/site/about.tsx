@@ -158,12 +158,12 @@ export function About() {
                     rel="noopener noreferrer"
                     className="certification-card"
                     key={certification.title}
-                    aria-label={`${about.certificationOpen} — ${certification.title}`}
+                    aria-label={`${about.certificationOpen} · ${certification.title}`}
                   >
                     <div className="certification-image">
                       <Image
                         src={certification.image}
-                        alt={`${certification.title} — Zo Mahefa`}
+                        alt={`${certification.title} · Zo Mahefa`}
                         width={1600}
                         height={1131}
                         sizes="(max-width: 767px) 90vw, 300px"

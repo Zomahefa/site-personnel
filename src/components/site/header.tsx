@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { site } from "@/lib/content";
 import { useI18n } from "@/components/language-provider";
-import { LocalClock } from "@/components/site/local-clock";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { LanguageToggle } from "@/components/site/language-toggle";
 
@@ -91,10 +90,7 @@ export function Header() {
           <span className="brand-mark">
             ZM<span className="text-brand">.</span>
           </span>
-          <span className="brand-name">
-            {site.name}
-            <span className="brand-role">{c.hero.kicker}</span>
-          </span>
+          <span className="brand-name">{site.name}</span>
         </Link>
 
         <nav className="desktop-nav" aria-label={ui.navMain}>
@@ -116,7 +112,6 @@ export function Header() {
             <span className="availability-dot" aria-hidden="true" />
             {ui.availability}
           </span>
-          <LocalClock />
           <LanguageToggle />
           <ThemeToggle />
           <a href={anchor("contact")} className="button button-dark header-cta">

@@ -9,19 +9,19 @@ import { AiAssistant } from "@/components/site/ai-assistant";
 import { site, siteUrl, defaultContent } from "@/lib/content";
 import "./globals.css";
 
-const title = "Zo Mahefa RANAIVO — Développeur web, DevOps & QA";
+const title = "Zo Mahefa RANAIVO · Ingénieur Fullstack Java & DevOps";
 const description =
-  "Portfolio de Zo Mahefa RANAIVO, développeur web & mobile, ingénieur DevOps et testeur QA à Fianarantsoa, Madagascar. Projets, compétences, témoignages et contact.";
+  "Portfolio de Zo Mahefa RANAIVO, ingénieur fullstack Java et DevOps à Fianarantsoa, Madagascar. Projets, compétences, témoignages et contact.";
 
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: title,
-    template: "%s — Zo Mahefa RANAIVO",
+    template: "%s · Zo Mahefa RANAIVO",
   },
   description,
-  applicationName: "Zo Mahefa RANAIVO — Portfolio",
+  applicationName: "Zo Mahefa RANAIVO · Portfolio",
   authors: [{ name: site.name, url: siteUrl }],
   creator: site.name,
   publisher: site.name,
@@ -30,11 +30,10 @@ export const metadata: Metadata = {
     "Zo Mahefa",
     "Zomahefa",
     "Zo Mahefa RANAIVO",
-    "développeur web Madagascar",
+    "développeur fullstack Java Madagascar",
     "développeur Fianarantsoa",
     "ingénieur DevOps Madagascar",
-    "testeur QA",
-    "QA automation",
+    "Angular",
     "Next.js",
     "Spring Boot",
     "Docker",
@@ -62,7 +61,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Zo Mahefa RANAIVO — Développeur web, DevOps et QA",
+        alt: "Zo Mahefa RANAIVO · Ingénieur Fullstack Java & DevOps",
       },
     ],
   },
@@ -112,12 +111,11 @@ const schema = {
       givenName: "Zo Mahefa",
       familyName: "RANAIVO",
       jobTitle: [
-        "Développeur web & mobile",
+        "Développeur Fullstack Java",
         "Ingénieur DevOps",
-        "Testeur QA",
       ],
       description:
-        "Développeur web & mobile, ingénieur DevOps et testeur QA basé à Fianarantsoa, Madagascar.",
+        "Développeur Fullstack Java et ingénieur DevOps basé à Fianarantsoa, Madagascar.",
       url: siteUrl,
       image: `${siteUrl}/photo-cv.png`,
       email: site.email,
@@ -131,7 +129,7 @@ const schema = {
       mainEntityOfPage: { "@id": `${siteUrl}/#profile` },
       alumniOf: {
         "@type": "CollegeOrUniversity",
-        name: "ENI — École Nationale d'Informatique",
+        name: "ENI · École Nationale d'Informatique",
       },
       knowsLanguage: ["fr", "en", "mg"],
       knowsAbout: [
@@ -162,16 +160,16 @@ const schema = {
           name: "Madagascar",
         },
         skills:
-          "Développement web et mobile, DevOps, CI/CD, tests logiciels, supervision",
+          "Développement fullstack Java, DevOps, CI/CD, tests logiciels, supervision",
       },
     },
     {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       url: siteUrl,
-      name: "Zo Mahefa RANAIVO — Portfolio",
+      name: "Zo Mahefa RANAIVO · Portfolio",
       alternateName: "Zomahefa",
-      inLanguage: "fr-FR",
+      inLanguage: "en-US",
       publisher: { "@id": `${siteUrl}/#person` },
     },
     {
@@ -197,7 +195,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="preload"

@@ -13,7 +13,7 @@ export const site = {
   phone: "+261 38 54 422 52",
   phoneHref: "tel:+261385442252",
   location: "Fianarantsoa, Madagascar",
-  coordinates: "21°27′S 47°05′E",
+  locationShort: "Madagascar",
   timezone: "Indian/Antananarivo",
   github: "https://github.com/Zomahefa",
   linkedin: "https://www.linkedin.com/in/zo-mahefa-ranaivo-338026346/",
@@ -90,6 +90,7 @@ export type ProcessStep = {
   title: string;
   text: string;
   deliverable: string;
+  accent?: boolean;
 };
 
 export type PipelineStep = {
@@ -122,15 +123,6 @@ export type Certification = {
   href: string;
 };
 
-export type Testimonial = {
-  name: string;
-  company: string;
-  phone: string;
-  phoneHref: string;
-  quote: string;
-  context: string;
-};
-
 export type NavItem = { id: string; label: string; index: string };
 
 export type SectionCopy = {
@@ -140,18 +132,10 @@ export type SectionCopy = {
   intro: string;
 };
 
-export type HeroStat = {
-  value: number;
-  label: string;
-  pad?: number;
-  prefix?: string;
-  suffix?: string;
-};
-
 export type HeroContent = {
   eyebrowLeft: string;
-  eyebrowCenter: string;
   eyebrowRight: string;
+  locationShort: string;
   kicker: string;
   title: {
     sr: string;
@@ -175,9 +159,7 @@ export type HeroContent = {
   focusLabel: string;
   focus: string;
   signature: string;
-  noteLeft: string;
-  noteRight: string;
-  stats: HeroStat[];
+  portraitHint: string;
   scroll: string;
 };
 
@@ -193,7 +175,6 @@ export type SiteContent = {
     expertise: SectionCopy;
     method: SectionCopy;
     about: SectionCopy;
-    testimonials: SectionCopy;
     contact: SectionCopy;
   };
   featuredProjects: FeaturedProject[];
@@ -201,7 +182,6 @@ export type SiteContent = {
     kicker: string;
     title: string;
     copy: string;
-    footerNote: string;
     allRepos: string;
     projects: ArchiveProject[];
   };
@@ -222,6 +202,15 @@ export type SiteContent = {
     footnote: string;
   };
   process: {
+    calloutKicker: string;
+    calloutLead: string;
+    calloutText: string;
+    aiChiefLabel: string;
+    aiChiefText: string;
+    aiCopilotLabel: string;
+    aiCopilotText: string;
+    question: string;
+    accentTag: string;
     steps: ProcessStep[];
     engagements: string[];
     engagementsKicker: string;
@@ -237,8 +226,6 @@ export type SiteContent = {
     deliverablesLabel: string;
     deliverables: string;
     cta: string;
-    footerLeft: string;
-    footerRight: string;
     steps: PipelineStep[];
   };
   about: {
@@ -268,10 +255,6 @@ export type SiteContent = {
     certifications: Certification[];
     softSkills: SoftSkill[];
   };
-  testimonials: {
-    items: Testimonial[];
-    note: string;
-  };
   contact: {
     directLabel: string;
     recruiterLabel: string;
@@ -294,13 +277,11 @@ export type SiteContent = {
       type: string;
       message: string;
       messagePlaceholder: string;
-      consent: string;
       submit: string;
       pending: string;
       note: string;
       errorRequired: string;
       errorEmail: string;
-      errorConsent: string;
       errorSend: string;
       fallbackLink: string;
       successTitle: string;
@@ -318,9 +299,10 @@ export type SiteContent = {
     cv: string;
     backToTop: string;
     rights: string;
-    built: string;
   };
   ui: {
+    moreDetails: string;
+    lessDetails: string;
     viewDemo: string;
     viewCode: string;
     caseStudy: string;
@@ -372,7 +354,6 @@ export type SiteContent = {
     languageLabel: string;
     languageSwitch: string;
     localTime: string;
-    testimonialPhone: string;
     contactCta: string;
     menuOpen: string;
     menuClose: string;
@@ -382,7 +363,6 @@ export type SiteContent = {
     availability: string;
     skipLink: string;
     deliverableLabel: string;
-    coordinatesAria: string;
   };
   ai: {
     title: string;
@@ -406,54 +386,45 @@ const fr: SiteContent = {
   workModes: "Sur site ou à distance",
   location: "Fianarantsoa, Madagascar",
   roles: [
-    "Développeur web & mobile",
+    "Développeur Fullstack Java",
     "Ingénieur DevOps",
-    "Testeur QA",
   ],
   nav: [
     { id: "projets", label: "Projets", index: "01" },
     { id: "expertise", label: "Expertise", index: "02" },
     { id: "methode", label: "Méthode", index: "03" },
     { id: "parcours", label: "Parcours", index: "04" },
-    { id: "temoignages", label: "Témoignages", index: "05" },
-    { id: "contact", label: "Contact", index: "06" },
+    { id: "contact", label: "Contact", index: "05" },
   ],
   hero: {
-    eyebrowLeft: "PORTFOLIO / ÉDITION 2026",
-    eyebrowCenter: "FIANARANTSOA, MADAGASCAR · UTC+3",
+    eyebrowLeft: "BIENVENUE SUR MON PORTFOLIO",
     eyebrowRight: "DISPONIBLE POUR COLLABORER",
+    locationShort: "Madagascar",
     kicker: "Ingénieur logiciel",
     title: {
-      sr: "Zo Mahefa RANAIVO — Développeur web & mobile, ingénieur DevOps et testeur QA",
-      line1: "Du premier",
-      line2Em: "commit",
-      line2After: " au",
-      line3Em: "dernier",
-      line3After: " test.",
+      sr: "Bonjour, je suis Zo Mahefa, ingénieur logiciel.",
+      line1: "Bonjour,",
+      line2Em: "je suis",
+      line2After: " Zo",
+      line3Em: "Mahefa",
+      line3After: ".",
     },
     roleLabel: "RÔLE_",
     intro:
-      "Je conçois des applications web et mobiles, j'automatise leur mise en production et je m'assure qu'elles restent fiables une fois en ligne. Un profil produit, cloud et qualité — sans jargon inutile.",
-    primaryCta: "Voir mes preuves",
+      "Développeur fullstack spécialisé en Java, avec une expertise en DevOps, dédié à la conception d'applications robustes, sécurisées et évolutives.",
+    primaryCta: "Voir mes projets",
     secondaryCta: "Parler d'un projet",
     cvCta: "CV PDF",
     cvAria: "Télécharger le CV de Zo Mahefa en PDF",
     factsAria: "Informations pratiques",
-    figureLabel: "FIG. 01 / PORTRAIT",
+    figureLabel: "PORTRAIT",
     year: "2026",
     portraitAlt: "Portrait de Zo Mahefa RANAIVO",
     portraitBadge: "Open to work",
     focusLabel: "FOCUS",
-    focus: "Web · Cloud · Quality",
+    focus: "Fullstack · DevOps · Quality",
     signature: "Zo Mahefa",
-    noteLeft: "BASÉ À FIANARANTSOA",
-    noteRight: "REMOTE FRIENDLY ↗",
-    stats: [
-      { value: 9, pad: 2, label: "projets documentés" },
-      { value: 3, pad: 2, label: "pôles d'expertise" },
-      { value: 8, pad: 2, label: "dépôts publics" },
-      { value: 48, prefix: "<", suffix: "h", label: "délai de réponse" },
-    ],
+    portraitHint: "Survol : couleur",
     scroll: "SCROLL",
   },
   sections: {
@@ -462,7 +433,7 @@ const fr: SiteContent = {
       label: "Travaux sélectionnés",
       title: "Des preuves, pas des promesses.",
       intro:
-        "Trois projets, trois problèmes réels. Le contexte, mon rôle et le résultat — sans chiffre que je ne peux pas défendre en entretien.",
+        "Trois projets, trois problèmes réels. Le contexte, mon rôle et le résultat, avec des preuves concrètes et vérifiables.",
     },
     expertise: {
       index: "02",
@@ -474,7 +445,7 @@ const fr: SiteContent = {
     method: {
       index: "03",
       label: "Méthode",
-      title: "Un cadre simple. Zéro surprise.",
+      title: "Le code ne représente que 30 % d'un projet réussi.",
       intro:
         "Le même fil rouge pour une mission client ou une intégration en équipe : clarifier, livrer par étapes, documenter. La technique sert le résultat, pas l'inverse.",
     },
@@ -485,15 +456,8 @@ const fr: SiteContent = {
       intro:
         "Une formation d'ingénieur, des stages qui touchent à la production et une pratique régulière du code, de l'infrastructure et des tests.",
     },
-    testimonials: {
-      index: "05",
-      label: "Témoignages",
-      title: "Ils m'ont confié leur outil de travail.",
-      intro:
-        "Trois clients, trois besoins concrets. Leur retour porte sur ce qui compte vraiment : la fiabilité au quotidien et la simplicité d'usage.",
-    },
     contact: {
-      index: "06",
+      index: "05",
       label: "Contact",
       title: "Un projet à cadrer ? Une équipe à renforcer ?",
       intro:
@@ -575,7 +539,7 @@ const fr: SiteContent = {
       index: "02",
       title: "E-Fandrosoana",
       subtitle: "Logiciel ERP tout-en-un pour les magasins",
-      year: "2024 — 2025",
+      year: "2024–2025",
       category: "Produit / Fullstack",
       summary:
         "Un ERP pour centraliser stocks, ventes, fournisseurs, clients et trésorerie.",
@@ -584,7 +548,7 @@ const fr: SiteContent = {
       problem:
         "La gestion reposait sur des fichiers et des saisies dispersées, avec un suivi des stocks et de la trésorerie difficile à fiabiliser.",
       role:
-        "Modélisation des données, API REST Spring Boot sécurisée, tableaux de bord React, base PostgreSQL et environnement Docker.",
+        "Modélisation des données, API REST Spring Boot sécurisée, tableaux de bord Angular, base PostgreSQL et environnement Docker.",
       outcome:
         "Un socle unique pour piloter l'activité, structuré pour accueillir de nouveaux modules sans repartir de zéro.",
       stack: [
@@ -592,7 +556,7 @@ const fr: SiteContent = {
         "Spring Boot",
         "Spring Security",
         "PostgreSQL",
-        "React",
+        "Angular",
         "TypeScript",
         "Docker",
       ],
@@ -664,7 +628,6 @@ const fr: SiteContent = {
     title: "Autres projets & labs",
     copy:
       "Le reste du terrain : desktop, réseau, systèmes et projets académiques. Les dépôts publics sont ouverts.",
-    footerNote: "ZÉRO LIEN MORT — LES PROJETS PRIVÉS SONT SIGNALÉS",
     allRepos: "Tous mes dépôts publics",
     projects: [
       {
@@ -702,14 +665,14 @@ const fr: SiteContent = {
       {
         title: "Administration Linux & Windows Server",
         category: "Systèmes · ENI",
-        year: "2023 — 2024",
+        year: "2023–2024",
         stack: "Active Directory · Bash · iptables",
         label: "Lab",
       },
       {
         title: "Réseaux, pfSense, Moodle & VoIP",
         category: "Infrastructure · ENI",
-        year: "2023 — 2024",
+        year: "2023–2024",
         stack: "GNS3 · pfSense · Asterisk · Moodle",
         label: "Labs",
       },
@@ -775,9 +738,12 @@ const fr: SiteContent = {
           "Spring Security",
           "PostgreSQL",
           "Docker",
+          "Docker Compose",
           "GitHub Actions",
           "Linux",
-          "React / Next.js",
+          "Nginx",
+          "Prometheus / Grafana",
+          "Angular",
           "Playwright",
           "Postman",
         ],
@@ -787,11 +753,10 @@ const fr: SiteContent = {
         note: "Mis en œuvre sur des projets et environnements réels.",
         items: [
           "Kubernetes",
-          "Prometheus / Grafana",
           "Terraform",
-          "Nginx",
           "Redis",
           "Django",
+          "React / Next.js",
           "TypeScript",
           "JUnit / Vitest",
           "Cypress",
@@ -862,45 +827,64 @@ const fr: SiteContent = {
       "UN BUG TROUVÉ AVANT LA PRODUCTION COÛTE MOINS CHER QU'UN INCIDENT SUBI PAR L'UTILISATEUR.",
   },
   process: {
+    calloutKicker: "RÉPARTITION RÉELLE",
+    calloutLead: "100 % d'ingénierie, dont 30 % de code.",
+    calloutText:
+      "Beaucoup pensent que le développeur ne fait qu'écrire du code, surtout depuis que l'IA peut en générer à la demande. Dans une vraie démarche d'ingénierie logicielle, le code ne représente que 30 % du métier. Les 70 % restants : cadrage, architecture, tests, sécurité, déploiement et supervision. La majorité du code est générée avec l'IA pour accélérer le travail, et je garde le pilotage.",
+    aiChiefLabel: "CHEF PILOTE",
+    aiChiefText:
+      "Je décide, j'arbitre et j'assume la responsabilité de la livraison.",
+    aiCopilotLabel: "CO-PILOTE",
+    aiCopilotText:
+      "L'IA accélère l'exécution. Elle assiste, mais elle ne décide pas à ma place.",
+    question: "Et vous, quelle étape vous demande le plus d'énergie ?",
+    accentTag: "30 %",
     steps: [
       {
         number: "01",
-        title: "Cadrer",
-        text: "Objectif, périmètre, risques et critères de réussite. On aligne le besoin avant d'écrire la première ligne.",
-        deliverable: "Mini-cahier des charges",
+        title: "Analyse du besoin",
+        text: "Comprendre le problème réel avant même de toucher au clavier : qui sont les utilisateurs, quel problème résoudre, quels objectifs viser.",
+        deliverable: "Cadrage & critères de succès",
       },
       {
         number: "02",
-        title: "Construire",
-        text: "Des itérations courtes, une démo à chaque étape et des décisions documentées. Pas de boîte noire.",
-        deliverable: "Incréments testés",
+        title: "Conception & architecture",
+        text: "Concevoir l'ensemble du système : cas d'utilisation, flux d'interactions, modèle de données et parcours UI/UX.",
+        deliverable: "Architecture fonctionnelle, modèle de base de données & maquettes UI/UX",
       },
       {
         number: "03",
-        title: "Livrer",
-        text: "Tests, pipeline, environnements et sauvegardes. La mise en ligne doit être une procédure, pas un exploit.",
-        deliverable: "Déploiement reproductible",
+        title: "Développement",
+        text: "Construire le back-end, le front-end et les API avec l'IA comme accélérateur sous revue stricte.",
+        deliverable: "Incréments testés & code documenté",
+        accent: true,
       },
       {
         number: "04",
-        title: "Veiller",
-        text: "Métriques, logs, corrections et passation. Le produit reste compréhensible après la livraison.",
-        deliverable: "Runbook & documentation",
+        title: "Tests & sécurité",
+        text: "Traquer les anomalies, automatiser les tests et auditer la sécurité avant toute mise en production.",
+        deliverable: "Rapport de tests & audit sécurité",
+      },
+      {
+        number: "05",
+        title: "Déploiement & maintenance",
+        text: "Automatiser la mise en ligne via CI/CD et la conteneurisation, superviser la production en temps réel (logs, métriques) et assurer la pérennité du service.",
+        deliverable: "Pipeline CI/CD, runbook & supervision",
       },
     ],
     engagements: [
       "Premier échange de 30 min",
       "Devis sous 5 jours ouvrés",
-      "Code et documentation remis",
+      "Code, tests et documentation remis",
       "Réponse sous 48 h ouvrées",
     ],
     engagementsKicker: "ENGAGEMENTS / SIMPLES",
-    engagementsTitle: "Des règles lisibles avant même de commencer.",
+    engagementsTitle: "Un projet à cadrer ? Parlons-en.",
     cta: "Cadrer un besoin",
   },
   pipeline: {
     label: "Chaîne de livraison",
-    title: "Du commit au monitoring.",
+    title: "Le reste ne s'improvise pas.",
     intro:
       "Une livraison ne s'arrête pas au déploiement. Chaque étape laisse une trace, chaque incident peut être compris.",
     principleLabel: "Principe :",
@@ -910,8 +894,6 @@ const fr: SiteContent = {
     deliverables:
       "Pipeline, procédure de rollback et documentation de supervision remis avec le projet.",
     cta: "Cadrer un projet",
-    footerLeft: "FLUX REJOUABLE · TESTS · LOGS · MÉTRIQUES",
-    footerRight: "DOCKER / GH ACTIONS / PROMETHEUS / VERCEL",
     steps: [
       {
         number: "01",
@@ -923,7 +905,7 @@ const fr: SiteContent = {
         number: "02",
         title: "Test",
         label: "Qualité",
-        text: "Tests automatisés et analyse statique avant tout déploiement.",
+        text: "Tests automatisés, analyse statique et audit de sécurité avant tout déploiement.",
       },
       {
         number: "03",
@@ -941,7 +923,7 @@ const fr: SiteContent = {
         number: "05",
         title: "Observe",
         label: "Production",
-        text: "Métriques, logs et alertes pour voir venir les incidents.",
+        text: "Métriques, logs, alertes et maintenance pour voir venir les incidents.",
       },
     ],
   },
@@ -949,9 +931,9 @@ const fr: SiteContent = {
     lead:
       "Je m'appelle Zo Mahefa RANAIVO. Je construis des applications utiles, puis je m'assure qu'elles tiennent debout.",
     body1:
-      "Formé à l'ENI, j'ai appris à relier le produit, le système et la qualité. Mes projets vont de l'ERP métier au pipeline CI/CD, en passant par la supervision et les tests. Ce qui m'intéresse : comprendre le besoin, choisir le juste niveau de complexité et laisser un système compréhensible derrière moi.",
+      "Formé à l'ENI, j'ai appris à relier le produit, le système et la qualité. Mon expérience couvre la conception d'applications métier jusqu'à leur mise en œuvre technique : pipelines CI/CD, tests et supervision. Ce qui m'intéresse : comprendre le besoin, choisir le juste niveau de complexité et laisser un système compréhensible derrière moi.",
     body2:
-      "Je documente mes décisions, je teste ce que je livre et je considère la mise en production comme une partie du travail — pas comme une formalité.",
+      "Je documente mes décisions, je teste ce que je livre et je considère la mise en production comme une partie du travail, pas comme une formalité.",
     targetKicker: "CE QUE JE RECHERCHE",
     targetItems: [
       "Web & mobile · backend",
@@ -960,7 +942,7 @@ const fr: SiteContent = {
     ],
     languagesLabel: "LANGUES",
     languages:
-      "Français courant · Anglais technique (documentation et échanges écrits) · Malgache natif",
+      "Français courant · Anglais technique (documentation et échanges écrits) · Malagasy natif",
     formatLabel: "FORMAT",
     format: "Remote friendly · réponse sous 48 h ouvrées",
     cvCta: "Télécharger le CV",
@@ -978,7 +960,7 @@ const fr: SiteContent = {
       "Pas une liste de mots dans un coin du CV : chaque qualité est reliée à une situation concrète de projet, de stage ou d'équipe.",
     experiences: [
       {
-        period: "2024 — Présent",
+        period: "2024–présent",
         title: "Développeur web & DevOps",
         company: "Freelance · Projets personnels",
         text: "Conception et développement d'applications métier : API Spring Boot ou Django, interfaces React, conteneurisation Docker, pipelines CI/CD et supervision. Une pratique de bout en bout, du besoin jusqu'à la production.",
@@ -986,14 +968,14 @@ const fr: SiteContent = {
       },
       {
         period: "2024",
-        title: "Stage L3 — CI/CD & monitoring",
+        title: "Stage L3 · CI/CD & monitoring",
         company: "Stage professionnel",
         text: "Mise en place d'une chaîne de livraison pour une application React/Django/MySQL sur VPS : Docker Compose, GitHub Actions, Nginx, déploiement blue/green, Prometheus, Grafana et Loki.",
         tags: ["Docker", "GitHub Actions", "Nginx", "Observabilité"],
       },
       {
-        period: "2023 — 2024",
-        title: "Stage L2 — Systèmes & réseau",
+        period: "2023–2024",
+        title: "Stage L2 · Systèmes & réseau",
         company: "Spray Info · Fianarantsoa",
         text: "Déploiement d'un serveur Moodle sous Ubuntu avec visioconférence, administration Linux, gestion des utilisateurs et sécurisation. Travaux pratiques de routage et de pare-feu avec GNS3 et pfSense.",
         tags: ["Linux", "Moodle", "GNS3", "pfSense"],
@@ -1001,15 +983,15 @@ const fr: SiteContent = {
     ],
     education: [
       {
-        period: "2025 — 2026",
+        period: "2025–2026",
         title: "Master 1 en informatique",
-        school: "ENI — École Nationale d'Informatique",
+        school: "ENI · École Nationale d'Informatique",
         detail: "Ingénierie des systèmes d'information. Formation en cours.",
       },
       {
-        period: "2022 — 2025",
+        period: "2022–2025",
         title: "Licence en informatique générale",
-        school: "ENI — École Nationale d'Informatique",
+        school: "ENI · École Nationale d'Informatique",
         detail: "Mention Très Bien. Développement, systèmes, réseaux et sécurité.",
       },
     ],
@@ -1089,39 +1071,6 @@ const fr: SiteContent = {
       },
     ],
   },
-  testimonials: {
-    items: [
-      {
-        name: "Quincaillerie Boutique de l'Évolution",
-        company: "Boutique de l'Évolution · Quincaillerie",
-        phone: "034 16 118 50",
-        phoneHref: "tel:+261341611850",
-        quote:
-          "Nous suivions nos stocks et nos ventes sur des cahiers. Aujourd'hui tout est centralisé : je vois ce qui manque, ce qui se vend et ce que je dois commander, sans ressaisir deux fois.",
-        context: "ERP — stocks, ventes & trésorerie",
-      },
-      {
-        name: "Tsena Fandrosoana",
-        company: "Tsena Fandrosoana",
-        phone: "038 98 18 975",
-        phoneHref: "tel:+261389818975",
-        quote:
-          "L'application a remplacé nos fichiers Excel. Les encaissements, les clients et les rapports sont clairs, et l'équipe a été formée rapidement.",
-        context: "Gestion commerciale & rapports",
-      },
-      {
-        name: "Boulangerie Ando",
-        company: "Boulangerie Ando",
-        phone: "038 26 48 310",
-        phoneHref: "tel:+261382648310",
-        quote:
-          "Nous avions besoin d'un outil simple pour la production et les ventes. Le résultat est fiable au quotidien et nous avons gagné du temps sur le suivi.",
-        context: "Suivi de production & ventes",
-      },
-    ],
-    note:
-      "Témoignages recueillis auprès de clients dont j'ai conçu et livré l'application.",
-  },
   contact: {
     directLabel: "ÉCRIRE DIRECTEMENT",
     recruiterLabel: "RECRUTEUR",
@@ -1153,16 +1102,12 @@ const fr: SiteContent = {
       message: "Votre message",
       messagePlaceholder:
         "Le contexte, l'objectif, l'échéance... Quelques lignes suffisent pour commencer.",
-      consent:
-        "J'accepte que mes coordonnées soient utilisées uniquement pour répondre à cette demande.",
       submit: "Envoyer le message",
       pending: "Envoi en cours...",
       note: "Pas de newsletter, pas de revente de données. Seulement une réponse.",
       errorRequired:
         "Merci de renseigner votre nom, votre e-mail et votre message.",
       errorEmail: "L'adresse e-mail ne semble pas valide.",
-      errorConsent:
-        "Merci de confirmer que vos coordonnées peuvent être utilisées pour vous répondre.",
       errorSend:
         "L'envoi direct est indisponible pour le moment. Votre message est prêt : ouvrez votre messagerie pour me l'adresser.",
       fallbackLink: "Ouvrir ma messagerie",
@@ -1174,16 +1119,17 @@ const fr: SiteContent = {
     },
   },
   footer: {
-    taglineLine1: "Ingénieur logiciel — web, mobile,",
-    taglineLine2: "DevOps et testeur QA.",
+    taglineLine1: "Ingénieur logiciel,",
+    taglineLine2: "Fullstack Java & DevOps.",
     navLabel: "Navigation de pied de page",
     contactLabel: "CONTACT",
     cv: "CV PDF",
     backToTop: "Haut de page",
     rights: "Tous droits réservés.",
-    built: "Conçu, développé et déployé avec Next.js.",
   },
   ui: {
+    moreDetails: "Plus de détails",
+    lessDetails: "Voir moins",
     viewDemo: "Voir la démo",
     viewCode: "Code source",
     caseStudy: "Étude de cas sur demande",
@@ -1235,18 +1181,15 @@ const fr: SiteContent = {
     languageLabel: "Langue du site",
     languageSwitch: "Passer le site en anglais",
     localTime: "heure locale",
-    testimonialPhone: "Téléphone",
     contactCta: "Me contacter",
     menuOpen: "Ouvrir le menu",
     menuClose: "Fermer le menu",
     navMain: "Navigation principale",
     navMobile: "Navigation mobile",
-    brandAria: "Zo Mahefa — retour en haut",
+    brandAria: "Zo Mahefa · retour en haut",
     availability: "Disponible",
     skipLink: "Aller au contenu",
     deliverableLabel: "LIVRABLE",
-    coordinatesAria:
-      "Coordonnées GPS de Fianarantsoa : 21 degrés 27 minutes sud, 47 degrés 5 minutes est",
   },
   ai: {
     title: "Assistant IA",
@@ -1277,51 +1220,46 @@ const en: SiteContent = {
   availability: "Internship · Apprenticeship · Mission",
   workModes: "On-site or remote",
   location: "Fianarantsoa, Madagascar",
-  roles: ["Web & mobile developer", "DevOps engineer", "QA tester"],
+  roles: [
+    "Fullstack Java Developer",
+    "DevOps Engineer",
+  ],
   nav: [
     { id: "projets", label: "Work", index: "01" },
     { id: "expertise", label: "Expertise", index: "02" },
     { id: "methode", label: "Method", index: "03" },
     { id: "parcours", label: "Background", index: "04" },
-    { id: "temoignages", label: "Testimonials", index: "05" },
-    { id: "contact", label: "Contact", index: "06" },
+    { id: "contact", label: "Contact", index: "05" },
   ],
   hero: {
-    eyebrowLeft: "PORTFOLIO / 2026 EDITION",
-    eyebrowCenter: "FIANARANTSOA, MADAGASCAR · UTC+3",
+    eyebrowLeft: "WELCOME TO MY PORTFOLIO",
     eyebrowRight: "AVAILABLE FOR COLLABORATION",
+    locationShort: "Madagascar",
     kicker: "Software engineer",
     title: {
-      sr: "Zo Mahefa RANAIVO — Web & mobile developer, DevOps engineer and QA tester",
-      line1: "From the first",
-      line2Em: "commit",
-      line2After: " to the",
-      line3Em: "final",
-      line3After: " test.",
+      sr: "Hello, I'm Zo Mahefa, software engineer.",
+      line1: "Hello,",
+      line2Em: "I'm",
+      line2After: " Zo",
+      line3Em: "Mahefa",
+      line3After: ".",
     },
     roleLabel: "ROLE_",
     intro:
-      "I build web and mobile applications, automate their delivery and make sure they stay reliable once live. A product, cloud and quality profile — without unnecessary jargon.",
-    primaryCta: "See the proof",
+      "Fullstack developer specialised in Java, with expertise in DevOps, dedicated to building robust, secure and scalable applications.",
+    primaryCta: "See my projects",
     secondaryCta: "Discuss a project",
     cvCta: "CV PDF",
     cvAria: "Download Zo Mahefa's CV as a PDF",
     factsAria: "Practical information",
-    figureLabel: "FIG. 01 / PORTRAIT",
+    figureLabel: "PORTRAIT",
     year: "2026",
     portraitAlt: "Portrait of Zo Mahefa RANAIVO",
     portraitBadge: "Open to work",
     focusLabel: "FOCUS",
-    focus: "Web · Cloud · Quality",
+    focus: "Fullstack · DevOps · Quality",
     signature: "Zo Mahefa",
-    noteLeft: "BASED IN FIANARANTSOA",
-    noteRight: "REMOTE FRIENDLY ↗",
-    stats: [
-      { value: 9, pad: 2, label: "documented projects" },
-      { value: 3, pad: 2, label: "areas of expertise" },
-      { value: 8, pad: 2, label: "public repositories" },
-      { value: 48, prefix: "<", suffix: "h", label: "response time" },
-    ],
+    portraitHint: "Hover: colour",
     scroll: "SCROLL",
   },
   sections: {
@@ -1330,7 +1268,7 @@ const en: SiteContent = {
       label: "Selected work",
       title: "Proof, not promises.",
       intro:
-        "Three projects, three real problems. The context, my role and the outcome — with no number I cannot defend in an interview.",
+        "Three projects, three real problems. The context, my role and the outcome, backed by concrete, verifiable evidence.",
     },
     expertise: {
       index: "02",
@@ -1342,7 +1280,7 @@ const en: SiteContent = {
     method: {
       index: "03",
       label: "Method",
-      title: "A simple framework. Zero surprises.",
+      title: "Code accounts for only 30% of a successful project.",
       intro:
         "The same thread for a client mission or joining a team: clarify, deliver in steps, document. Technology serves the outcome, not the other way around.",
     },
@@ -1353,15 +1291,8 @@ const en: SiteContent = {
       intro:
         "An engineering education, internships close to production, and regular practice across code, infrastructure and testing.",
     },
-    testimonials: {
-      index: "05",
-      label: "Testimonials",
-      title: "They trusted me with their working tool.",
-      intro:
-        "Three clients, three concrete needs. Their feedback is about what really matters: day-to-day reliability and ease of use.",
-    },
     contact: {
-      index: "06",
+      index: "05",
       label: "Contact",
       title: "A project to scope? A team to strengthen?",
       intro:
@@ -1443,7 +1374,7 @@ const en: SiteContent = {
       index: "02",
       title: "E-Fandrosoana",
       subtitle: "All-in-one ERP software for stores",
-      year: "2024 — 2025",
+      year: "2024–2025",
       category: "Product / Fullstack",
       summary:
         "An ERP to centralise stock, sales, suppliers, customers and cash flow.",
@@ -1452,7 +1383,7 @@ const en: SiteContent = {
       problem:
         "Management relied on spreadsheets and scattered entries, making stock and cash flow difficult to trust.",
       role:
-        "Data modelling, secured Spring Boot REST API, React dashboards, PostgreSQL database and Docker environment.",
+        "Data modelling, secured Spring Boot REST API, Angular dashboards, PostgreSQL database and Docker environment.",
       outcome:
         "A single foundation to run the business, structured to welcome new modules without starting over.",
       stack: [
@@ -1460,7 +1391,7 @@ const en: SiteContent = {
         "Spring Boot",
         "Spring Security",
         "PostgreSQL",
-        "React",
+        "Angular",
         "TypeScript",
         "Docker",
       ],
@@ -1532,7 +1463,6 @@ const en: SiteContent = {
     title: "Other projects & labs",
     copy:
       "The rest of the field: desktop, networking, systems and academic projects. Public repositories are open.",
-    footerNote: "NO DEAD LINKS — PRIVATE PROJECTS ARE FLAGGED",
     allRepos: "All my public repositories",
     projects: [
       {
@@ -1570,14 +1500,14 @@ const en: SiteContent = {
       {
         title: "Linux & Windows Server administration",
         category: "Systems · ENI",
-        year: "2023 — 2024",
+        year: "2023–2024",
         stack: "Active Directory · Bash · iptables",
         label: "Lab",
       },
       {
         title: "Networking, pfSense, Moodle & VoIP",
         category: "Infrastructure · ENI",
-        year: "2023 — 2024",
+        year: "2023–2024",
         stack: "GNS3 · pfSense · Asterisk · Moodle",
         label: "Labs",
       },
@@ -1643,9 +1573,12 @@ const en: SiteContent = {
           "Spring Security",
           "PostgreSQL",
           "Docker",
+          "Docker Compose",
           "GitHub Actions",
           "Linux",
-          "React / Next.js",
+          "Nginx",
+          "Prometheus / Grafana",
+          "Angular",
           "Playwright",
           "Postman",
         ],
@@ -1655,11 +1588,10 @@ const en: SiteContent = {
         note: "Applied on real projects and environments.",
         items: [
           "Kubernetes",
-          "Prometheus / Grafana",
           "Terraform",
-          "Nginx",
           "Redis",
           "Django",
+          "React / Next.js",
           "TypeScript",
           "JUnit / Vitest",
           "Cypress",
@@ -1730,45 +1662,63 @@ const en: SiteContent = {
       "A BUG FOUND BEFORE PRODUCTION COSTS LESS THAN AN INCIDENT SUFFERED BY THE USER.",
   },
   process: {
+    calloutKicker: "THE REAL SPLIT",
+    calloutLead: "100% engineering, 30% of it is code.",
+    calloutText:
+      "Many people think a developer only writes code, especially now that AI can generate it on demand. In a real software engineering process, code accounts for only 30% of the job. The remaining 70%: framing, architecture, testing, security, deployment and monitoring. Most of the code is generated with AI to speed up the work, and I keep the pilot role.",
+    aiChiefLabel: "PILOT",
+    aiChiefText: "I decide, arbitrate and own the delivery.",
+    aiCopilotLabel: "CO-PILOT",
+    aiCopilotText:
+      "AI accelerates execution. It assists, but it does not decide for me.",
+    question: "And you, which step takes the most energy?",
+    accentTag: "30%",
     steps: [
       {
         number: "01",
-        title: "Scope",
-        text: "Goal, perimeter, risks and success criteria. We align the need before writing the first line.",
-        deliverable: "Mini project brief",
+        title: "Needs analysis",
+        text: "Understand the real problem before even touching the keyboard: who the users are, what problem to solve, what goals to reach.",
+        deliverable: "Scope & success criteria",
       },
       {
         number: "02",
-        title: "Build",
-        text: "Short iterations, a demo at every step and documented decisions. No black box.",
-        deliverable: "Tested increments",
+        title: "Design & architecture",
+        text: "Design the whole system: use cases, interaction flows, data model and UI/UX journeys.",
+        deliverable: "Functional architecture, data model & UI/UX mockups",
       },
       {
         number: "03",
-        title: "Deliver",
-        text: "Tests, pipeline, environments and backups. Going live must be a procedure, not a feat.",
-        deliverable: "Reproducible deployment",
+        title: "Development",
+        text: "Build the back end, the front end and the APIs with AI as an accelerator under strict review.",
+        deliverable: "Tested increments & documented code",
+        accent: true,
       },
       {
         number: "04",
-        title: "Observe",
-        text: "Metrics, logs, fixes and handover. The product stays understandable after delivery.",
-        deliverable: "Runbook & documentation",
+        title: "Testing & security",
+        text: "Track anomalies, automate tests and audit security before any production release.",
+        deliverable: "Test report & security audit",
+      },
+      {
+        number: "05",
+        title: "Deployment & maintenance",
+        text: "Automate releases with CI/CD and containers, monitor production in real time (logs, metrics) and keep the service running over time.",
+        deliverable: "CI/CD pipeline, runbook & monitoring",
       },
     ],
     engagements: [
       "First 30-minute conversation",
       "Quote within 5 business days",
-      "Code and documentation delivered",
+      "Code, tests and documentation delivered",
       "Reply within 48 business hours",
     ],
     engagementsKicker: "COMMITMENTS / SIMPLE",
-    engagementsTitle: "Clear rules before we even start.",
+    engagementsTitle: "A project to scope? Let's talk.",
     cta: "Scope a need",
   },
   pipeline: {
     label: "Delivery chain",
-    title: "From commit to monitoring.",
+    title: "The rest is not improvised.",
     intro:
       "Delivery does not stop at deployment. Every step leaves a trace, every incident can be understood.",
     principleLabel: "Principle:",
@@ -1778,8 +1728,6 @@ const en: SiteContent = {
     deliverables:
       "Pipeline, rollback procedure and monitoring documentation delivered with the project.",
     cta: "Scope a project",
-    footerLeft: "REPLAYABLE FLOW · TESTS · LOGS · METRICS",
-    footerRight: "DOCKER / GH ACTIONS / PROMETHEUS / VERCEL",
     steps: [
       {
         number: "01",
@@ -1791,7 +1739,7 @@ const en: SiteContent = {
         number: "02",
         title: "Test",
         label: "Quality",
-        text: "Automated tests and static analysis before any deployment.",
+        text: "Automated tests, static analysis and a security audit before any deployment.",
       },
       {
         number: "03",
@@ -1809,7 +1757,7 @@ const en: SiteContent = {
         number: "05",
         title: "Observe",
         label: "Production",
-        text: "Metrics, logs and alerts to see incidents coming.",
+        text: "Metrics, logs, alerts and maintenance to see incidents coming.",
       },
     ],
   },
@@ -1817,9 +1765,9 @@ const en: SiteContent = {
     lead:
       "My name is Zo Mahefa RANAIVO. I build useful applications, then make sure they hold up.",
     body1:
-      "Trained at ENI, I learned to connect the product, the system and quality. My projects range from business ERPs to CI/CD pipelines, through monitoring and testing. What drives me: understand the need, choose the right level of complexity and leave a system that others can understand.",
+      "Trained at ENI, I learned to connect the product, the system and quality. My experience covers the design of business applications through to their technical delivery: CI/CD pipelines, testing and monitoring. What drives me: understanding the need, choosing the right level of complexity and leaving a system that others can understand.",
     body2:
-      "I document my decisions, test what I deliver and treat going live as part of the work — not a formality.",
+      "I document my decisions, test what I deliver and treat going live as part of the work, not a formality.",
     targetKicker: "WHAT I AM LOOKING FOR",
     targetItems: [
       "Web & mobile · backend",
@@ -1846,7 +1794,7 @@ const en: SiteContent = {
       "Not a list of words in a CV corner: every quality is tied to a concrete project, internship or team situation.",
     experiences: [
       {
-        period: "2024 — Present",
+        period: "2024–present",
         title: "Web developer & DevOps",
         company: "Freelance · Personal projects",
         text: "Design and development of business applications: Spring Boot or Django APIs, React interfaces, Docker containerisation, CI/CD pipelines and monitoring. An end-to-end practice, from need to production.",
@@ -1854,14 +1802,14 @@ const en: SiteContent = {
       },
       {
         period: "2024",
-        title: "Third-year internship — CI/CD & monitoring",
+        title: "Third-year internship · CI/CD & monitoring",
         company: "Professional internship",
         text: "Built a delivery chain for a React/Django/MySQL application on a VPS: Docker Compose, GitHub Actions, Nginx, blue/green deployment, Prometheus, Grafana and Loki.",
         tags: ["Docker", "GitHub Actions", "Nginx", "Observability"],
       },
       {
-        period: "2023 — 2024",
-        title: "Second-year internship — Systems & networking",
+        period: "2023–2024",
+        title: "Second-year internship · Systems & networking",
         company: "Spray Info · Fianarantsoa",
         text: "Deployed a Moodle server on Ubuntu with video conferencing, Linux administration, user management and hardening. Routing and firewall labs with GNS3 and pfSense.",
         tags: ["Linux", "Moodle", "GNS3", "pfSense"],
@@ -1869,15 +1817,15 @@ const en: SiteContent = {
     ],
     education: [
       {
-        period: "2025 — 2026",
+        period: "2025–2026",
         title: "Master 1 in Computer Science",
-        school: "ENI — École Nationale d'Informatique",
+        school: "ENI · École Nationale d'Informatique",
         detail: "Information systems engineering. Currently enrolled.",
       },
       {
-        period: "2022 — 2025",
+        period: "2022–2025",
         title: "Bachelor's degree in Computer Science",
-        school: "ENI — École Nationale d'Informatique",
+        school: "ENI · École Nationale d'Informatique",
         detail: "Graduated with honours. Development, systems, networking and security.",
       },
     ],
@@ -1947,7 +1895,7 @@ const en: SiteContent = {
       },
       {
         title: "Attention to detail",
-        text: "A label, a status, an edge case: invisible details make the difference in acceptance.",
+        text: "A label, a status, an edge case: the invisible details that make the difference at acceptance.",
         proof:
           "Reproducible defect reports and functional acceptance checklists.",
       },
@@ -1955,42 +1903,9 @@ const en: SiteContent = {
         title: "Technical curiosity",
         text: "Understand what happens under the abstraction before adding another layer.",
         proof:
-          "Regular watch and experimentation around infrastructure and quality.",
+          "Keeping up with the field and experimenting with infrastructure and quality.",
       },
     ],
-  },
-  testimonials: {
-    items: [
-      {
-        name: "Quincaillerie Boutique de l'Évolution",
-        company: "Boutique de l'Évolution · Hardware store",
-        phone: "034 16 118 50",
-        phoneHref: "tel:+261341611850",
-        quote:
-          "We used to track stock and sales in notebooks. Now everything is centralised: I can see what is missing, what sells and what to order, without entering data twice.",
-        context: "ERP — stock, sales & cash flow",
-      },
-      {
-        name: "Tsena Fandrosoana",
-        company: "Tsena Fandrosoana",
-        phone: "038 98 18 975",
-        phoneHref: "tel:+261389818975",
-        quote:
-          "The app replaced our Excel files. Payments, customers and reports are clear, and the team was trained quickly.",
-        context: "Sales management & reporting",
-      },
-      {
-        name: "Boulangerie Ando",
-        company: "Boulangerie Ando",
-        phone: "038 26 48 310",
-        phoneHref: "tel:+261382648310",
-        quote:
-          "We needed a simple tool for production and sales. The result is reliable every day and we save time on tracking.",
-        context: "Production & sales tracking",
-      },
-    ],
-    note:
-      "Testimonials collected from clients whose application I designed and delivered.",
   },
   contact: {
     directLabel: "WRITE DIRECTLY",
@@ -2023,15 +1938,11 @@ const en: SiteContent = {
       message: "Your message",
       messagePlaceholder:
         "The context, the goal, the deadline... A few lines are enough to start.",
-      consent:
-        "I agree that my contact details will be used only to reply to this request.",
       submit: "Send message",
       pending: "Sending...",
       note: "No newsletter, no data resale. Just an answer.",
       errorRequired: "Please fill in your name, email and message.",
       errorEmail: "This email address does not look valid.",
-      errorConsent:
-        "Please confirm that your contact details can be used to reply to you.",
       errorSend:
         "Direct sending is unavailable right now. Your message is ready: open your mail app to send it to me.",
       fallbackLink: "Open my mail app",
@@ -2043,16 +1954,17 @@ const en: SiteContent = {
     },
   },
   footer: {
-    taglineLine1: "Software engineer — web, mobile,",
-    taglineLine2: "DevOps and QA tester.",
+    taglineLine1: "Software engineer,",
+    taglineLine2: "Fullstack Java & DevOps.",
     navLabel: "Footer navigation",
     contactLabel: "CONTACT",
     cv: "CV PDF",
     backToTop: "Back to top",
     rights: "All rights reserved.",
-    built: "Designed, built and deployed with Next.js.",
   },
   ui: {
+    moreDetails: "More details",
+    lessDetails: "Show less",
     viewDemo: "View demo",
     viewCode: "Source code",
     caseStudy: "Case study on request",
@@ -2104,18 +2016,15 @@ const en: SiteContent = {
     languageLabel: "Site language",
     languageSwitch: "Switch the site to French",
     localTime: "local time",
-    testimonialPhone: "Phone",
     contactCta: "Contact me",
     menuOpen: "Open menu",
     menuClose: "Close menu",
     navMain: "Main navigation",
     navMobile: "Mobile navigation",
-    brandAria: "Zo Mahefa — back to top",
+    brandAria: "Zo Mahefa · back to top",
     availability: "Available",
     skipLink: "Skip to content",
     deliverableLabel: "DELIVERABLE",
-    coordinatesAria:
-      "GPS coordinates of Fianarantsoa: 21 degrees 27 minutes south, 47 degrees 5 minutes east",
   },
   ai: {
     title: "AI assistant",
@@ -2150,6 +2059,6 @@ export function getContent(locale: Locale): SiteContent {
 }
 
 export function mailtoForProject(title: string) {
-  const subject = encodeURIComponent(`Étude de cas — ${title}`);
+  const subject = encodeURIComponent(`Étude de cas · ${title}`);
   return `mailto:${site.email}?subject=${subject}`;
 }

@@ -68,21 +68,8 @@ describe("contenu bilingue", () => {
   it("traduit réellement les libellés principaux", () => {
     expect(contentByLocale.fr.hero.kicker).toBe("Ingénieur logiciel");
     expect(contentByLocale.en.hero.kicker).toBe("Software engineer");
-    expect(contentByLocale.fr.footer.taglineLine2).toContain("testeur QA");
-    expect(contentByLocale.en.footer.taglineLine2).toContain("QA tester");
+    expect(contentByLocale.fr.footer.taglineLine2).toContain("DevOps");
+    expect(contentByLocale.en.footer.taglineLine2).toContain("DevOps");
   });
 
-  it("conserve les trois témoignages clients dans les deux langues", () => {
-    for (const locale of locales) {
-      const items = contentByLocale[locale].testimonials.items;
-      expect(items).toHaveLength(3);
-      expect(items.map((item) => item.name)).toEqual([
-        "Quincaillerie Boutique de l'Évolution",
-        "Tsena Fandrosoana",
-        "Boulangerie Ando",
-      ]);
-      expect(items.every((item) => item.phone.length > 0)).toBe(true);
-      expect(items.every((item) => item.quote.length > 40)).toBe(true);
-    }
-  });
 });

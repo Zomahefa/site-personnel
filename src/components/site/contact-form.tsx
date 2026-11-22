@@ -12,7 +12,6 @@ type FormState = {
   typeIndex: number;
   message: string;
   website: string;
-  consent: boolean;
 };
 
 const initialState: FormState = {
@@ -22,7 +21,6 @@ const initialState: FormState = {
   typeIndex: 0,
   message: "",
   website: "",
-  consent: false,
 };
 
 export function ContactForm() {
@@ -40,10 +38,10 @@ export function ContactForm() {
 
   const mailtoHref = useMemo(() => {
     const subject = encodeURIComponent(
-      `${formCopy.head} — ${projectType || "portfolio"}`,
+      `${formCopy.head} · ${projectType || "portfolio"}`,
     );
     const body = encodeURIComponent(
-      `${form.message}\n\n— ${form.name}\n${form.email}${
+      `${form.message}\n\n${form.name}\n${form.email}${
         form.phone ? `\n${form.phone}` : ""
       }\n${projectType ? `${formCopy.type} : ${projectType}` : ""}`,
     );
@@ -72,11 +70,6 @@ export function ContactForm() {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       setError(formCopy.errorEmail);
-      return;
-    }
-
-    if (!form.consent) {
-      setError(formCopy.errorConsent);
       return;
     }
 
@@ -237,16 +230,6 @@ export function ContactForm() {
           onChange={(event) => update("website", event.target.value)}
         />
       </div>
-
-      <label className="form-consent" htmlFor={`${formId}-consent`}>
-        <input
-          id={`${formId}-consent`}
-          type="checkbox"
-          checked={form.consent}
-          onChange={(event) => update("consent", event.target.checked)}
-        />
-        <span>{formCopy.consent}</span>
-      </label>
 
       {error ? (
         <div className="form-error" role="alert">

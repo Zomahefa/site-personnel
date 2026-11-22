@@ -409,7 +409,7 @@ export default function AdminPage() {
                       </p>
                       <a
                         href={`mailto:${message.email}?subject=${encodeURIComponent(
-                          "Réponse à votre message — portfolio",
+                          "Réponse à votre message · portfolio",
                         )}`}
                         className="text-link mt-3"
                       >
@@ -529,7 +529,7 @@ export default function AdminPage() {
                     <div className="mt-3 space-y-3">
                       {(visits.topCountries.length
                         ? visits.topCountries
-                        : [{ country: "—", count: 0 }]
+                        : [{ country: "·", count: 0 }]
                       ).map((country) => (
                         <div key={country.country}>
                           <div className="flex items-center justify-between text-xs">
@@ -647,10 +647,10 @@ export default function AdminPage() {
                                 <td className="py-2 pr-3">
                                   {countryNames[visit.country] ??
                                     visit.country ??
-                                    "—"}
+                                    "·"}
                                 </td>
                                 <td className="py-2 pr-3">
-                                  {visit.device || "—"}
+                                  {visit.device || "·"}
                                 </td>
                                 <td className="py-2 text-muted-foreground">
                                   {shortReferrer(visit.referrer)}

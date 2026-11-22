@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Zo Mahefa RANAIVO — Portfolio",
+    name: "Zo Mahefa RANAIVO · Portfolio",
     short_name: "Zo Mahefa",
     description:
       "Développeur web & mobile, ingénieur DevOps et testeur QA. Projets, parcours et contact.",

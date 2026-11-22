@@ -12,7 +12,7 @@ export function LanguageToggle() {
       className="icon-button language-toggle"
       onClick={toggleLocale}
       aria-label={c.ui.languageSwitch}
-      title={`${c.ui.languageLabel} — ${locale.toUpperCase()}`}
+      title={`${c.ui.languageLabel} · ${locale.toUpperCase()}`}
     >
       <Languages className="size-4" aria-hidden="true" />
       <span className="mono language-code">{locale.toUpperCase()}</span>

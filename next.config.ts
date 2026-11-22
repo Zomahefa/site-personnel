@@ -34,6 +34,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    agentUpgrade: "security",
+  },
   outputFileTracingRoot: process.cwd(),
   turbopack: { root: process.cwd() },
   compress: true,

@@ -56,7 +56,7 @@ export function ProjectGallery({ captures, title }: Props) {
       className={`project-gallery ${paused ? "is-paused" : ""}`}
       role="region"
       aria-roledescription="carousel"
-      aria-label={`${ui.galleryRegion} — ${title}`}
+      aria-label={`${ui.galleryRegion} · ${title}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setHovered(true)}
@@ -144,7 +144,7 @@ export function ProjectGallery({ captures, title }: Props) {
               type="button"
               className="gallery-arrow"
               onClick={() => goTo(index - 1)}
-              aria-label={`${ui.galleryPrev} — ${title}`}
+              aria-label={`${ui.galleryPrev} · ${title}`}
             >
               <ChevronLeft className="size-4" aria-hidden="true" />
             </button>
@@ -152,7 +152,7 @@ export function ProjectGallery({ captures, title }: Props) {
               type="button"
               className="gallery-arrow"
               onClick={() => goTo(index + 1)}
-              aria-label={`${ui.galleryNext} — ${title}`}
+              aria-label={`${ui.galleryNext} · ${title}`}
             >
               <ChevronRight className="size-4" aria-hidden="true" />
             </button>

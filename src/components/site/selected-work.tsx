@@ -1,7 +1,12 @@
 "use client";
 
-import { ArrowUpRight, ExternalLink, Lock } from "lucide-react";
-import { mailtoForProject, site } from "@/lib/content";
+import { useState } from "react";
+import { ArrowUpRight, ChevronDown, ExternalLink, Lock } from "lucide-react";
+import {
+  mailtoForProject,
+  site,
+  type FeaturedProject,
+} from "@/lib/content";
 import { useI18n } from "@/components/language-provider";
 import { GithubIcon } from "@/components/icons";
 import { Reveal } from "@/components/site/reveal";
@@ -30,99 +35,11 @@ export function SelectedWork() {
 
         <div className="project-list">
           {featuredProjects.map((project, index) => (
-            <Reveal key={project.id} delay={index * 0.04} distance={28}>
-              <article
-                className={`project-row ${index % 2 === 1 ? "is-reversed" : ""}`}
-              >
-                <div className="project-visual-col">
-                  {project.gallery?.length ? (
-                    <ProjectGallery
-                      captures={project.gallery}
-                      title={project.title}
-                    />
-                  ) : (
-                    <ProjectVisual kind={project.visual} title={project.title} />
-                  )}
-                </div>
-
-                <div className="project-content">
-                  <div className="project-meta">
-                    <span className="project-index mono">{project.index}</span>
-                    <span className="mono">{project.year}</span>
-                    <span className="mono">{project.category}</span>
-                  </div>
-
-                  <h3 className="project-title">{project.title}</h3>
-                  <p className="project-subtitle">{project.subtitle}</p>
-                  <p className="project-summary">{project.summary}</p>
-                  <p className="project-context">{project.context}</p>
-
-                  <dl className="case-study">
-                    <div>
-                      <dt>{ui.caseProblem}</dt>
-                      <dd>{project.problem}</dd>
-                    </div>
-                    <div>
-                      <dt>{ui.caseRole}</dt>
-                      <dd>{project.role}</dd>
-                    </div>
-                    <div>
-                      <dt>{ui.caseOutcome}</dt>
-                      <dd>{project.outcome}</dd>
-                    </div>
-                  </dl>
-
-                  <div className="project-bottom">
-                    <ul className="tag-list" aria-label={ui.technologies}>
-                      {project.stack.map((tech) => (
-                        <li className="tag" key={tech}>
-                          {tech}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="project-links">
-                      {project.demo ? (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="button button-dark project-demo"
-                          aria-label={`${project.demoLabel ?? ui.viewDemo} — ${project.title}`}
-                        >
-                          <ExternalLink className="size-3.5" aria-hidden="true" />
-                          {project.demoLabel ?? ui.viewDemo}
-                        </a>
-                      ) : null}
-                      {project.repo ? (
-                        <a
-                          href={project.repo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-link"
-                          aria-label={`${project.title} — ${ui.archiveRepoAria}`}
-                        >
-                          <GithubIcon className="size-4" />
-                          {ui.viewCode}
-                          <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                        </a>
-                      ) : null}
-                      {project.privateCode ? (
-                        <a
-                          href={mailtoForProject(project.title)}
-                          className="text-link"
-                          aria-label={`${ui.caseStudy} — ${project.title}`}
-                        >
-                          <Lock className="size-3.5" aria-hidden="true" />
-                          {ui.caseStudy}
-                          <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                        </a>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
+            <FeaturedProjectRow
+              key={project.id}
+              project={project}
+              index={index}
+            />
           ))}
         </div>
 
@@ -170,7 +87,7 @@ export function SelectedWork() {
                   rel="noopener noreferrer"
                   key={project.title}
                   role="listitem"
-                  aria-label={`${project.title} — ${ui.archiveRepoAria}`}
+                  aria-label={`${project.title} · ${ui.archiveRepoAria}`}
                 >
                   {content}
                 </a>
@@ -187,9 +104,6 @@ export function SelectedWork() {
           </div>
 
           <div className="archive-footer">
-            <span className="mono text-muted-foreground">
-              {archive.footerNote}
-            </span>
             <a
               href={site.github}
               target="_blank"
@@ -204,5 +118,127 @@ export function SelectedWork() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+function FeaturedProjectRow({
+  project,
+  index,
+}: {
+  project: FeaturedProject;
+  index: number;
+}) {
+  const { c } = useI18n();
+  const { ui } = c;
+  const [expanded, setExpanded] = useState(false);
+  const detailsId = `project-details-${project.id}`;
+
+  return (
+    <Reveal delay={index * 0.04} distance={28}>
+      <article
+        className={`project-row ${index % 2 === 1 ? "is-reversed" : ""} ${
+          expanded ? "is-expanded" : ""
+        }`}
+      >
+        <div className="project-visual-col">
+          {project.gallery?.length ? (
+            <ProjectGallery captures={project.gallery} title={project.title} />
+          ) : (
+            <ProjectVisual kind={project.visual} title={project.title} />
+          )}
+        </div>
+
+        <div className="project-content">
+          <div className="project-meta">
+            <span className="project-index mono">{project.index}</span>
+            <span className="mono">{project.year}</span>
+            <span className="mono">{project.category}</span>
+          </div>
+
+          <h3 className="project-title">{project.title}</h3>
+
+          <button
+            type="button"
+            className="project-toggle"
+            aria-expanded={expanded}
+            aria-controls={detailsId}
+            onClick={() => setExpanded((value) => !value)}
+          >
+            {expanded ? ui.lessDetails : ui.moreDetails}
+            <ChevronDown className="size-3.5" aria-hidden="true" />
+          </button>
+
+          <div className="project-details" id={detailsId}>
+            <p className="project-subtitle">{project.subtitle}</p>
+            <p className="project-summary">{project.summary}</p>
+            <p className="project-context">{project.context}</p>
+
+            <dl className="case-study">
+              <div>
+                <dt>{ui.caseProblem}</dt>
+                <dd>{project.problem}</dd>
+              </div>
+              <div>
+                <dt>{ui.caseRole}</dt>
+                <dd>{project.role}</dd>
+              </div>
+              <div>
+                <dt>{ui.caseOutcome}</dt>
+                <dd>{project.outcome}</dd>
+              </div>
+            </dl>
+
+            <div className="project-bottom">
+              <ul className="tag-list" aria-label={ui.technologies}>
+                {project.stack.map((tech) => (
+                  <li className="tag" key={tech}>
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="project-links">
+                {project.demo ? (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button button-dark project-demo"
+                    aria-label={`${project.demoLabel ?? ui.viewDemo} · ${project.title}`}
+                  >
+                    <ExternalLink className="size-3.5" aria-hidden="true" />
+                    {project.demoLabel ?? ui.viewDemo}
+                  </a>
+                ) : null}
+                {project.repo ? (
+                  <a
+                    href={project.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-link"
+                    aria-label={`${project.title} · ${ui.archiveRepoAria}`}
+                  >
+                    <GithubIcon className="size-4" />
+                    {ui.viewCode}
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </a>
+                ) : null}
+                {project.privateCode ? (
+                  <a
+                    href={mailtoForProject(project.title)}
+                    className="text-link"
+                    aria-label={`${ui.caseStudy} · ${project.title}`}
+                  >
+                    <Lock className="size-3.5" aria-hidden="true" />
+                    {ui.caseStudy}
+                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </Reveal>
   );
 }

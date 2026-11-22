@@ -27,7 +27,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 const STORAGE_KEY = "zm_locale";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("fr");
+  const [locale, setLocaleState] = useState<Locale>("en");
   const mounted = useRef(false);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         setLocaleState(stored);
       }
     } catch {
-      // Stockage indisponible : la langue par défaut reste le français.
+      // Stockage indisponible : la langue par défaut reste l'anglais.
     }
   }, []);
 

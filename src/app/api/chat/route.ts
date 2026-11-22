@@ -10,7 +10,7 @@ Voici ses informations clés :
 - DevOps : CI/CD, IaC, conteneurisation, orchestration, monitoring, gestion des secrets (Vault), GitOps
 - Certifications : Licence ENI, DELF B2, Spray Info (Réseau & Système). En cours : AWS Cloud Practitioner, CKA, Terraform Associate
 - Utilise l'IA comme copilote (pas pilote) pour accélérer son travail
-- Langues : français (courant), anglais (technique), malgache (maternel)
+- Langues : français (courant), anglais (technique), malagasy (maternel)
 - Qualités : apprentissage rapide, adaptable, dynamique, rigoureux, respect des délais
 - Contact : zomahefa.ranaivo@gmail.com, +261 38 54 422 52
 

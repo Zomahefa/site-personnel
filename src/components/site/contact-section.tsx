@@ -57,8 +57,8 @@ export function ContactSection() {
                 <a
                   href={`mailto:${site.email}?subject=${encodeURIComponent(
                     isFr
-                      ? "Opportunité — recrutement"
-                      : "Opportunity — recruitment",
+                      ? "Opportunité · recrutement"
+                      : "Opportunity · recruitment",
                   )}`}
                   className="contact-path"
                 >
@@ -75,8 +75,8 @@ export function ContactSection() {
                 <a
                   href={`mailto:${site.email}?subject=${encodeURIComponent(
                     isFr
-                      ? "Mission — cadrage de projet"
-                      : "Mission — project scoping",
+                      ? "Mission · cadrage de projet"
+                      : "Mission · project scoping",
                   )}`}
                   className="contact-path"
                 >
@@ -97,7 +97,7 @@ export function ContactSection() {
               <div className="contact-meta">
                 <span>
                   <MapPin className="size-3.5" aria-hidden="true" />
-                  {c.location} · {contact.locationNote}
+                  {site.locationShort} · {contact.locationNote}
                 </span>
                 <span>
                   <span className="status-dot" aria-hidden="true" />

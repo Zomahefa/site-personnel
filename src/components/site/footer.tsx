@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { site } from "@/lib/content";
 import { useI18n } from "@/components/language-provider";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
-import { LocalClock } from "@/components/site/local-clock";
 
 export function Footer() {
   const { c } = useI18n();
@@ -29,14 +28,10 @@ export function Footer() {
               {footer.taglineLine2}
             </p>
             <div className="footer-coordinates">
-              <span title={ui.coordinatesAria}>
+              <span>
                 <MapPin className="size-3.5" aria-hidden="true" />
                 {c.location}
               </span>
-              <span className="mono footer-gps" title={ui.coordinatesAria}>
-                {site.coordinates}
-              </span>
-              <LocalClock />
             </div>
           </div>
 
@@ -62,7 +57,7 @@ export function Footer() {
                 href={site.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub — Zo Mahefa"
+                aria-label="GitHub · Zo Mahefa"
               >
                 <GithubIcon className="size-4" />
               </a>
@@ -70,7 +65,7 @@ export function Footer() {
                 href={site.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn — Zo Mahefa"
+                aria-label="LinkedIn · Zo Mahefa"
               >
                 <LinkedinIcon className="size-4" />
               </a>
@@ -90,7 +85,6 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} Zo Mahefa RANAIVO. {footer.rights}
           </p>
-          <p className="footer-built">{footer.built}</p>
           <a href={homeHref} className="footer-back">
             {footer.backToTop}
             <ArrowUp className="size-3.5" aria-hidden="true" />

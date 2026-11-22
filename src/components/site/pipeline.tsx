@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, GitBranch, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import { useI18n } from "@/components/language-provider";
 import { Reveal } from "@/components/site/reveal";
 import { TypewriterHeading } from "@/components/site/typewriter";
@@ -77,14 +77,6 @@ export function Pipeline() {
             </a>
           </div>
         </Reveal>
-
-        <div className="pipeline-bottomline">
-          <span className="mono">
-            <GitBranch className="inline size-3.5" aria-hidden="true" />{" "}
-            {pipeline.footerLeft}
-          </span>
-          <span className="mono">{pipeline.footerRight}</span>
-        </div>
       </div>
     </section>
   );

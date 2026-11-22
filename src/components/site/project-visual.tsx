@@ -16,7 +16,7 @@ export function ProjectVisual({ kind, title }: Props) {
     <div
       className={`project-visual visual-${kind}`}
       role="img"
-      aria-label={`${ui.visualAria} — ${title}`}
+      aria-label={`${ui.visualAria} · ${title}`}
     >
       <div className="visual-grid" aria-hidden="true" />
       <div className="visual-bar">
@@ -40,15 +40,15 @@ export function ProjectVisual({ kind, title }: Props) {
             <div className="incident-kpis">
               <div>
                 <span className="mini-label">{ui.visualReported}</span>
-                <strong>—</strong>
+                <strong>·</strong>
               </div>
               <div>
                 <span className="mini-label">{ui.visualInProgress}</span>
-                <strong>—</strong>
+                <strong>·</strong>
               </div>
               <div>
                 <span className="mini-label">{ui.visualResolved}</span>
-                <strong>—</strong>
+                <strong>·</strong>
               </div>
             </div>
             <div className="incident-map">

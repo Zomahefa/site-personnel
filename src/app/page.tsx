@@ -5,7 +5,6 @@ import { Capabilities } from "@/components/site/capabilities";
 import { Process } from "@/components/site/process";
 import { Pipeline } from "@/components/site/pipeline";
 import { About } from "@/components/site/about";
-import { Testimonials } from "@/components/site/testimonials";
 import { ContactSection } from "@/components/site/contact-section";
 
 export default function Home() {
@@ -18,7 +17,6 @@ export default function Home() {
       <Process />
       <Pipeline />
       <About />
-      <Testimonials />
       <ContactSection />
     </>
   );

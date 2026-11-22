@@ -6,11 +6,13 @@ import { useReducedMotion } from "framer-motion";
 type RotatingTypewriterProps = {
   roles: readonly string[];
   className?: string;
+  fallback?: "all" | "first";
 };
 
 export function RotatingTypewriter({
   roles,
   className = "",
+  fallback = "all",
 }: RotatingTypewriterProps) {
   const reduceMotion = useReducedMotion();
   const [text, setText] = useState("");
@@ -68,14 +70,15 @@ export function RotatingTypewriter({
   const label = useMemo(() => roles.join(" · "), [roles]);
 
   if (reduceMotion) {
+    const visible = fallback === "first" ? roles.slice(0, 1) : roles;
     return (
       <span className={className}>
         <span className="sr-only">{label}</span>
         <span aria-hidden="true">
-          {roles.map((role, index) => (
+          {visible.map((role, index) => (
             <span key={role}>
               {role}
-              {index < roles.length - 1 ? (
+              {index < visible.length - 1 ? (
                 <span className="text-brand"> · </span>
               ) : null}
             </span>

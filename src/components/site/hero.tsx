@@ -6,13 +6,13 @@ import {
   ArrowRight,
   Download,
   MapPin,
+  MousePointerClick,
   MoveUpRight,
 } from "lucide-react";
 import { site } from "@/lib/content";
 import { useI18n } from "@/components/language-provider";
 import { RotatingTypewriter } from "@/components/site/typewriter";
 import { Reveal } from "@/components/site/reveal";
-import { CountUp } from "@/components/site/count-up";
 
 export function Hero() {
   const { c, locale } = useI18n();
@@ -24,7 +24,6 @@ export function Hero() {
       <div className="site-shell">
         <div className="hero-topline">
           <span className="mono">{hero.eyebrowLeft}</span>
-          <span className="mono hidden sm:inline">{hero.eyebrowCenter}</span>
           <span className="mono">{hero.eyebrowRight}</span>
         </div>
 
@@ -33,7 +32,7 @@ export function Hero() {
             <Reveal delay={0.05} distance={14}>
               <p className="hero-kicker">
                 <span className="status-dot" aria-hidden="true" />
-                {site.name} — {hero.kicker}
+                {site.name} · {hero.kicker}
               </p>
             </Reveal>
 
@@ -89,7 +88,7 @@ export function Hero() {
               <ul className="hero-facts" aria-label={hero.factsAria}>
                 <li>
                   <MapPin className="size-3.5" aria-hidden="true" />
-                  {c.location}
+                  {hero.locationShort}
                 </li>
                 <li>
                   <span className="fact-cross" aria-hidden="true">
@@ -128,6 +127,10 @@ export function Hero() {
                   <span className="status-dot" aria-hidden="true" />
                   {hero.portraitBadge}
                 </span>
+                <span className="portrait-hint mono">
+                  <MousePointerClick className="size-3" aria-hidden="true" />
+                  {hero.portraitHint}
+                </span>
                 <span
                   className="portrait-corner portrait-corner-tl"
                   aria-hidden="true"
@@ -147,28 +150,11 @@ export function Hero() {
                 <span className="portrait-signature">{hero.signature}</span>
               </figcaption>
             </figure>
-            <div className="portrait-note">
-              <span className="mono">{hero.noteLeft}</span>
-              <span className="mono text-right">{hero.noteRight}</span>
-            </div>
           </Reveal>
         </div>
 
         <Reveal delay={0.46} distance={14}>
           <div className="hero-bottom">
-            <div className="hero-stats">
-              {hero.stats.map((stat) => (
-                <div className="hero-stat" key={stat.label}>
-                  <CountUp
-                    value={stat.value}
-                    pad={stat.pad}
-                    prefix={stat.prefix}
-                    suffix={stat.suffix}
-                  />
-                  <span className="hero-stat-label">{stat.label}</span>
-                </div>
-              ))}
-            </div>
             <a
               href="#projets"
               className="scroll-cue"
